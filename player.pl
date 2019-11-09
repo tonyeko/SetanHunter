@@ -7,9 +7,10 @@ initPlayer :-
     /* Spawn Player */
 	random(1,10,X),
 	random(1,10,Y),
-	asserta(playerPos(X,Y)),
-    nl, write(X), write(' '), write(Y), nl,
-    printmap(0,0).
+	asserta(playerPos(X,Y)).
+    
+    % nl, write(X), write(' '), write(Y), nl,
+    % printmap(0,0).
 
 	% asserta(healthpoint(100)),
 	% asserta(armor(0)),

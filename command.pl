@@ -2,8 +2,7 @@ showinstruction :-
     write('Halo '),
 	showPlayerName,
 	write(', kamu adalah Tokemon Trainer .... KALIMAT PEMBUKA -----'), nl, nl,
-    showcommands,
-    showlegends.
+    showcommands.
 
 showcommands :-
     write('Daftar command yang dapat dilakukan: '), nl,
@@ -25,3 +24,18 @@ showlegends :-
 	write('  P = '), showPlayerName, write(' (Player)'),nl,
     write('  X = pagar'),nl,
 	write('  G = gym center'),nl,nl, !.
+
+showmap :- 
+    write('Posisi '), showPlayerName, write(' saat ini:'), nl,
+    printmap(0,0), nl,
+    showlegends, !.
+
+quit :- 
+    write('Anda akan keluar dari game. Ingin save status game? (y/n)'), nl,
+    write('$ '), 
+    read(X), save(X),
+    abort, !.
+
+execute(quit) :- quit, !.
+execute(help) :- showcommands, !.
+execute(map)  :- showmap, !.

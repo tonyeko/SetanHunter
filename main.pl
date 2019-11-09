@@ -29,17 +29,21 @@ start :-
 	% read(X),
 	% asserta(player(X)),
 	initPlayer,
-
-	/* Show Instruction */
 	showinstruction,
+	showmap,
 
 	% supply,
 	% spawn_player,
 	
 	% spawn_level(L),nl, %Nanti ini diganti sama spawn_level(N) dimana N adalah integer 1 (gampang), 2(sedeng), 3(susah).
+	asserta(health(1)),
 
 	repeat,
-		write('>> '), /* Menandakan input */
-		read(Input),nl, /*Meminta input dari user */
-		do(Input),nl, /*Menjadlankan do(Input) */
-		end_condition. /*apabila end end condition terpenuhi maka program akan berakhir */
+		write('$ '), 
+		read(Input), nl, 
+		execute(Input), nl,
+		end_game.
+
+end_game :-
+  health(0), !,
+  write('==== KALIMAT KALAH ===='),nl, end(y), !.
