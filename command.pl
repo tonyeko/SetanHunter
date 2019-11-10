@@ -11,10 +11,10 @@ showcommands :-
     write('  help.              : menampilkan daftar command yang dapat dilakukan.'),nl,
     write('  map.               : menampilkan peta.'),nl,
 	write('  heal.              : menyembuhkan tokemon di inventory jika berada di gym center.'),nl,
-	write('  w.                 : bergerak kearah Utara(atas).'),nl,
-	write('  a.                 : bergerak kearah Timur(kanan).'),nl,
-	write('  s.                 : bergerak kearah Barat(kiri).'),nl,
-	write('  d.                 : bergerak kearah Selatan(bawah).'),nl,
+	write('  w.                 : bergerak kearah atas.'),nl,
+	write('  a.                 : bergerak kearah kanan.'),nl,
+	write('  s.                 : bergerak kearah kiri.'),nl,
+	write('  d.                 : bergerak kearah bawah.'),nl,
 	write('  status.            : melihat status diri.'),nl,
 	write('  save(filename).    : menyimpan status permainan.'),nl,
 	write('  load(filename).    : me-load status permainan.'),nl,nl, !.
@@ -36,6 +36,10 @@ quit :-
     read(X), save(X),
     abort, !.
 
-execute(quit) :- quit, !.
-execute(help) :- showcommands, !.
-execute(map)  :- showmap, !.
+execute(quit)   :- quit, !.
+execute(help)   :- showcommands, !.
+execute(map)    :- showmap, !.
+execute(w)      :- w_move, !.
+execute(a)      :- a_move, !.
+execute(s)      :- s_move, !.
+execute(d)      :- d_move, !.

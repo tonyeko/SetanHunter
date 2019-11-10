@@ -23,7 +23,7 @@ start :-
     write('   |__/ \\______/ |__/  \\__/ \\_______/|__/ |__/ |__/ \\______/ |__/  |__/'),nl,
 	nl,nl,
 	write('Gotta catch ''em all!'),nl,
-	write('Selamat datang di dunia Tokemon. .... . Silahkan memperkenalkan dirimu...'),nl,
+	write('Selamat datang di dunia Tokemon. == ISI KALIMAT == . Silahkan memperkenalkan dirimu...'),nl,
 	% write('Siapa nama kamu?'), nl,
 	% write('$ '),
 	% read(X),
