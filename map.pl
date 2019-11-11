@@ -12,7 +12,7 @@
     /* Print Medan */
     printmap(X,Y) :- write('- '), X1 is X+1, printmap(X1,Y), !.
 
-% /* W A S D */
+/* W A S D */
     w_move :- playerPos(_,Y), Y == 1, !, write('Ada pagar yang menghalangimu, kamu tidak bisa ke atas.'), nl, !.
     /* INI MAU ADA KONSEKUENSI KALO DIA TETEP KE ATAS ? */
     w_move :- playerPos(X,Y), Y1 is Y-1, retract(playerPos(X,Y)), asserta(playerPos(X,Y1)), !.
@@ -26,8 +26,13 @@
     d_move :- playerPos(X,_), X == 10, !, write('Ada pagar yang menghalangimu, kamu tidak bisa ke kanan.'), nl, !.
     d_move :- playerPos(X,Y), X1 is X+1, retract(playerPos(X,Y)), asserta(playerPos(X1,Y)), !.
 
+/* Show Position Information */
+    showpos :- playerPos(X, Y), pos(X, Y, Z), showPlayerName, write(' sekarang berada di '), write(Z), nl, !.
+
 /* Gym Position */
 gymPos(5,7).
+/* Location Name */
+
 /* Batas Pagar */
     /* Baris ke-0 */
     hedge(0,0).

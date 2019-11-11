@@ -1,4 +1,5 @@
 :- dynamic(playerPos/2). 	/* playerPos(X, Y) */
+:- dynamic(playerTokemon/1). 	/* playerPos(X, Y) */
 
 initPlayer :-
 	write('Siapa nama kamu?'), nl,
@@ -8,6 +9,8 @@ initPlayer :-
 	random(1,10,X),
 	random(1,10,Y),
 	asserta(playerPos(X,Y)).
+	/* Tokemon awal */
+	playerTokemon(tikachu).
     
     % nl, write(X), write(' '), write(Y), nl,
     % printmap(0,0).
