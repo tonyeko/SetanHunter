@@ -9,6 +9,8 @@
 :-include('command.pl').
 :-include('player.pl').
 :-include('map.pl').
+:-include('position.pl').
+:-include('tokemon.pl').
 
 /*Rules*/
 start :-
@@ -28,10 +30,6 @@ start :-
 	showinstruction,
 	showmap,
 
-	% supply,
-	% spawn_player,
-	
-	% spawn_level(L),nl, %Nanti ini diganti sama spawn_level(N) dimana N adalah integer 1 (gampang), 2(sedeng), 3(susah).
 	asserta(health(1)),
 
 	repeat,

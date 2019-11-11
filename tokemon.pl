@@ -1,60 +1,60 @@
-/* Tipe Tokemon */
-    % type(fire).
-    % type(leaves).
-    % type(water).
-    % type(dragon).
-    % type(normal).
-    % type(electric).
 /* Nama Tokemon */
-    /* type: fire */
         tokemon(charmanbro).
-        type(fire, charmanbro).
         tokemon(magger).
-        type(fire, magger).
         tokemon(moltron).
+        tokemon(execute).
+        tokemon(lotek).
+        tokemon(nutleaf).
+        tokemon(psyluck).
+        tokemon(magicard).
+        tokemon(fastpoke).
+        tokemon(martini).
+        tokemon(latian).
+        tokemon(educa).
+        tokemon(ruanguru).
+        tokemon(dosatu).
+        tokemon(pidgay).
+        tokemon(setarbuck).
+        tokemon(tikachu).
+        tokemon(elekterus).
+        tokemon(helicopter).
+        tokemon(moltron).
+        tokemon(latian).
+        tokemon(educa).
+        tokemon(ruanguru).
+
+    /* type: fire */
+        type(fire, magger).
+        type(fire, charmanbro).
         type(fire, moltron).
     /* type: leaves */
-        tokemon(execute).
-        type(leaves, execute).
-        tokemon(lotek).
-        type(leaves, lotek).
-        tokemon(nutleaf).
+        type(leaves, execute).    
+        type(leaves, lotek).     
         type(leaves, nutleaf).
-    /* type: water */
-        tokemon(psyluck).
+    /* type: water */    
         type(water, psyluck).
-        tokemon(magicard).
         type(water, magicard).
-        tokemon(fastpoke).
         type(water, fastpoke).
     /* type: dragon */
-        tokemon(martini).
         type(dragon, martini).
-        tokemon(latian).
         type(dragon, latian).
-        tokemon(educa).
         type(dragon, educa).
-        tokemon(ruanguru).
         type(dragon, ruanguru).
     /* type: normal */
-        tokemon(dosatu).
         type(normal, dosatu).
-        tokemon(pidgay).
         type(normal, pidgay).
-        tokemon(setarbuck).
         type(normal, setarbuck).
-    /* type: electric */    
-        tokemon(tikachu).
-        type(electric, tikachu).
-        tokemon(elekterus).
+    /* type: electric */ 
+        type(electric, tikachu). 
         type(electric, elekterus).
-        tokemon(helicopter).
         type(electric, helicopter).
+    
 /* Legendary Tokemon */
         legendary(moltron).
         legendary(latian).
         legendary(ruanguru).
         legendary(educa).
+
 /* Relasi Tipe Tokemon */
     /* Super Effective */
     /* Serangan tokemon fire efektif terhadap leaves */

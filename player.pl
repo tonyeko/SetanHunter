@@ -10,16 +10,7 @@ initPlayer :-
 	random(1,10,Y),
 	asserta(playerPos(X,Y)).
 	/* Tokemon awal */
-	playerTokemon(tikachu).
-    
-    % nl, write(X), write(' '), write(Y), nl,
-    % printmap(0,0).
-
-	% asserta(healthpoint(100)),
-	% asserta(armor(0)),
-	% asserta(senjata(sniper_rifle,40,3)),
-	% asserta(maxInventory(10)),
-	% asserta(maxHealth(100)),
-	% asserta(maxArmor(100)).
+	playerTokemon([tikachu]).
+	legendsTokemon([moltron, latian, ruanguru, educa]).
 
 showPlayerName :- player(X), write(X).

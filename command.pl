@@ -36,14 +36,33 @@ quit :-
     read(X), save(X),
     abort, !.
 
-% showstatus :- 
+showstatus :-
+	write('Info Status:'), nl,
+	playerTokemon(X), showstokemonstat(X), nl,
+    write('Tokemon Legenda yang BELUM dikalahkan: '), nl, 
+    legendsTokemon(Y), showslegends(Y).
+	
+showstokemonstat([]).
+showstokemonstat([X|T]) :-
+	tokemon(X),
+	write('Nama             : '),  write(X), nl,
+	write('HP               : '), starthp(X, Y), write(Y), nl, 
+	write('Tipe             : '), type(Z, X), write(Z), nl,
+	write('Attack           : '), attack(X, U), write(U), nl,
+	write('Special Attack   : '), spattack(X, V), write(V), nl,
+	showstokemonstat(T).
 
+showslegends([]).
+showslegends([X|T]) :-
+	tokemon(X),
+	legendary(X), write(' - '), write(X), nl,
+	showslegends(T).
 
 execute(quit)   :- quit, !.
 execute(help)   :- showcommands, !.
 execute(map)    :- showmap, !.
 execute(w)      :- showPlayerName, write(' bergerak ke utara, '), w_move, showpos, !.
-execute(a)      :- a_move, showpos, !.
-execute(s)      :- s_move, showpos, !.
-execute(d)      :- d_move, showpos, !.
+execute(a)      :- showPlayerName, write(' bergerak ke barat, '), a_move, showpos, !.
+execute(s)      :- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, !.
+execute(d)      :- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, !.
 execute(status) :- showstatus, !.
