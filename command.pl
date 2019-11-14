@@ -102,9 +102,9 @@ resetHP([X|T])	:-
 	asserta(hp(X, Y)),
 	resetHP(T), !.
 
-healing	:- playerPos(X, Y), gymPos(A, B), X == A, Y == B, tokemonHealed(0), !, write('Tokemon kamu berhasil disembuhkan.'), nl, nl, retract(tokemonHealed(0)), asserta(tokemonHealed(1)), playerTokemon(Z), resetHP(Z), !.
-healing	:- tokemonHealed(0), !, write('tidak berada di area gym, tokemon tidak bisa disembuhkan.'), nl, !.
-healing :- tokemonHealed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan tokemon kamu di gym.'), nl, !.
+healing	:- playerPos(X, Y), gymPos(A, B), X == A, Y == B, gymUsed(0), !, write('Tokemon kamu berhasil disembuhkan.'), nl, nl, retract(gymUsed(0)), asserta(gymUsed(1)), playerTokemon(Z), resetHP(Z), !.
+healing	:- gymUsed(0), !, write('tidak berada di area gym, tokemon tidak bisa disembuhkan.'), nl, !.
+healing :- gymUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan tokemon kamu di gym.'), nl, !.
 
 execute(start)	:- write('permainan sudah dimulai.'), nl, !.
 execute(quit)   :- quit, !.
