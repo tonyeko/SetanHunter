@@ -75,6 +75,25 @@
         starthp(elekterus, 470).
         starthp(helicopter, 750).
 
+        hp(charmanbro, 500).
+        hp(magger, 450).
+        hp(moltron, 1000).
+        hp(execute, 350).
+        hp(lotek, 300).
+        hp(nutleaf, 470).
+        hp(psyluck, 360).
+        hp(magicard, 250).
+        hp(fastpoke, 660).
+        hp(martini, 450).
+        hp(latian, 1500).
+        hp(educa, 2200).
+        hp(ruanguru, 3000).
+        hp(dosatu, 600).
+        hp(pidgay, 340).
+        hp(setarbuck, 460).
+        hp(tikachu, 500).
+        hp(elekterus, 470).
+        hp(helicopter, 750).
 
         attack(charmanbro, 40).
         attack(magger, 30).
