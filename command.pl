@@ -45,7 +45,7 @@ showstatus :-
 showstokemonstat([]).
 showstokemonstat([X|T]) :-
 	tokemon(X),
-	write('Nama             : '),  write(X), nl,
+	write('Nama             : '), write(X), nl,
 	write('HP               : '), starthp(X, Y), write(Y), nl, 
 	write('Tipe             : '), type(Z, X), write(Z), nl,
 	write('Attack           : '), attack(X, U), write(U), nl,
@@ -57,6 +57,23 @@ showslegends([X|T]) :-
 	tokemon(X),
 	legendary(X), write(' - '), write(X), nl,
 	showslegends(T).
+
+conc([], List, List).
+conc([H|T], List, [H|CList]) :- conc(T, List, CList).
+
+delete(El,[El|Tail],Tail).
+delete(El,[Head|Tail],[Head|res]) :-	
+	delete(El,Tail,res).
+
+captured(X) :-
+	tokemon(X),
+	playerTokemon(Y), conc(Y, [X], Z), 
+	retract(playerTokemon(Y)), asserta(playerTokemon(Z)).
+
+dead(X) :-
+	tokemon(X),
+	playerTokemon(Y), delete(X, Y, Z), 
+	retract(playerTokemon(Y)), asserta(playerTokemon(Z)).
 
 execute(quit)   :- quit, !.
 execute(help)   :- showcommands, !.
