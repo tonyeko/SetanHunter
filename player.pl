@@ -1,5 +1,5 @@
 :- dynamic(playerPos/2). 	/* playerPos(X, Y) */
-:- dynamic(playerTokemon/1). 	/* playerPos(X, Y) */
+:- dynamic(playerTokemon/1). 	/* playerTokemon(X, Y) */
 
 initPlayer :-
 	write('Siapa nama kamu?'), nl,

@@ -38,7 +38,7 @@
     pos(4,4, 'lapbas itb.').
     pos(4,5, 'lapbas itb.').
     pos(4,6, 'jalan.').
-    pos(4,7, 'jalan.').
+    % pos(4,7, 'jalan.').
     pos(4,8, 'labtek V.').
     pos(4,9, 'labtek V.').
     pos(4,10, 'labtek V.').
@@ -74,7 +74,7 @@
     pos(7,10, 'jalan.').
     pos(8,1, 'jalan.').
     pos(8,2, 'jalan.').
-    pos(8,3, 'jalan.').
+    % pos(8,3, 'jalan.').
     pos(8,4, 'jalan.').
     pos(8,5, 'jalan.').
     pos(8,6, 'jalan.').
@@ -153,3 +153,7 @@
     hedge(9,11).
     hedge(10,11).
     hedge(11,11).
+
+    /* Random Hedge */
+    hedge(4,7).
+    hedge(8,3).

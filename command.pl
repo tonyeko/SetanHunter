@@ -69,9 +69,9 @@ healing	:- write('tidak berada di area gym, tokemon tidak bisa disembuhkan.'), n
 conc([], List, List).
 conc([H|T], List, [H|CList]) :- conc(T, List, CList).
 
-delete(El,[El|Tail],Tail).
-delete(El,[Head|Tail],[Head|res]) :-	
-	delete(El,Tail,res).
+% delete(El,[El|Tail],Tail).
+% delete(El,[Head|Tail],[Head|res]) :-	
+% 	delete(El,Tail,res).
 
 captured(X) :-
 	tokemon(X),
