@@ -58,30 +58,50 @@ resetHP([X|T])	:-
 	asserta(hp(X, Y)), !.
 
 showslegends([]).
+/* KASUS SUDAH DITANGKAP */
+showslegends([X|T]) :-
+	tokemon(X), searchParty(X),
+	legendary(X), write(' - '), write(X), write(' <SUDAH DITANGKAP>'), nl,
+	showslegends(T).
+/* KASUS BELUM DITANGKAP */
 showslegends([X|T]) :-
 	tokemon(X),
 	legendary(X), write(' - '), write(X), nl,
 	showslegends(T).
 
-healing	:- playerPos(X, Y), gymPos(A, B), X == A, Y == B, !, playerTokemon(Z), resetHP(Z), !.
-healing	:- write('tidak berada di area gym, tokemon tidak bisa disembuhkan.'), nl, !.
+count([],0).
+count([H|Tail], N) :- number(H),count(Tail, N1), N is N1 + 1.
+count([H|Tail], N) :- \+number(H),count(Tail, N).
 
 conc([], List, List).
 conc([H|T], List, [H|CList]) :- conc(T, List, CList).
 
-% delete(El,[El|Tail],Tail).
-% delete(El,[Head|Tail],[Head|res]) :-	
-% 	delete(El,Tail,res).
+del(Element,[Element|Tail],Tail).
+del(Element,[Head|Tail],[Head|Tail1]) :-
+	del(Element,Tail,Tail1).
 
+searchParty(X) :- 
+    playerTokemon(L),
+    member(X, L).
+
+healing	:- playerPos(X, Y), gymPos(A, B), X == A, Y == B, !, playerTokemon(Z), resetHP(Z), !.
+healing	:- write('tidak berada di area gym, tokemon tidak bisa disembuhkan.'), nl, !.
+
+/* KASUS SUDAH 6 PARTY. nb: kalo tetep mau masukin, kasih opsi del satu tokemon dari party */
+captured(X) :-
+	tokemon(X),
+	playerTokemon(Y), count(Y, N), N = 6,
+	write("Party sudah penuh!").
+/* KASUS MASIH ADA SLOT */
 captured(X) :-
 	tokemon(X),
 	playerTokemon(Y), conc(Y, [X], Z), 
-	retract(playerTokemon(Y)), asserta(playerTokemon(Z)).
+	retract(playerTokemon(Y)), assertz(playerTokemon(Z)).
 
 dead(X) :-
 	tokemon(X),
-	playerTokemon(Y), delete(X, Y, Z), 
-	retract(playerTokemon(Y)), asserta(playerTokemon(Z)).
+	playerTokemon(Y), del(X, Y, Z), 
+	retract(playerTokemon(Y)), assertz(playerTokemon(Z)).
 
 execute(quit)   :- quit, !.
 execute(help)   :- showcommands, !.
