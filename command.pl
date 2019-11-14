@@ -52,11 +52,19 @@ showstokemonstat([X|T]) :-
 	write('Special Attack   : '), spattack(X, V), write(V), nl,
 	showstokemonstat(T).
 
+resetHP([X|T])	:-
+	tokemon(X), starthp(X, Y),
+	retract(hp(X, Z)), 
+	asserta(hp(X, Y)), !.
+
 showslegends([]).
 showslegends([X|T]) :-
 	tokemon(X),
 	legendary(X), write(' - '), write(X), nl,
 	showslegends(T).
+
+healing	:- playerPos(X, Y), gymPos(A, B), X == A, Y == B, !, playerTokemon(Z), resetHP(Z), !.
+healing	:- write('tidak berada di area gym, tokemon tidak bisa disembuhkan.'), nl, !.
 
 conc([], List, List).
 conc([H|T], List, [H|CList]) :- conc(T, List, CList).
@@ -78,6 +86,7 @@ dead(X) :-
 execute(quit)   :- quit, !.
 execute(help)   :- showcommands, !.
 execute(map)    :- showmap, !.
+execute(heal)	:- healing, !.
 execute(w)      :- showPlayerName, write(' bergerak ke utara, '), w_move, showpos, !.
 execute(a)      :- showPlayerName, write(' bergerak ke barat, '), a_move, showpos, !.
 execute(s)      :- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, !.

@@ -48,7 +48,7 @@
     pos(5,4, 'lapbas itb.').
     pos(5,5, 'lapbas itb.').
     pos(5,6, 'jalan.').
-    pos(5,7, 'gym').
+    pos(5,7, 'gym.').
     pos(5,8, 'labtek V.').
     pos(5,9, 'labtek V.').
     pos(5,10, 'labtek V.').

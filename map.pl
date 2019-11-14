@@ -12,16 +12,16 @@
     printmap(X,Y) :- write('- '), X1 is X+1, printmap(X1,Y), !.
 
 /* W A S D */
-    w_move :- playerPos(_,Y), Y == 1, !, write('ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke utara.'), nl, !.
+    w_move :- playerPos(_,Y), Y == 1, !, write('tetapi ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke utara.'), nl, !.
     w_move :- playerPos(X,Y), Y1 is Y-1, retract(playerPos(X,Y)), asserta(playerPos(X,Y1)), !.
     
-    a_move :- playerPos(X,_), X == 1, !, write('ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke barat.'), nl, !.
+    a_move :- playerPos(X,_), X == 1, !, write('tetapi ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke barat.'), nl, !.
     a_move :- playerPos(X,Y), X1 is X-1, retract(playerPos(X,Y)), asserta(playerPos(X1,Y)), !.
 
-    s_move :- playerPos(_,Y), Y == 10, !, write('ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke selatan.'), nl, !.
+    s_move :- playerPos(_,Y), Y == 10, !, write('tetapi ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke selatan.'), nl, !.
     s_move :- playerPos(X,Y), Y1 is Y+1, retract(playerPos(X,Y)), asserta(playerPos(X,Y1)), !.
 
-    d_move :- playerPos(X,_), X == 10, !, write('ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke timur.'), nl, !.
+    d_move :- playerPos(X,_), X == 10, !, write('tetapi ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke timur.'), nl, !.
     d_move :- playerPos(X,Y), X1 is X+1, retract(playerPos(X,Y)), asserta(playerPos(X1,Y)), !.
 
 /* Show Position Information */

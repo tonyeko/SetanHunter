@@ -30,6 +30,7 @@ start :-
 	showinstruction,
 	showmap,
 
+	/* KONDISI KALAH, NANTI DIGANTI */
 	asserta(health(1)),
 
 	repeat,
@@ -39,5 +40,5 @@ start :-
 		end_game.
 
 end_game :-
-  health(0), !,
+  health(0), !, /* KONDISI KALAH, NANTI DIGANTI */
   write('==== KALIMAT KALAH ===='),nl, end(y), !.

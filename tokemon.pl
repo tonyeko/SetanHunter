@@ -1,3 +1,5 @@
+:- dynamic(hp/2). /* hp(X, Y) */
+
 /* Nama Tokemon */
         tokemon(charmanbro).
         tokemon(magger).
