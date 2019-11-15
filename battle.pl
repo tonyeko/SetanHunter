@@ -26,8 +26,8 @@ pick(X) :-
     showPlayerName, write(' : '),
     write(X),
     write(', lawan setan itu!'), nl, nl,
-    playerPos(D, E), enemy(A, B, C), D == B, E == C,
-    assertz(fighting(X, A)),
+    playerPos(D, E), B is D, C is E, enemy(A, B, C),
+    asserta(fighting(X, A)),
     battle, !.
 pick(_) :-
     write('You don''t have that Setan!'), nl,
@@ -107,7 +107,8 @@ battlecommand(status) :- battlestatus.
 enemymove :-  
     fighting(X, Y),
     nattack(Y, U),
-    hp(X, P), P is P-U,
+    hp(X, P), P1 is P-U,
+    retract(hp(X, P)), asserta(hp(X, P1)),
     write(X), nl, nl.
 
 battle :-
@@ -118,3 +119,5 @@ battle :-
         battlecommand(Input), nl,
         enemymove,
         write('HahahihiDEBUG').
+
+% KONDISI ENDBATTLE NANTI HARUS DITAMBAHI retract(fighting(X, Y)),
