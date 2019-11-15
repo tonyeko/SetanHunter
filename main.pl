@@ -11,6 +11,7 @@
 :-include('map.pl').
 :-include('position.pl').
 :-include('tokemon.pl').
+:-include('encounter.pl').
 
 /*Rules*/
 start :-
@@ -27,6 +28,7 @@ start :-
 	write('Gotta catch ''em all!'),nl,
 	write('Selamat datang di dunia Tokemon. == ISI KALIMAT == . Silahkan memperkenalkan dirimu...'),nl,
 	initPlayer,
+	initEnemy(10),
 	showinstruction,
 	showmap,
 

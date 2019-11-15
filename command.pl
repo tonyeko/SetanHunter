@@ -52,6 +52,14 @@ showstokemonstat([X|T]) :-
 	write('Special Attack   : '), spattack(X, V), write(V), nl, nl,
 	showstokemonstat(T).
 
+showEnemyStatus(X) :-
+	tokemon(X),
+	write('Nama             : '), write(X), nl,
+	write('HP               : '), hp(X, Y), write(Y), nl, 
+	write('Tipe             : '), type(Z, X), write(Z), nl,
+	write('Attack           : '), attack(X, U), write(U), nl,
+	write('Special Attack   : '), spattack(X, V), write(V), nl, nl, !.
+
 showslegends([]).
 /* KASUS SUDAH DITANGKAP */
 showslegends([X|T]) :-
@@ -95,10 +103,10 @@ dead(X) :-
 	playerTokemon(Y), del(X, Y, Z), 
 	retract(playerTokemon(Y)), assertz(playerTokemon(Z)).
 
-resetHP([X|T])	:- tokemon(X), hp(X, Y), Y == 0, !, resetHP(T), !.		/* Untuk tokemon yang sudah mati, HP == 0 */
+% resetHP([X|T])	:- tokemon(X), hp(X, Y), Y == 0, !, resetHP(T), !.		/* Untuk tokemon yang sudah mati, HP == 0 */
 resetHP([X|T])	:-
 	tokemon(X), starthp(X, Y),
-	retract(hp(X, Z)), 
+	retract(hp(X, _)), 
 	asserta(hp(X, Y)),
 	resetHP(T), !.
 
@@ -111,8 +119,8 @@ execute(quit)   :- quit, !.
 execute(help)   :- showcommands, !.
 execute(map)    :- showmap, !.
 execute(heal)	:- healing, !.
-execute(w)      :- showPlayerName, write(' bergerak ke utara, '), w_move, showpos, !.
-execute(a)      :- showPlayerName, write(' bergerak ke barat, '), a_move, showpos, !.
-execute(s)      :- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, !.
-execute(d)      :- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, !.
+execute(w)      :- showPlayerName, write(' bergerak ke utara, '), w_move, showpos, isEncountered, !.
+execute(a)      :- showPlayerName, write(' bergerak ke barat, '), a_move, showpos, isEncountered, !.
+execute(s)      :- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, isEncountered, !.
+execute(d)      :- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
 execute(status) :- showstatus, !.

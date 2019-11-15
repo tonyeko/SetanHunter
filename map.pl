@@ -31,3 +31,6 @@
 
 /* Show Position Information */
     showpos :- playerPos(X, Y), pos(X, Y, Z), showPlayerName, write(' sekarang berada di '), write(Z), nl, !.
+/* Bertemu Enemy */
+    isEncountered :- playerPos(X, Y), enemy(_, B, C), X == B, Y == C, !, enc, nl, !.
+    isEncountered :- !.
