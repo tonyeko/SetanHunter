@@ -21,11 +21,3 @@ getElmt([_|T], N, X) :- N1 is N-1, getElmt(T, N1, X), !.
 
 enc :-  nl, write('!!!!ALERT!!!!'), nl, write('A wild Tokemon appears!'), nl, nl, enemy(X, _, _), showEnemyStatus(X), 
         write('Fight or Run?'), write(' MASUK KONDISI BATTLE'), !.
-
-% /* Kondisi */
-% Enc :- playerPos(X,Y) = enemyTokPos(W,Z).
-% /* Spawn wild tokemon*/
-% enemyTok(X) :- Enc,!, random(tokemon(X)),asserta(enemyTok(X)).
-% /* Lokasi Enemy */
-% enemyTokPos(X,Y) :- random(1,10,X), random(1,10,Y), asserta(enemyTokPos(X,Y)).
-% legTokPos(X,Y,Z) :- random(1,10,X), random(1,10,Y), ,random(1,10,Z),asserta(legTokPos(X,Y,Z)).

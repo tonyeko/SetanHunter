@@ -117,18 +117,28 @@
     hedge(0,9).
     hedge(0,10).
     hedge(0,11).
-    /* Baris ke-11 */
-    hedge(11,1).
-    hedge(11,2).
-    hedge(11,3).
-    hedge(11,4).
-    hedge(11,5).
-    hedge(11,6).
-    hedge(11,7).
-    hedge(11,8).
-    hedge(11,9).
-    hedge(11,10).
-    hedge(11,11).
+    hedge(0,12).
+    hedge(0,13).
+    hedge(0,14).
+    hedge(0,15).
+    hedge(0,16).
+    /* Baris ke-16 */
+    hedge(16,1).
+    hedge(16,2).
+    hedge(16,3).
+    hedge(16,4).
+    hedge(16,5).
+    hedge(16,6).
+    hedge(16,7).
+    hedge(16,8).
+    hedge(16,9).
+    hedge(16,10).
+    hedge(16,11).
+    hedge(16,12).
+    hedge(16,13).
+    hedge(16,14).
+    hedge(16,15).
+    hedge(16,16).
     /* Kolom ke-0 */
     hedge(1,0).
     hedge(2,0).
@@ -141,18 +151,28 @@
     hedge(9,0).
     hedge(10,0).
     hedge(11,0).
+    hedge(12,0).
+    hedge(13,0).
+    hedge(14,0).
+    hedge(15,0).
+    hedge(16,0).
     /* Kolom ke-11 */
-    hedge(1,11).
-    hedge(2,11).
-    hedge(3,11).
-    hedge(4,11).
-    hedge(5,11).
-    hedge(6,11).
-    hedge(7,11).
-    hedge(8,11).
-    hedge(9,11).
-    hedge(10,11).
-    hedge(11,11).
+    hedge(1,16).
+    hedge(2,16).
+    hedge(3,16).
+    hedge(4,16).
+    hedge(5,16).
+    hedge(6,16).
+    hedge(7,16).
+    hedge(8,16).
+    hedge(9,16).
+    hedge(10,16).
+    hedge(11,16).
+    hedge(12,16).
+    hedge(13,16).
+    hedge(14,16).
+    hedge(15,16).
+    hedge(16,16).
 
     /* Random Hedge */
     hedge(4,7).

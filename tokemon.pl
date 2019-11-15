@@ -3,7 +3,7 @@
 /* Nama Tokemon */
         tokemon(charmanbro).
         tokemon(magger).
-        tokemon(moltron).
+        % tokemon(moltron).
         tokemon(execute).
         tokemon(lotek).
         tokemon(nutleaf).
@@ -11,9 +11,9 @@
         tokemon(magicard).
         tokemon(fastpoke).
         tokemon(martini).
-        tokemon(latian).
-        tokemon(educa).
-        tokemon(ruanguru).
+        % tokemon(latian).
+        % tokemon(educa).
+        % tokemon(ruanguru).
         tokemon(dosatu).
         tokemon(pidgay).
         tokemon(setarbuck).
