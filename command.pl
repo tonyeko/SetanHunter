@@ -41,27 +41,32 @@ quit :-
 
 showstatus :-
 	write('Setan yang dimiliki:'), nl, nl,
-	playerTokemon(X), showstokemonstat(X),
+	playerSetan(X), showssetanstat(X),
     write('Bos Setan yang BELUM dikalahkan: '), nl, 
-    legendsTokemon(Y), showslegends(Y).
+    legendsSetan(Y), showslegends(Y).
 	
-showstokemonstat([]).
-showstokemonstat([X|T]) :-
+showssetanstat([]).
+showssetanstat([X|T]) :-
 	setan(X),
 	write('Nama             : '), write(X), nl,
-	write('HP               : '), hp(X, Y), write(Y), nl, 
+	write('HP               : '), hp(X, Y), write(Y), write('/'), starthp(X,A), write(A),nl, 
 	write('Tipe             : '), type(Z, X), write(Z), nl,
-	write('Attack           : '), attack(X, U), write(U), nl,
-	write('Special Attack   : '), spattack(X, V), write(V), nl, nl,
-	showstokemonstat(T).
+	write('Attack           : '), nattack(X, U), write(U), nl,
+	write('Special Attack   : '), spattack(X, V, W), write(W), write('('), write(V), write(')'), nl, nl,
+	showssetanstat(T).
 
 showEnemyStatus(X) :-
 	setan(X),
 	write('Nama             : '), write(X), nl,
-	write('HP               : '), hp(X, Y), write(Y), nl, 
+	write('HP               : '), hp(X, Y), write(Y), write('/'), starthp(X,A), write(A),nl, 
 	write('Tipe             : '), type(Z, X), write(Z), nl,
-	write('Attack           : '), attack(X, U), write(U), nl,
-	write('Special Attack   : '), spattack(X, V), write(V), nl, nl, !.
+	write('Attack           : '), nattack(X, U), write(U), nl,
+	write('Special Attack   : '), spattack(X, V, W), write(W), write('('), write(V), write(')'), nl, nl, !.
+
+/* Ambil elemen ke-N dari List */
+getElmt([], 0, '') :- !.
+getElmt([H|_], 0, H) :- !.
+getElmt([_|T], N, X) :- N1 is N-1, getElmt(T, N1, X), !.
 
 showslegends([]).
 /* KASUS SUDAH DITANGKAP */
@@ -87,24 +92,24 @@ del(Element,[Head|Tail],[Head|Tail1]) :-
 	del(Element,Tail,Tail1).
 
 searchParty(X) :- 
-    playerTokemon(L),
+    playerSetan(L),
     member(X, L).
 
 /* KASUS SUDAH 6 PARTY. nb: kalo tetep mau masukin, kasih opsi del satu setan dari party */
 captured(X) :-
 	setan(X),
-	playerTokemon(Y), count(Y, N), N = 6,
+	playerSetan(Y), count(Y, N), N = 6,
 	write("Party sudah penuh!").
 /* KASUS MASIH ADA SLOT */
 captured(X) :-
 	setan(X),
-	playerTokemon(Y), conc(Y, [X], Z), 
-	retract(playerTokemon(Y)), assertz(playerTokemon(Z)).
+	playerSetan(Y), conc(Y, [X], Z), 
+	retract(playerSetan(Y)), assertz(playerSetan(Z)).
 
 dead(X) :-
 	setan(X),
-	playerTokemon(Y), del(X, Y, Z), 
-	retract(playerTokemon(Y)), assertz(playerTokemon(Z)).
+	playerSetan(Y), del(X, Y, Z), 
+	retract(playerSetan(Y)), assertz(playerSetan(Z)).
 
 resetHP([X|T])	:-
 	setan(X), starthp(X, Y),
@@ -112,7 +117,7 @@ resetHP([X|T])	:-
 	asserta(hp(X, Y)),
 	resetHP(T), !.
 
-healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, write('Setan kamu berhasil disembuhkan.'), nl, nl, retract(rektoratUsed(0)), asserta(rektoratUsed(1)), playerTokemon(Z), resetHP(Z), !.
+healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, write('Setan kamu berhasil disembuhkan.'), nl, nl, retract(rektoratUsed(0)), asserta(rektoratUsed(1)), playerSetan(Z), resetHP(Z), !.
 healing	:- rektoratUsed(0), !, write('tidak berada di area rektorat, setan kamu tidak bisa disembuhkan.'), nl, !.
 healing :- rektoratUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan setan kamu di rektorat.'), nl, !.
 

@@ -11,7 +11,7 @@
 :-include('map.pl').
 :-include('position.pl').
 :-include('setan.pl').
-:-include('encounter.pl').
+:-include('battle.pl').
 
 /*Rules*/
 start :-

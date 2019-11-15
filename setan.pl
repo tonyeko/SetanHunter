@@ -37,7 +37,7 @@
         type(gluttony, genderuwo).     
         type(gluttony, kuyang).
         type(gluttony, beelzebub).
-        typr(gluttony, grimreaper).
+        type(gluttony, grimreaper).
     /* type: greed */    
         type(greed, mbah_jenggot).
         type(greed, hantu_kaki).
@@ -59,7 +59,7 @@
         type(lust, noni_belanda). 
         type(lust, tukang_baso_PAU).
         type(lust, hantu_wibu).
-        type(lust, asmodeus)
+        type(lust, asmodeus).
     /*	type: wrath */
     	type(wrath, pennywise).
     	type(wrath, valak).
@@ -98,7 +98,7 @@
         starthp(pennywise, 2750).
         starthp(danlap_1920,3150).
         starthp(hantu_wibu,2235).
-        starthp(nurikabe, 6000).
+        starthp(nurikabe, 7500).
         starthp(samurai, 2700).
         starthp(grimreaper, 4250).
         starthp(cerberus, 4750).
@@ -208,6 +208,7 @@
         spattack(beelzebub, 1800,'Demonic Blast').
         spattack(leviathan, 1600,'Hell Punishing Wave').
         spattack(satan, 2000,'Big Bang!').                
+
 /* Relasi Tipe setan */
     /* Super Effective */
     /* Serangan setan envy efektif terhadap gluttony */
