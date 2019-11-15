@@ -13,7 +13,7 @@ showcommands :-
 	write('  quit.              : keluar dari permainan.'),nl,
     write('  help.              : menampilkan daftar command yang dapat dilakukan.'),nl,
     write('  map.               : menampilkan peta.'),nl,
-	write('  heal.              : menyembuhkan setan di inventory jika berada di gym center.'),nl,
+	write('  heal.              : menyembuhkan setan di inventory jika berada di rektorat.'),nl,
 	write('  w.                 : bergerak kearah utara.'),nl,
 	write('  a.                 : bergerak kearah barat.'),nl,
 	write('  s.                 : bergerak kearah selatan.'),nl,
@@ -26,7 +26,7 @@ showlegends :-
     write('Keterangan : '), nl,
 	write('  P = '), showPlayerName, write(' (Player)'),nl,
     write('  X = pagar'),nl,
-	write('  G = gym center'),nl,nl, !.
+	write('  R = rektorat'),nl,nl, !.
 
 showmap :- 
     write('Posisi '), showPlayerName, write(' saat ini:'), nl,
@@ -112,9 +112,9 @@ resetHP([X|T])	:-
 	asserta(hp(X, Y)),
 	resetHP(T), !.
 
-healing	:- playerPos(X, Y), gymPos(A, B), X == A, Y == B, gymUsed(0), !, write('Setan kamu berhasil disembuhkan.'), nl, nl, retract(gymUsed(0)), asserta(gymUsed(1)), playerTokemon(Z), resetHP(Z), !.
-healing	:- gymUsed(0), !, write('tidak berada di area gym, setan kamu tidak bisa disembuhkan.'), nl, !.
-healing :- gymUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan setan kamu di gym.'), nl, !.
+healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, write('Setan kamu berhasil disembuhkan.'), nl, nl, retract(rektoratUsed(0)), asserta(rektoratUsed(1)), playerTokemon(Z), resetHP(Z), !.
+healing	:- rektoratUsed(0), !, write('tidak berada di area rektorat, setan kamu tidak bisa disembuhkan.'), nl, !.
+healing :- rektoratUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan setan kamu di rektorat.'), nl, !.
 
 execute(start)	:- write('permainan sudah dimulai.'), nl, !.
 execute(quit)   :- quit, !.
