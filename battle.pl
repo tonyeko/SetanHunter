@@ -44,9 +44,7 @@ initBattle :-
 
 iseffective(X, Y, M) :-
     type(YourSetanType, X), type(EnemySetanType, Y),
-    write(YourSetanType), write(EnemySetanType), 
-    YourSetanType /= EnemySetanType, !,
-    seeffective(YourSetanType, EnemySetanType), !,
+    seffective(YourSetanType, EnemySetanType), !,
     M is 2.
 iseffective(X, Y, M) :-
     type(YourSetanType, X), type(EnemySetanType, Y),
@@ -73,7 +71,6 @@ battlestatus :-
 battlecommand(attack) :-
     fighting(X, Y),
     iseffective(X, Y, Modifier),
-    write(Modifier),
     nattack(X, Z),
     Damage is (Z * Modifier),
     hp(Y, P), P1 is P-Damage, 
