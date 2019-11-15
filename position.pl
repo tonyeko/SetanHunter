@@ -1,5 +1,6 @@
 /* Gym Position */
     gymPos(5,7).
+    gymPos(11,12).
 
 /* Location Name */
     pos(1,1, 'parkiran sipil.').
@@ -43,7 +44,7 @@
     pos(3,9, 'labtek V.').
     pos(3,10, 'labtek V.').
     pos(3,11, 'labtek II.').
-    pos(3,12, 'labtek II.').
+    % pos(3,12, 'labtek II.').
     pos(3,13, 'Kansar.').
     pos(3,14, 'CC Barat.').
     pos(3,15, 'CC Barat.').
@@ -53,7 +54,6 @@
     pos(4,4, 'lapbas itb.').
     pos(4,5, 'lapbas itb.').
     pos(4,6, 'jalan.').
-    % pos(4,7, 'jalan.').
     pos(4,8, 'labtek V.').
     pos(4,9, 'labtek V.').
     pos(4,10, 'labtek V.').
@@ -163,7 +163,7 @@
     pos(11,9, 'jalan.').
     pos(11,10, 'jalan.').
     pos(11,11, 'Koperasi.').
-    pos(11,12, 'Koperasi.').
+    pos(11,12, 'gym.').
     pos(11,13, 'Koperasi.').
     pos(11,14, 'Trek lari.').
     pos(11,15, 'Trek lari.').
@@ -189,12 +189,12 @@
     pos(13,5, 'Monument.').
     pos(13,6, 'jalan.').
     pos(13,7, 'jalan.').
-    pos(13,8, 'jalan.').
+    % pos(13,8, 'jalan.').
     pos(13,9, 'Tamfest.').
     pos(13,10, 'Tamfest.').
     pos(13,11, 'Tamfest.').
     pos(13,12, 'Rest Area.').
-    pos(13,13, 'Lab IRK.').
+    % pos(13,13, 'Lab IRK.').
     pos(13,14, 'Lab IRK.').
     pos(13,15, 'Lab IRK.').
     pos(14,1, 'Perpustakaan.').
@@ -227,7 +227,6 @@
     pos(15,13, 'Castle of Anguish.').
     pos(15,14, 'Castle of Anguish.').
     pos(15,15, 'Castle of Anguish.').
-
 
 /* Batas Pagar */
     /* Baris ke-0 */
@@ -301,5 +300,9 @@
     hedge(16,16).
 
     /* Random Hedge */
+    hedge(3,12).
     hedge(4,7).
     hedge(8,3).
+    hedge(11,7).
+    hedge(13,13).
+    

@@ -7,8 +7,8 @@ initPlayer :-
 	write('$ '), read(P),
 	asserta(player(P)),
     /* Spawn Player */
-	random(1,10,X),
-	random(1,10,Y),
+	random(1,15,X),
+	random(1,15,Y),
 	asserta(playerPos(X,Y)).
 	/* Tokemon awal */
 	playerTokemon([tikachu]).

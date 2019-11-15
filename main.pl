@@ -10,7 +10,7 @@
 :-include('player.pl').
 :-include('map.pl').
 :-include('position.pl').
-:-include('tokemon.pl').
+:-include('setan.pl').
 :-include('encounter.pl').
 
 /*Rules*/
@@ -35,9 +35,9 @@ start :-
 	write('$$ |  $$ |$$    $$/ $$ |  $$ |  $$  $$/ $$       |$$ |      '),nl,
 	write('$$/   $$/  $$$$$$/  $$/   $$/    $$$$/   $$$$$$$/ $$/       '),nl,
 	nl,nl,
-	write('Selamat datang di dunia Tokemon. == ISI KALIMAT == . Silahkan memperkenalkan dirimu...'),nl,
-	initPlayer,
-	initEnemy(10),
+	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl,
+	initPlayer, nl,
+	initEnemy(20),
 	showinstruction,
 	showmap,
 

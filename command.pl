@@ -1,7 +1,10 @@
 showinstruction :-
-    write('Halo '),
-	showPlayerName,
-	write(', kamu adalah Tokemon Trainer .... KALIMAT PEMBUKA -----'), nl, nl,
+    write('Halo, '), showPlayerName, write('! Kamu adalah mahasiswa ITB jurusan Teknik Informatika, yang mempunyai banyak sekali tugas besar dan tugas kecil.'), nl,
+	write('Tentunya, kamu juga punya banyak sekali deadline tubes yang harus akan datang dalam waktu dekat. Namun, akhir-akhir ini setiap malam di ITB banyak sekali'), nl,
+	write('setan yang berkeliaraan yang mengganggu mahasiswa (termasuk kamu), sehingga kamu tidak bisa nubes malem-malem di ITB...'), nl,
+	write('Keresahan inilah yang membuat kamu membuat sebuah pengangkap setan (yang dibuat menggunakan bahasa Prolog) dan mencalonkan diri sebagai seorang SETAN HUNTER,'), nl,
+	write('yang bertugas untuk menjinakkan setan-setan di ITB, serta mengakhiri penyebab dari penampakan-penampakan ini...'), nl, nl,
+	write('Apakah kamu bisa menjinakkan serta mengalahkan semua setan di ITB? Semoga berhasil! Nasib tubes dan indeks dan teman-temanmu semua ada di tanganmu!'), nl, nl,
     showcommands.
 
 showcommands :-
@@ -10,7 +13,7 @@ showcommands :-
 	write('  quit.              : keluar dari permainan.'),nl,
     write('  help.              : menampilkan daftar command yang dapat dilakukan.'),nl,
     write('  map.               : menampilkan peta.'),nl,
-	write('  heal.              : menyembuhkan tokemon di inventory jika berada di gym center.'),nl,
+	write('  heal.              : menyembuhkan setan di inventory jika berada di gym center.'),nl,
 	write('  w.                 : bergerak kearah utara.'),nl,
 	write('  a.                 : bergerak kearah barat.'),nl,
 	write('  s.                 : bergerak kearah selatan.'),nl,
@@ -37,14 +40,14 @@ quit :-
     abort, !.
 
 showstatus :-
-	write('Tokemon yang dimiliki:'), nl, nl,
+	write('Setan yang dimiliki:'), nl, nl,
 	playerTokemon(X), showstokemonstat(X),
-    write('Tokemon Legenda yang BELUM dikalahkan: '), nl, 
+    write('Bos Setan yang BELUM dikalahkan: '), nl, 
     legendsTokemon(Y), showslegends(Y).
 	
 showstokemonstat([]).
 showstokemonstat([X|T]) :-
-	tokemon(X),
+	setan(X),
 	write('Nama             : '), write(X), nl,
 	write('HP               : '), hp(X, Y), write(Y), nl, 
 	write('Tipe             : '), type(Z, X), write(Z), nl,
@@ -53,7 +56,7 @@ showstokemonstat([X|T]) :-
 	showstokemonstat(T).
 
 showEnemyStatus(X) :-
-	tokemon(X),
+	setan(X),
 	write('Nama             : '), write(X), nl,
 	write('HP               : '), hp(X, Y), write(Y), nl, 
 	write('Tipe             : '), type(Z, X), write(Z), nl,
@@ -63,12 +66,12 @@ showEnemyStatus(X) :-
 showslegends([]).
 /* KASUS SUDAH DITANGKAP */
 showslegends([X|T]) :-
-	tokemon(X), searchParty(X),
+	setan(X), searchParty(X),
 	legendary(X), write(' - '), write(X), write(' <SUDAH DITANGKAP>'), nl,
 	showslegends(T).
 /* KASUS BELUM DITANGKAP */
 showslegends([X|T]) :-
-	tokemon(X),
+	setan(X),
 	legendary(X), write(' - '), write(X), nl,
 	showslegends(T).
 
@@ -87,32 +90,31 @@ searchParty(X) :-
     playerTokemon(L),
     member(X, L).
 
-/* KASUS SUDAH 6 PARTY. nb: kalo tetep mau masukin, kasih opsi del satu tokemon dari party */
+/* KASUS SUDAH 6 PARTY. nb: kalo tetep mau masukin, kasih opsi del satu setan dari party */
 captured(X) :-
-	tokemon(X),
+	setan(X),
 	playerTokemon(Y), count(Y, N), N = 6,
 	write("Party sudah penuh!").
 /* KASUS MASIH ADA SLOT */
 captured(X) :-
-	tokemon(X),
+	setan(X),
 	playerTokemon(Y), conc(Y, [X], Z), 
 	retract(playerTokemon(Y)), assertz(playerTokemon(Z)).
 
 dead(X) :-
-	tokemon(X),
+	setan(X),
 	playerTokemon(Y), del(X, Y, Z), 
 	retract(playerTokemon(Y)), assertz(playerTokemon(Z)).
 
-% resetHP([X|T])	:- tokemon(X), hp(X, Y), Y == 0, !, resetHP(T), !.		/* Untuk tokemon yang sudah mati, HP == 0 */
 resetHP([X|T])	:-
-	tokemon(X), starthp(X, Y),
+	setan(X), starthp(X, Y),
 	retract(hp(X, _)), 
 	asserta(hp(X, Y)),
 	resetHP(T), !.
 
-healing	:- playerPos(X, Y), gymPos(A, B), X == A, Y == B, gymUsed(0), !, write('Tokemon kamu berhasil disembuhkan.'), nl, nl, retract(gymUsed(0)), asserta(gymUsed(1)), playerTokemon(Z), resetHP(Z), !.
-healing	:- gymUsed(0), !, write('tidak berada di area gym, tokemon tidak bisa disembuhkan.'), nl, !.
-healing :- gymUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan tokemon kamu di gym.'), nl, !.
+healing	:- playerPos(X, Y), gymPos(A, B), X == A, Y == B, gymUsed(0), !, write('Setan kamu berhasil disembuhkan.'), nl, nl, retract(gymUsed(0)), asserta(gymUsed(1)), playerTokemon(Z), resetHP(Z), !.
+healing	:- gymUsed(0), !, write('tidak berada di area gym, setan kamu tidak bisa disembuhkan.'), nl, !.
+healing :- gymUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan setan kamu di gym.'), nl, !.
 
 execute(start)	:- write('permainan sudah dimulai.'), nl, !.
 execute(quit)   :- quit, !.
