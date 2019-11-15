@@ -2,8 +2,8 @@
     /* Print Player Position */
     printmap(X,16) :- playerPos(X,16), !,  write('P '), X1 is X+1, nl, printmap(X1,0), !.
     printmap(X,Y) :- playerPos(X,Y), !,  write('P '), X1 is X+1, printmap(X1,Y), !.
-    /* Print Gym Position */
-    printmap(X,Y) :- gymPos(X,Y), !, write('G '), X1 is X+1, printmap(X1,Y), !.
+    /* Print rektorat Position */
+    printmap(X,Y) :- rektoratPos(X,Y), !, write('G '), X1 is X+1, printmap(X1,Y), !.
     /* Print Pagar */
     printmap(16,16) :- write('X '), nl, !. /* Baris terakhir kolom terakhir */
     printmap(16,Y) :- write('X '), nl, Y1 is Y+1, printmap(0,Y1), !. /* Baris terakhir Kolom Y */

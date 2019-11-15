@@ -1,6 +1,6 @@
-/* Gym Position */
-    gymPos(5,7).
-    gymPos(11,12).
+/* rektorat Position */
+    rektoratPos(5,7).
+    rektoratPos(11,12).
 
 /* Location Name */
     pos(1,1, 'parkiran sipil.').
@@ -68,7 +68,7 @@
     pos(5,4, 'lapbas itb.').
     pos(5,5, 'lapbas itb.').
     pos(5,6, 'jalan.').
-    pos(5,7, 'gym.').
+    pos(5,7, 'rektorat.').
     pos(5,8, 'labtek V.').
     pos(5,9, 'labtek V.').
     pos(5,10, 'labtek V.').
@@ -163,7 +163,7 @@
     pos(11,9, 'jalan.').
     pos(11,10, 'jalan.').
     pos(11,11, 'Koperasi.').
-    pos(11,12, 'gym.').
+    pos(11,12, 'rektorat.').
     pos(11,13, 'Koperasi.').
     pos(11,14, 'Trek lari.').
     pos(11,15, 'Trek lari.').

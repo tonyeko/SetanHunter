@@ -67,7 +67,6 @@
         legendary(satan).
 
 /* stats */
-
         starthp(charmanbro, 500).
         starthp(magger, 450).
         starthp(moltron, 1000).
