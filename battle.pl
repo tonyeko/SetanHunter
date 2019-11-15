@@ -40,6 +40,7 @@ showsetan([X|T]) :-
 	write(' - '), write(X), nl,
 	showsetan(T).
 
+spused(0).
 initBattle :-
     spused(0), 
     write('Choose your Setan!'), nl, nl,
@@ -92,71 +93,28 @@ battlecommand(specialattack) :-
     write(X),
     spattack(X, U, Z),
     write(' uses '), write(Z), write('!'),
-    iseffective(Modifier),
+    iseffective(X, Y, Modifier),
     hp(Y, P), P is P-(U * Modifier),
     write(Y), nl, nl,
     assertz(spused(player)).
+
 battlecommand(specialattack) :-
     fighting(_, _), spused(player),
     write('Special Attack sudah digunakan!').
 
 battlecommand(status) :- battlestatus.
 
-enemymove(N):-
-    fighting(X, Y), N > 7,
-    spattack(Y, U, W),
-    write(' uses '), write(W), write('!'),
-    iseffective(Modifier),
-    hp(X, P), P is P-(U * Modifier),
-    write(X), nl, nl.
-enemymove(_):-
-    fighting(X, Y), spused(enemy),
-    spattack(Y, U, W),
-    write(' uses '), write(W), write('!'),
-    iseffective(Modifier),
-    hp(X, P), P is P-(U * Modifier),
-    write(X), nl, nl.
-enemymove(N):-  
-    fighting(X, Y), N =< 7, \+ spused(enemy),
+enemymove :-  
+    fighting(X, Y),
     nattack(Y, U),
-    iseffective(Modifier),
-    hp(X, P), P is P-(U * Modifier),
+    hp(X, P), P is P-U,
     write(X), nl, nl.
 
 battle :-
     repeat,
         battlestatus,
+        write('DEBUG'), nl,
         write('$ '), read(Input), nl,
         battlecommand(Input), nl,
-        endbattle,
-        random(1, 10, N),
-        enemymove(N),
-        endbattle.
-
-endbattle :-
-    fighting(_, Y),
-    hp(Y, P), P = 0,
-    retspatk, !.
-endbattle :-
-    fighting(X, _),
-    hp(X, P), P = 0,
-    playerSetan(L), L = [], !,
-    health(R), R is 0,
-    retspatk.              /* bener kah? */
-endbattle :-
-    fighting(X, _),
-    hp(X, P), P = 0, !,
-    /* retract */
-    write('$ '), read(Input), nl,
-    pick(Input), nl.
-
-restore :-
-    spused(player), retract(spused(player)),
-    fighting(X,Y), retract(fighting(X,Y)).
-restore :-
-    spused(enemy), retract(spused(enemy)),
-    fighting(X,Y), retract(fighting(X,Y)).
-restore :-
-    spused(player), retract(spused(player)),
-    spused(enemy), retract(spused(enemy)),
-    fighting(X,Y), retract(fighting(X,Y)).
+        enemymove,
+        write('HahahihiDEBUG').
