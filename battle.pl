@@ -44,9 +44,16 @@ initBattle :-
     write('$ '), read(Input), nl,
     pick(Input).
 
-enemymove .
-
-iseffective(M) :- M is 1 . /* blm di cek */ 
+iseffective(X, Y, M) :-
+    type(X, P), type(Y, Q),
+    seeffective(P, Q), !,
+    M is 2.
+iseffective(X, Y, M) :-
+    type(X, P), type(Y, Q),
+    neffective(P, Q), !,
+    M is (1/2).
+iseffective(X, Y, M) :-
+    M is 1.
 
 battlestatus :-
     fighting(X, Y),
@@ -61,45 +68,84 @@ battlestatus :-
     write('Type: '), type(S, X),
     write(S), nl, nl.
 
-battlecommand(attack) :-
-    fighting(X, Y),
-    write('You dealt'),
-    nattack(X, Y), write(Y),
-    write(' damage to'),
-    write(Y), nl, nl,
-    iseffective(Modifier),
-    hp(Y, P), P is P-(Y * Modifier),
-    battlestatus,
-    enemymove.
+    battlecommand(attack) :-
+        fighting(X, Y),
+        write('You dealt'),
+        nattack(X, Z), write(Z),
+        write(' damage to'),
+        write(Z), nl, nl,
+        iseffective(Modifier),
+        hp(Y, P), P is P-(Z * Modifier),
+        battlestatus.
 
-battlecommand(specialattack) :-
-    fighting(X, Y),
-    write(X),
-    spattack(X, Y, Z),
-    write(' uses '), write(Z), write('!'),
-    iseffective(Modifier),
-    hp(Y, P), P is P-(Y * Modifier),
-    write(Y), nl, nl,
-    enemymove.
+    battlecommand(specialattack) :-
+        fighting(X, Y), \+ spused(player),
+        write(X),
+        spattack(X, U, Z),
+        write(' uses '), write(Z), write('!'),
+        iseffective(Modifier),
+        hp(Y, P), P is P-(U * Modifier),
+        write(Y), nl, nl,
+        assertz(spused(player)).
+    battlecommand(specialattack) :-
+        fighting(X, Y), spused(player),
+        write('Special Attack sudah digunakan!').
 
-battle :-
-    repeat,
-        battlestatus,
-        write('$ '), read(Input), nl,
-        battlecommand(Input), nl,
-        endbattle.
+    enemymove(N):-
+        fighting(X, Y), N > 7,
+        spattack(Y, U, W),
+        write(' uses '), write(W), write('!'),
+        iseffective(Modifier),
+        hp(X, P), P is P-(U * Modifier),
+        write(X), nl, nl.
+    enemymove(N):-
+        fighting(X, Y), spused(enemy),
+        spattack(Y, U, W),
+        write(' uses '), write(W), write('!'),
+        iseffective(Modifier),
+        hp(X, P), P is P-(U * Modifier),
+        write(X), nl, nl.
+    enemymove(N):-
+        fighting(X, Y), N <= 7, \+ spused(enemy),
+        nattack(Y, U),
+        iseffective(Modifier),
+        hp(X, P), P is P-(U * Modifier),
+        write(X), nl, nl.
 
-endbattle :-
-    fighting(X, Y),
-    hp(Y, P), P = 0, !.
-endbattle :-
-    fighting(X, Y),
-    hp(X, P), P = 0,
-    playerTokemon(L), L = [], !,
-    health(R), R is 0.              /* bener kah? */
-endbattle :-
-    fighting(X, Y),
-    hp(X, P), P = 0, !,
-    /* retract */
-    write('$ '), read(Input), nl,
-    pick(Input), nl.
+        battle :-
+            repeat,
+                battlestatus,
+                write('$ '), read(Input), nl,
+                battlecommand(Input), nl,
+                endbattle,
+                random(1, 10, N),
+                enemymove(N),
+                endbattle.
+
+        endbattle :-
+            fighting(X, Y),
+            hp(Y, P), P = 0,
+            retspatk, !.
+        endbattle :-
+            fighting(X, Y),
+            hp(X, P), P = 0,
+            playerTokemon(L), L = [], !,
+            health(R), R is 0,
+            retspatk.              /* bener kah? */
+        endbattle :-
+            fighting(X, Y),
+            hp(X, P), P = 0, !,
+            /* retract */
+            write('$ '), read(Input), nl,
+            pick(Input), nl.
+
+        restore :-
+            spused(player), retract(spused(player)),
+            fighting(X,Y), retract(fighting(X,Y)).
+        restore :-
+            spused(enemy), retract(spused(enemy)),
+            fighting(X,Y), retract(fighting(X,Y)).
+        restore :-
+            spused(player), retract(spused(player)),
+            spused(enemy), retract(spused(enemy)),
+            fighting(X,Y), retract(fighting(X,Y)).
