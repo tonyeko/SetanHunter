@@ -1,7 +1,14 @@
 /* Encounter */
 enc :-  nl, write('!!!!Cilukk Baaaa!!!!'), nl, write('Tiba-tiba ada setan '), playerPos(A, B), enemy(X, C, D), A == C, B == D, write(X), write(' muncul di depanmu!'), nl, nl, showEnemyStatus(X), 
-        write('Fight or Run?'), nl, 
-        write('$ '), read(P), P = 'Fight' -> initBattle; random(1,100,Q), run(Q). 
+        write('Fight or Run?'), nl, readbattlechoice. 
+
+readbattlechoice :- write('$ '), read(P), battlechoice(P).
+
+battlechoice(P) :- P = 'Fight', !, initBattle.
+battlechoice(P) :- P = 'fight', !, initBattle.
+battlechoice(P) :- P = 'Run', !, random(1,100,Q), run(Q). 
+battlechoice(P) :- P = 'run', !, random(1,100,Q), run(Q). 
+battlechoice(_) :- write('Pilihan tidak ada. Masukkan fight atau run'), nl, readbattlechoice.
 
 /* Battle */
 preBattle :-
@@ -34,6 +41,7 @@ showsetan([X|T]) :-
 	showsetan(T).
 
 initBattle :-
+    spused(0), 
     write('Choose your Setan!'), nl, nl,
     write('Available Setans: '),
     playerSetan(L), nl,
