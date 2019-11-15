@@ -21,6 +21,11 @@
         setan(valak).
         setan(pennywise).
         setan(danlap_1920).
+        setan(hantu_wibu).
+        setan(nurikabe).
+        setan(samurai).
+        setan(grimreaper).
+        setan(cerberus).
 
     /* type: envy */
         type(envy, pocong).
@@ -32,6 +37,7 @@
         type(gluttony, genderuwo).     
         type(gluttony, kuyang).
         type(gluttony, beelzebub).
+        typr(gluttony, grimreaper).
     /* type: greed */    
         type(greed, mbah_jenggot).
         type(greed, hantu_kaki).
@@ -42,20 +48,24 @@
         type(pride,	jin_tomang).
         type(pride, jelangkung).
         type(pride, lucifer).
+        type(pride, samurai).
     /* type: sloth */
         type(sloth, jenglot).
         type(sloth, wewe_gombel).
         type(sloth, jeruk_purut).
+        type(sloth,nurikabe).
+        type(sloth,belphegor).
     /* type: lust */ 
         type(lust, noni_belanda). 
         type(lust, tukang_baso_PAU).
         type(lust, hantu_wibu).
-        type(lust, asmodeus).
+        type(lust, asmodeus)
     /*	type: wrath */
     	type(wrath, pennywise).
     	type(wrath, valak).
     	type(wrath, danlap_1920).
     	type(wrath, satan).
+        type(wrath, cerberus).
 
 /* Legendary setan */
         legendary(lucifer).
@@ -67,87 +77,137 @@
         legendary(satan).
 
 /* stats */
-        starthp(charmanbro, 500).
-        starthp(magger, 450).
-        starthp(moltron, 1000).
-        starthp(execute, 350).
-        starthp(lotek, 300).
-        starthp(nutleaf, 470).
-        starthp(psyluck, 360).
-        starthp(magicard, 250).
-        starthp(fastpoke, 660).
-        starthp(martini, 450).
-        starthp(latian, 1500).
-        starthp(educa, 2200).
-        starthp(ruanguru, 3000).
-        starthp(dosatu, 600).
-        starthp(pidgay, 340).
-        starthp(setarbuck, 460).
-        starthp(tikachu, 500).
-        starthp(elekterus, 470).
-        starthp(helicopter, 750).
+        starthp(pocong, 2500).
+        starthp(kuntilanak, 2000).
+        starthp(tuyul, 3000).
+        starthp(banaspati, 3000).
+        starthp(genderuwo, 2250).
+        starthp(kuyang, 2100).
+        starthp(mbah_jenggot, 2400).
+        starthp(hantu_kaki, 2250).
+        starthp(slenderman, 3500).
+        starthp(jin_tomang, 2250).
+        starthp(jelangkung, 2500).
+        starthp(hantu_IP_4, 3000).
+        starthp(tukang_baso_PAU, 3000).
+        starthp(noni_belanda, 2600).
+        starthp(jenglot, 2340).
+        starthp(wewe_gombel, 2460).
+        starthp(jeruk_purut, 2600).
+        starthp(valak, 2470).
+        starthp(pennywise, 2750).
+        starthp(danlap_1920,3150).
+        starthp(hantu_wibu,2235).
+        starthp(nurikabe, 6000).
+        starthp(samurai, 2700).
+        starthp(grimreaper, 4250).
+        starthp(cerberus, 4750).
+        starthp(lucifer, 7500).
+        starthp(mammon, 8500).
+        starthp(asmodeus, 5500).
+        starthp(belphegor, 4500).
+        starthp(beelzebub, 6000).
+        starthp(leviathan, 7000).
+        starthp(satan, 9999).
 
-        hp(charmanbro, 500).
-        hp(magger, 450).
-        hp(moltron, 1000).
-        hp(execute, 350).
-        hp(lotek, 300).
-        hp(nutleaf, 470).
-        hp(psyluck, 360).
-        hp(magicard, 250).
-        hp(fastpoke, 660).
-        hp(martini, 450).
-        hp(latian, 1500).
-        hp(educa, 2200).
-        hp(ruanguru, 3000).
-        hp(dosatu, 600).
-        hp(pidgay, 340).
-        hp(setarbuck, 460).
-        hp(tikachu, 500).
-        hp(elekterus, 470).
-        hp(helicopter, 750).
+        hp(pocong, 2500).
+        hp(kuntilanak, 2000).
+        hp(tuyul, 3000).
+        hp(banaspati, 3000).
+        hp(genderuwo, 2250).
+        hp(kuyang, 2100).
+        hp(mbah_jenggot, 2400).
+        hp(hantu_kaki, 2250).
+        hp(slenderman, 3500).
+        hp(jin_tomang, 2250).
+        hp(jelangkung, 2500).
+        hp(hantu_IP_4, 3000).
+        hp(tukang_baso_PAU, 3000).
+        hp(noni_belanda, 2600).
+        hp(jenglot, 2340).
+        hp(wewe_gombel, 2460).
+        hp(jeruk_purut, 2600).
+        hp(valak, 2470).
+        hp(pennywise, 2750).
+        hp(danlap_1920,3150).
+        hp(hantu_wibu,2235).
+        hp(nurikabe, 7500).
+        hp(samurai, 2700).
+        hp(grimreaper, 4250).
+        hp(cerberus, 4750).
+        hp(lucifer, 7500).
+        hp(mammon, 8500).
+        hp(asmodeus, 5500).
+        hp(belphegor, 4500).
+        hp(beelzebub, 6000).
+        hp(leviathan, 7000).
+        hp(satan, 9999).
 
-        attack(charmanbro, 40).
-        attack(magger, 30).
-        attack(moltron, 90).
-        attack(execute, 25).
-        attack(lotek, 25).
-        attack(nutleaf, 27).
-        attack(psyluck, 23).
-        attack(magicard, 15).
-        attack(fastpoke, 40).
-        attack(martini, 50).
-        attack(latian, 95).
-        attack(educa, 103).
-        attack(ruanguru, 105).
-        attack(dosatu, 40).
-        attack(pidgay, 34).
-        attack(setarbuck, 46).
-        attack(tikachu, 40).
-        attack(elekterus, 47).
-        attack(helicopter, 75).
+        nattack(pocong, 250).
+        nattack(kuntilanak, 275).
+        nattack(tuyul, 225).
+        nattack(banaspati, 325).
+        nattack(genderuwo, 275).
+        nattack(kuyang, 275).
+        nattack(mbah_jenggot, 225).
+        nattack(hantu_kaki, 300).
+        nattack(slenderman, 350).
+        nattack(jin_tomang, 225).
+        nattack(jelangkung, 250).
+        nattack(hantu_IP_4, 300).
+        nattack(tukang_baso_PAU, 350).
+        nattack(noni_belanda, 225).
+        nattack(jenglot, 275).
+        nattack(wewe_gombel, 200).
+        nattack(jeruk_purut, 300).
+        nattack(valak, 300).
+        nattack(pennywise, 225).
+        nattack(danlap_1920,200).
+        nattack(hantu_wibu,250).
+        nattack(nurikabe, 100).
+        nattack(samurai, 300).
+        nattack(grimreaper, 400).
+        nattack(cerberus, 350).
+        nattack(lucifer, 350).
+        nattack(mammon, 250).
+        nattack(asmodeus, 550).
+        nattack(belphegor, 450).
+        nattack(beelzebub, 500).
+        nattack(leviathan, 400).
+        nattack(satan, 650).
 
-        spattack(charmanbro, 65).
-        spattack(magger, 50).
-        spattack(moltron, 120).
-        spattack(execute, 50).
-        spattack(lotek, 40).
-        spattack(nutleaf, 47).
-        spattack(psyluck, 43).
-        spattack(magicard, 35).
-        spattack(fastpoke, 60).
-        spattack(martini, 90).
-        spattack(latian, 135).
-        spattack(educa, 163).
-        spattack(ruanguru, 175).
-        spattack(dosatu, 60).
-        spattack(pidgay, 54).
-        spattack(setarbuck, 66).
-        spattack(tikachu, 75).
-        spattack(elekterus, 77).
-        spattack(helicopter, 85).
-
-
+        spattack(pocong, 500, 'Rocket Knuckle').
+        spattack(kuntilanak, 600, 'Screaming Howl').
+        spattack(tuyul, 775, 'Dual Burst').
+        spattack(banaspati, 875,'Rising Flame').
+        spattack(genderuwo, 975,'Black Void').
+        spattack(kuyang, 975,'Surging Aurora').
+        spattack(mbah_jenggot, 625,'Beard Slap').
+        spattack(hantu_kaki, 650,'Rampaging Kick').
+        spattack(slenderman, 600,'Faceless Rage').
+        spattack(jin_tomang, 900,'Cyclone Fury').
+        spattack(jelangkung, 550,'Vegetable Nightmare').
+        spattack(hantu_IP_4, 950,'Soulstroke of Education').
+        spattack(tukang_baso_PAU, 650,'Happy Discount Fiesta').
+        spattack(noni_belanda, 850,'Assasinate').
+        spattack(jenglot, 650,'Moonlight Fury').
+        spattack(wewe_gombel, 775,'Spicy BOMB!!!').
+        spattack(jeruk_purut, 800,'Exploded Fruit Farm').
+        spattack(valak, 1000,'Indignation').
+        spattack(pennywise, 575,'Lucky!!!').
+        spattack(danlap_1920, 800,'Homing Interruption Fury').
+        spattack(hantu_wibu, 1000,'Comiket Open!!!').
+        spattack(nurikabe, 500,'Earthquake').
+        spattack(samurai, 1100,'Godspeed Slash').
+        spattack(grimreaper, 1200,'Twilight Fury').
+        spattack(cerberus, 1500,'Tri-Burst Elemental Ray').
+        spattack(lucifer, 1500,'Terminus Pride').
+        spattack(mammon, 1250,'Astral Impact').
+        spattack(asmodeus, 1400,'Symphony of Hell').
+        spattack(belphegor, 1750,'Chaotic Fury').
+        spattack(beelzebub, 1800,'Demonic Blast').
+        spattack(leviathan, 1600,'Hell Punishing Wave').
+        spattack(satan, 2000,'Big Bang!').                
 /* Relasi Tipe setan */
     /* Super Effective */
     /* Serangan setan envy efektif terhadap gluttony */
