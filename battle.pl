@@ -77,8 +77,7 @@ battlecommand(attack) :-
     retract(hp(Y, P)), asserta(hp(Y, P1)),
     write('You dealt '), write(Damage),
     write(' damage to '),
-    write(Y), nl, nl,
-    battlestatus.
+    write(Y), nl.
 
 battlecommand(specialattack) :-
     fighting(X, Y), \+ spused(player),
