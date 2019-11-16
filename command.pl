@@ -131,3 +131,6 @@ execute(a)      :- showPlayerName, write(' bergerak ke barat, '), a_move, showpo
 execute(s)      :- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, isEncountered, !.
 execute(d)      :- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
 execute(status) :- showstatus, !.
+
+endgame(0) :- write('Anda kalah.'), nl, abort, !.
+endgame(1) :- write('Selamat!! Anda telah menyelesaikan permainan ini.'), nl, abort, !.
