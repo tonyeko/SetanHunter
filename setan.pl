@@ -1,4 +1,4 @@
-%:- dynamic(hp/2). /* hp(X, Y) */
+:- dynamic(hp/2). /* hp(X, Y) */
 
 /* Nama setan */
         setan(pocong).
