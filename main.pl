@@ -64,5 +64,5 @@ reset :-
 	retractall(rektoratUsed(_)),
 	retractall(spused(_)),
 	retractall(battleWithLegend(_)),
-	retractall(fighting(_,_)).
-	
+	retractall(fighting(_,_)),
+	retractall(hp(_,_)), consult('setan.pl').
