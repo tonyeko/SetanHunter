@@ -1,4 +1,4 @@
-:- dynamic(hp/2). /* hp(X, Y) */
+%:- dynamic(hp/2). /* hp(X, Y) */
 
 /* Nama setan */
         setan(pocong).
@@ -33,12 +33,12 @@
         type(envy, tuyul).
         type(envy, leviathan).
     /* type: gluttony */
-        type(gluttony, banaspati).    
-        type(gluttony, genderuwo).     
+        type(gluttony, banaspati).
+        type(gluttony, genderuwo).
         type(gluttony, kuyang).
         type(gluttony, beelzebub).
         type(gluttony, grimreaper).
-    /* type: greed */    
+    /* type: greed */
         type(greed, mbah_jenggot).
         type(greed, hantu_kaki).
         type(greed, slenderman).
@@ -55,8 +55,8 @@
         type(sloth, jeruk_purut).
         type(sloth,nurikabe).
         type(sloth,belphegor).
-    /* type: lust */ 
-        type(lust, noni_belanda). 
+    /* type: lust */
+        type(lust, noni_belanda).
         type(lust, tukang_baso_PAU).
         type(lust, hantu_wibu).
         type(lust, asmodeus).
@@ -207,7 +207,7 @@
         spattack(belphegor, 1750,'Chaotic Fury').
         spattack(beelzebub, 1800,'Demonic Blast').
         spattack(leviathan, 1600,'Hell Punishing Wave').
-        spattack(satan, 2000,'Big Bang!').                
+        spattack(satan, 2000,'Big Bang!').
 
 /* Relasi Tipe setan */
     /* Super Effective */

@@ -1,18 +1,19 @@
-:- dynamic(spused/1).
+:- dynamic(spused/2).
+:- dynamic(fighting/2).
 :- dynamic(battleWithLegend/1).
 
 /* Encounter */
-enc :-  nl, write('!!!!Cilukk Baaaa!!!!'), nl, write('Tiba-tiba ada setan '), playerPos(A, B), enemy(X, C, D), A == C, B == D, write(X), write(' muncul di depanmu!'), nl, nl, showEnemyStatus(X), 
-        write('Fight or Run?'), nl, readbattlechoice. 
-encLegend :-  nl, write('!!!!ALERTT!!!!'), nl, write('Tiba-tiba ada BOS setan '), playerPos(A, B), legendaryPos(X, C, D), A == C, B == D, asserta(enemy(X, C, D)), write(X), write(' muncul di depanmu!'), nl, nl, showEnemyStatus(X), 
-                asserta(battleWithLegend(1)), initBattle. 
+enc :-  nl, write('!!!!Cilukk Baaaa!!!!'), nl, write('Tiba-tiba ada setan '), playerPos(A, B), enemy(X, C, D), A == C, B == D, write(X), write(' muncul di depanmu!'), nl, nl, showEnemyStatus(X),
+        write('Fight or Run?'), nl, readbattlechoice.
+encLegend :-  nl, write('!!!!ALERTT!!!!'), nl, write('Tiba-tiba ada BOS setan '), playerPos(A, B), legendaryPos(X, C, D), A == C, B == D, asserta(enemy(X, C, D)), write(X), write(' muncul di depanmu!'), nl, nl, showEnemyStatus(X),
+                asserta(battleWithLegend(1)), initBattle.
 
 readbattlechoice :- write('$ '), read(P), battlechoice(P).
 
 battlechoice(P) :- P = 'Fight', !, asserta(battleWithLegend(0)), initBattle, !.
 battlechoice(P) :- P = 'fight', !, asserta(battleWithLegend(0)), initBattle, !.
-battlechoice(P) :- P = 'Run', !, random(1,100,Q), run(Q), !. 
-battlechoice(P) :- P = 'run', !, random(1,100,Q), run(Q), !. 
+battlechoice(P) :- P = 'Run', !, random(1,100,Q), run(Q), !.
+battlechoice(P) :- P = 'run', !, random(1,100,Q), run(Q), !.
 battlechoice(_) :- write('Pilihan tidak ada. Masukkan fight atau run'), nl, readbattlechoice, !.
 
 /* Battle */
@@ -47,8 +48,8 @@ initBattle :-
     write('Choose your Setan!'), nl, nl,
     write('Available Setans: '),
     playerSetan(L), nl,
-    showsetan(L), nl, 
-    write('Pick: '), 
+    showsetan(L), nl,
+    write('Pick: '),
     asserta(spused(player, 0)), asserta(spused(enemy, 0)),
     read(Input), nl,
     pick(Input).
@@ -56,8 +57,8 @@ initBattle :-
 initBattleKe2 :-
     write('Available Setans: '),
     playerSetan(L), nl,
-    showsetan(L), nl, 
-    write('Pick: '), 
+    showsetan(L), nl,
+    write('Pick: '),
     asserta(spused(player, 0)),
     read(Input), nl,
     pick(Input).
@@ -93,7 +94,7 @@ battlecommand(attack) :-
     iseffective(X, Y, Modifier),
     nattack(X, Z),
     Damage is (Z * Modifier),
-    hp(Y, P), P1 is P-Damage, 
+    hp(Y, P), P1 is P-Damage,
     retract(hp(Y, P)), asserta(hp(Y, P1)),
     write('You dealt '), write(Damage),
     write(' damage to '), write(Y).
@@ -117,7 +118,7 @@ battlecommand(specialattack) :-
 
 battlecommand(status) :- battlestatus.
 
-enemymove(N) :-  
+enemymove(N) :-
     fighting(X, Y), N =< 6,
     nattack(Y, U),
     iseffective(X, Y, Modifier),
@@ -125,7 +126,7 @@ enemymove(N) :-
     hp(X, P), P1 is P-Damage,
     retract(hp(X, P)), asserta(hp(X, P1)),
     nl, writeEnemyAttack(Damage), nl.
-enemymove(N) :-  
+enemymove(N) :-
     fighting(X, Y), spused(enemy, 0), N > 6, !,
     write('Enemy '), write(Y),
     spattack(Y, U, Z),
@@ -137,7 +138,7 @@ enemymove(N) :-
     nl, writeEnemyAttack(Damage),
     retract(spused(enemy, 0)),
     asserta(spused(enemy, 1)), nl.
-enemymove(N) :-  
+enemymove(N) :-
     fighting(X, Y), spused(enemy, 1), N > 6, !,
     nattack(Y, U),
     iseffective(X, Y, Modifier),
@@ -146,7 +147,7 @@ enemymove(N) :-
     retract(hp(X, P)), asserta(hp(X, P1)),
     nl, writeEnemyAttack(Damage), nl.
 
-writeEnemyAttack(Damage) :- 
+writeEnemyAttack(Damage) :-
     fighting(X, Y),
     write(Y), write(' dealt '), write(Damage),
     write(' damage to '), write(X), nl.
@@ -159,7 +160,7 @@ battle :-
         enemymove(N),
         endbattle.
 
-inputBattleCommand :- 
+inputBattleCommand :-
     write('$ '), read(Input), nl,
     battlecommand(Input), nl.
 
@@ -170,10 +171,10 @@ endbattle :-
     write('Apakah anda ingin menangkap '), write(Y), write('(Y/N)? '),
     read(Input), catch(Input, Y), restore, deleteEnemy, !.
 endbattle :-
-    fighting(X, _), 
+    fighting(X, _),
     hp(X, P), P =< 0, !, dead(X), zeroHP(X), !.
 
-zeroHP(_) :- playerSetan(L), L = [], !, 
+zeroHP(_) :- playerSetan(L), L = [], !,
     write('Anda kehabisan setan. '), restore, endgame(0), !.
 zeroHP(X) :- write(X), write(' is dead.'), nl, nl, spused(enemy, Z), restore, asserta(spused(enemy, Z)), initBattleKe2, !.
 

@@ -13,6 +13,8 @@
 :-include('setan.pl').
 :-include('battle.pl').
 
+:- dynamic(gameMain/1).
+
 /*Rules*/
 start :-
 	reset,
@@ -41,13 +43,13 @@ start :-
 	initPlayer, nl,
 	initLegends,
 	initEnemy(20),
-	
+
 	showinstruction,
 	showmap,
 
 	repeat,
-		write('$ '), 
-		read(Input), nl, 
+		write('$ '),
+		read(Input), nl,
 		execute(Input), nl,
 		loop.
 
@@ -55,8 +57,8 @@ loop :-
   gameMain(0), !.
 
 reset :-
-	retractall(playerPos(_, _)), 
-	retractall(legendaryPos(_, _, _)), 
+	retractall(playerPos(_, _)),
+	retractall(legendaryPos(_, _, _)),
 	retractall(enemy(_, _, _)),
 	retractall(difficulty(_)),
 	retractall(legendsSetan(_)),
