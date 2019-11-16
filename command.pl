@@ -71,12 +71,11 @@ getElmt([_|T], N, X) :- N1 is N-1, getElmt(T, N1, X), !.
 showslegends([]).
 /* KASUS SUDAH DITANGKAP */
 showslegends([X|T]) :-
-	setan(X), searchParty(X),
+	searchParty(X), 
 	legendary(X), write(' - '), write(X), write(' <SUDAH DITANGKAP>'), nl,
 	showslegends(T).
 /* KASUS BELUM DITANGKAP */
 showslegends([X|T]) :-
-	setan(X),
 	legendary(X), write(' - '), write(X), nl,
 	showslegends(T).
 
@@ -112,10 +111,15 @@ dead(X) :-
 	retract(playerSetan(Y)), assertz(playerSetan(Z)).
 
 resetHP([X|T])	:-
-	setan(X), starthp(X, Y),
+	starthp(X, Y),
 	retract(hp(X, _)), 
 	asserta(hp(X, Y)),
 	resetHP(T), !.
+
+resetEnemyHP(X) :- 
+	starthp(X, Y),
+	retract(hp(X, _)), 
+	asserta(hp(X, Y)), !.
 
 healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, write('Setan kamu berhasil disembuhkan.'), nl, nl, retract(rektoratUsed(0)), asserta(rektoratUsed(1)), playerSetan(Z), resetHP(Z), !.
 healing	:- rektoratUsed(0), !, write('tidak berada di area rektorat, setan kamu tidak bisa disembuhkan.'), nl, !.

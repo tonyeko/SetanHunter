@@ -12,7 +12,7 @@ initPlayer :-
 	random(1,15,Y),
 	asserta(playerPos(X,Y)).
 	/* Setan awal */
-	playerSetan([pocong]).
+	playerSetan([pocong, valak]).
 	rektoratUsed(0). /* Setan belum pernah disembuhkan di rektorat */
 	legendsSetan([lucifer, mammon, asmodeus, belphegor, beelzebub, leviathan, satan]).
 

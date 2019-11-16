@@ -52,6 +52,15 @@ initBattle :-
     read(Input), nl,
     pick(Input).
 
+initBattleKe2 :-
+    write('Available Setans: '),
+    playerSetan(L), nl,
+    showsetan(L), nl, 
+    write('Pick: '), 
+    asserta(spused(player, 0)),
+    read(Input), nl,
+    pick(Input).
+
 iseffective(X, Y, M) :-
     type(YourSetanType, X), type(EnemySetanType, Y),
     seffective(YourSetanType, EnemySetanType), !,
@@ -155,25 +164,32 @@ inputBattleCommand :-
 
 endbattle :-
     fighting(_, Y),
-    hp(Y, P), P = 0,
-    /* Apakah anda ingin menangkap setan lawan */
-    restore, !.
-endbattle :-
-    fighting(X, _),
-    hp(X, P), P =< 0,
-    dead(X),
-    playerSetan(L), L = [], !, nl,
-    write('Anda kehabisan setan. '),
-    endgame(0), !.
+    hp(Y, P), P =< 0,
+    write('Anda telah mengalahkan setan '), write(Y), nl,
+    write('Apakah anda ingin menangkap '), write(Y), write('(Y/N)? '),
+    read(Input), catch(Input, Y), restore, deleteEnemy, nl, showstatus, !.
 endbattle :-
     fighting(X, _),
     hp(X, P), P =< 0, !,
     dead(X),
-    playerSetan(L),
-    showsetan(L), nl, 
-    write('Pick: '), 
-    read(Input), nl,
-    pick(Input).
+    write(X), write(' is dead.'), nl, nl,
+    spused(enemy, Z),
+    restore, 
+    asserta(spused(enemy, Z)),
+    initBattleKe2, !.
+endbattle :-
+    fighting(X, _),
+    hp(X, P), P =< 0, playerSetan(L), L = [], !,
+    dead(X),
+    write('Anda kehabisan setan. '), restore,
+    endgame(0), !.
+
+catch(X, Enemy) :- X = 'Y', !, resetEnemyHP(Enemy), captured(Enemy), nl, nl, write('Selamat!!'), nl, write(Enemy), write(' berhasil ditangkap!'), nl.
+catch(X, Enemy) :- X = 'y', !, resetEnemyHP(Enemy), captured(Enemy), nl, nl, write('Selamat!!'), nl, write(Enemy), write(' berhasil ditangkap!'), nl.
+catch(X, _) :- X = 'N', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
+catch(X, _) :- X = 'n', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
+
+deleteEnemy :- playerPos(D, E), B is D, C is E, enemy(A, B, C), retract(enemy(A, B, C)).
 
 restore :-
     retract(spused(player, _)), retract(fighting(_, _)), retract(spused(enemy, _)).
