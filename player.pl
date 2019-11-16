@@ -12,17 +12,21 @@ initPlayer :-
     /* Spawn Player */
 	generateRandomPos(X,Y),
 	asserta(playerPos(X,Y)).
-	/* Setan awal */
-	playerSetan([pocong]).
-	rektoratUsed(0). /* Setan belum pernah disembuhkan di rektorat */
+    /* Fakta Awal */
+	playerSetan([pocong]).          /* Setan awal */
+	rektoratUsed(0).                /* Setan belum pernah disembuhkan di rektorat */
 
-initLegends :- !.
-    % generateRandomPos(X1, Y1), generateRandomPos(X2, Y2), generateRandomPos(X3, Y3), 
-    % generateRandomPos(X4, Y4), generateRandomPos(X5, Y5), generateRandomPos(X6, Y6),
-    % generateRandomPos(X7, Y7), 
-	% asserta(legendaryPos(lucifer, X1, Y1)), asserta(legendaryPos(mammon, X2, Y2)), asserta(legendaryPos(asmodeus, X3, Y3)),
-    % asserta(legendaryPos(belphegor, X4, Y4)), asserta(legendaryPos(beelzebub, X5, Y5)), asserta(legendaryPos(leviathan, X6, Y6)), 
-    % asserta(legendaryPos(satan, X7, Y7)), 
+initLegends :-
+    generateRandomPos(X1, Y1), 
+    generateRandomPos(X2, Y2), generateRandomPos(X3, Y3), 
+    generateRandomPos(X4, Y4), generateRandomPos(X5, Y5), generateRandomPos(X6, Y6),
+    generateRandomPos(X7, Y7), 
+	asserta(legendaryPos(lucifer, X1, Y1)),
+    asserta(legendaryPos(mammon, X2, Y2)), asserta(legendaryPos(asmodeus, X3, Y3)),
+    asserta(legendaryPos(belphegor, X4, Y4)), asserta(legendaryPos(beelzebub, X5, Y5)), asserta(legendaryPos(leviathan, X6, Y6)), 
+    asserta(legendaryPos(satan, X7, Y7)), write(X3), write(Y3).
+    
+    /* Fakta Awal Legends yg belum dikalahkan */
     legendsSetan([lucifer, mammon, asmodeus, belphegor, beelzebub, leviathan, satan]).
 
 initEnemy(0) :- !. /* Basis */

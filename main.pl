@@ -35,10 +35,12 @@ start :-
 	write('$$ |  $$ |$$    $$/ $$ |  $$ |  $$  $$/ $$       |$$ |      '),nl,
 	write('$$/   $$/  $$$$$$/  $$/   $$/    $$$$/   $$$$$$$/ $$/       '),nl,
 	nl,nl,
+	initDifficulty, nl, nl,
 	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl,
 	initPlayer, nl,
-	initEnemy(20),
 	initLegends,
+	initEnemy(20),
+	
 	showinstruction,
 	showmap,
 

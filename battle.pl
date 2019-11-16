@@ -1,16 +1,19 @@
 :- dynamic(spused/1).
+:- dynamic(battleWithLegend/1).
 
 /* Encounter */
 enc :-  nl, write('!!!!Cilukk Baaaa!!!!'), nl, write('Tiba-tiba ada setan '), playerPos(A, B), enemy(X, C, D), A == C, B == D, write(X), write(' muncul di depanmu!'), nl, nl, showEnemyStatus(X), 
         write('Fight or Run?'), nl, readbattlechoice. 
+encLegend :-  nl, write('!!!!ALERTT!!!!'), nl, write('Tiba-tiba ada BOS setan '), playerPos(A, B), legendaryPos(X, C, D), A == C, B == D, asserta(enemy(X, C, D)), write(X), write(' muncul di depanmu!'), nl, nl, showEnemyStatus(X), 
+                asserta(battleWithLegend(1)), initBattle. 
 
 readbattlechoice :- write('$ '), read(P), battlechoice(P).
 
-battlechoice(P) :- P = 'Fight', !, initBattle.
-battlechoice(P) :- P = 'fight', !, initBattle.
-battlechoice(P) :- P = 'Run', !, random(1,100,Q), run(Q). 
-battlechoice(P) :- P = 'run', !, random(1,100,Q), run(Q). 
-battlechoice(_) :- write('Pilihan tidak ada. Masukkan fight atau run'), nl, readbattlechoice.
+battlechoice(P) :- P = 'Fight', !, asserta(battleWithLegend(0)), initBattle, !.
+battlechoice(P) :- P = 'fight', !, asserta(battleWithLegend(0)), initBattle, !.
+battlechoice(P) :- P = 'Run', !, random(1,100,Q), run(Q), !. 
+battlechoice(P) :- P = 'run', !, random(1,100,Q), run(Q), !. 
+battlechoice(_) :- write('Pilihan tidak ada. Masukkan fight atau run'), nl, readbattlechoice, !.
 
 /* Battle */
 preBattle :-
@@ -20,8 +23,8 @@ preBattle :-
     P = 'Fight' -> run(0);
     random(1,100,Q), run(Q).
 
-run(X) :- X < 50, !, write('You failed to run!'), nl, initBattle, !.
-run(_) :- write('You sucessfully escaped the Setan!').
+run(X) :- X < 50, !, write('You failed to run!'), nl, asserta(battleWithLegend(0)), initBattle, !.
+run(_) :- write('You sucessfully escaped the Setan!'), !.
 
 pick(X) :-
     searchParty(X), !,
@@ -162,25 +165,20 @@ inputBattleCommand :-
 
 endbattle :-
     fighting(_, Y),
-    hp(Y, P), P =< 0,
-    write('Anda telah mengalahkan setan '), write(Y), nl,
+    hp(Y, P), P =< 0, !,
+    write('Anda telah mengalahkan setan '), write(Y), nl, isLegend(Y),
     write('Apakah anda ingin menangkap '), write(Y), write('(Y/N)? '),
     read(Input), catch(Input, Y), restore, deleteEnemy, !.
 endbattle :-
-    fighting(X, _),
-    hp(X, P), P =< 0, !,
-    dead(X),
-    write(X), write(' is dead.'), nl, nl,
-    spused(enemy, Z),
-    restore, 
-    asserta(spused(enemy, Z)),
-    initBattleKe2, !.
-endbattle :-
-    fighting(X, _),
-    hp(X, P), P =< 0, playerSetan(L), L = [], !,
-    dead(X),
-    write('Anda kehabisan setan. '), restore,
-    endgame(0), !.
+    fighting(X, _), 
+    hp(X, P), P =< 0, !, dead(X), zeroHP(X), !.
+
+zeroHP(_) :- playerSetan(L), L = [], !, 
+    write('Anda kehabisan setan. '), restore, endgame(0), !.
+zeroHP(X) :- write(X), write(' is dead.'), nl, nl, spused(enemy, Z), restore, asserta(spused(enemy, Z)), initBattleKe2, !.
+
+isLegend(X) :- battleWithLegend(1), !, legendsSetan(ListLegend), del(X, ListLegend, NewListLegend), retract(legendsSetan(ListLegend)), asserta(legendsSetan(NewListLegend)), endgame(1), !.
+isLegend(_) :- battleWithLegend(0), !.
 
 catch(X, Enemy) :- X = 'Y', !, resetEnemyHP(Enemy), captured(Enemy).
 catch(X, Enemy) :- X = 'y', !, resetEnemyHP(Enemy), captured(Enemy).
@@ -190,4 +188,4 @@ catch(X, _) :- X = 'n', !, nl, write('Sayang sekali anda tidak mau menangkap set
 deleteEnemy :- playerPos(D, E), B is D, C is E, enemy(A, B, C), retract(enemy(A, B, C)).
 
 restore :-
-    retract(spused(player, _)), retract(fighting(_, _)), retract(spused(enemy, _)).
+    retract(spused(player, _)), retract(fighting(_, _)), retract(spused(enemy, _)), retract(battleWithLegend(_)).

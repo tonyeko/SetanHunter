@@ -1,3 +1,20 @@
+:- dynamic(difficulty/1).
+
+initDifficulty :- 
+	write('Pilih tingkat kesulitan game ini: '), nl,
+	write(' - easy : Anda hanya perlu mengalahkan 2 legendary setan.'), nl,
+	write(' - hard : Anda perlu mengalahkan semua legendary setan dan persentase bertemu legendary setan lebih kecil.'), nl, nl,
+	readDifficulty.
+
+readDifficulty :- 
+	write('$ '), read(Input), nl,
+	chooseDifficulty(Input).
+
+chooseDifficulty(easy) :- write('Anda memilih difficulty: easy'), asserta(difficulty(easy)).
+chooseDifficulty(hard) :- write('Anda memilih difficulty: hard'), asserta(difficulty(hard)).
+chooseDifficulty(_) :- write('Pilihan tidak ada, masukkan easy atau hard!'), nl, nl, readDifficulty.
+	
+
 showinstruction :-
     write('Halo, '), showPlayerName, write('! Kamu adalah mahasiswa ITB jurusan Teknik Informatika, yang mempunyai banyak sekali tugas besar dan tugas kecil.'), nl,
 	write('Tentunya, kamu juga punya banyak sekali deadline tubes yang harus akan datang dalam waktu dekat. Namun, akhir-akhir ini setiap malam di ITB banyak sekali'), nl,
@@ -76,11 +93,6 @@ generateRandomPosLegend :-
     asserta(legendaryPos(belphegor, X4, Y4)), asserta(legendaryPos(beelzebub, X5, Y5)), asserta(legendaryPos(leviathan, X6, Y6)), 
     asserta(legendaryPos(satan, X7, Y7)).
 
-% retractLegendaryPos([]) :- !.
-% retractLegendaryPos([H|T]) :-
-% 	legendaryPos(H, PosX, PosY), 
-
-
 /* Ambil elemen ke-N dari List */
 getElmt([], 0, '') :- !.
 getElmt([H|_], 0, H) :- !.
@@ -110,7 +122,7 @@ searchParty(X) :-
     playerSetan(L),
     member(X, L).
 
-/* KASUS SUDAH 6 PARTY. nb: kalo tetep mau masukin, kasih opsi del satu setan dari party */
+/* KASUS SUDAH 6 PARTY */
 captured(X) :-
 	playerSetan(Y), count(Y, N), N == 6, !, 
 	write('Party sudah penuh! '),
@@ -164,5 +176,23 @@ execute(d)      :- showPlayerName, write(' bergerak ke timur, '), d_move, showpo
 execute(status) :- showstatus, !.
 % execute(_)		:- write('Masukan tidak sesuai, silahkan liat daftar command.'), !.
 
-endgame(0) :- write('Anda kalah.'), nl, abort, !.
-endgame(1) :- write('Selamat!! Anda telah menyelesaikan permainan ini.'), nl, abort, !.
+endgame(0) :- nl, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. Tetap Semangat!!'), nl, abort, !.
+endgame(1) :- difficulty(hard), legendsSetan(L), L = [], !, nl, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, abort, !.
+endgame(1) :- difficulty(easy), legendsSetan(L), count(L, N), N == 5, !, nl, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty easy.'), nl, abort, !.
+endgame(_) :- !.
+
+winAnimation :- 
+	write('_____.___.               __      __.__        '),nl,
+	write('\\__  |   | ____  __ __  /  \\    /  \\__| ____  '),nl,
+	write(' /   |   |/  _ \\|  |  \\ \\   \\/\\/   /  |/    \\ '),nl,
+	write(' \\____   (  <_> )  |  /  \\        /|  |   |  \\'),nl,
+	write(' / ______|\\____/|____/    \\__/\\  / |__|___|  /'),nl,
+	write(' \\/                            \\/          \\/ '),nl.
+
+loseAnimation :-
+	write('_____.___.              .____                        '),nl,
+	write('\\__  |   | ____  __ __  |    |    ____  ______ ____  '),nl,
+	write(' /   |   |/  _ \\|  |  \\ |    |   /  _ \\/  ___// __ \\ '),nl,
+	write(' \\____   (  <_> )  |  / |    |__(  <_> )___ \\\\  ___/ '),nl,
+	write(' / ______|\\____/|____/  |_______ \\____/____  >\\___  >'),nl,
+	write(' \\/                             \\/         \\/     \\/ '),nl.
