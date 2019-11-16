@@ -15,6 +15,7 @@
 
 /*Rules*/
 start :-
+	reset,
 	asserta(gameMain(1)), nl, 		/* Penanda game sedang berjalan */
 	write('  ______              __                                   '),nl,
 	write(' /      \\            |  \\                                  '),nl,
@@ -44,15 +45,24 @@ start :-
 	showinstruction,
 	showmap,
 
-	/* KONDISI KALAH, NANTI DIGANTI */
-	asserta(health(1)),
-
 	repeat,
 		write('$ '), 
 		read(Input), nl, 
 		execute(Input), nl,
-		end_game.
+		loop.
 
-end_game :-
-  health(0), !, /* KONDISI KALAH, NANTI DIGANTI */
-  write('==== KALIMAT KALAH ===='),nl, end(y), !.
+loop :-
+  gameMain(0), !.
+
+reset :-
+	retractall(playerPos(_, _)), 
+	retractall(legendaryPos(_, _, _)), 
+	retractall(enemy(_, _, _)),
+	retractall(difficulty(_)),
+	retractall(legendsSetan(_)),
+	retractall(playerSetan(_)),
+	retractall(rektoratUsed(_)),
+	retractall(spused(_)),
+	retractall(battleWithLegend(_)),
+	retractall(fighting(_,_)).
+	

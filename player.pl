@@ -11,10 +11,10 @@ initPlayer :-
 	asserta(player(P)),
     /* Spawn Player */
 	generateRandomPos(X,Y),
-	asserta(playerPos(X,Y)).
+	asserta(playerPos(X,Y)),
     /* Fakta Awal */
-	playerSetan([pocong]).          /* Setan awal */
-	rektoratUsed(0).                /* Setan belum pernah disembuhkan di rektorat */
+	asserta(playerSetan([pocong])),          /* Setan awal */
+	asserta(rektoratUsed(0)).                /* Setan belum pernah disembuhkan di rektorat */
 
 initLegends :-
     generateRandomPos(X1, Y1), 
@@ -24,10 +24,9 @@ initLegends :-
 	asserta(legendaryPos(lucifer, X1, Y1)),
     asserta(legendaryPos(mammon, X2, Y2)), asserta(legendaryPos(asmodeus, X3, Y3)),
     asserta(legendaryPos(belphegor, X4, Y4)), asserta(legendaryPos(beelzebub, X5, Y5)), asserta(legendaryPos(leviathan, X6, Y6)), 
-    asserta(legendaryPos(satan, X7, Y7)).
-    
+    asserta(legendaryPos(satan, X7, Y7)),
     /* Fakta Awal Legends yg belum dikalahkan */
-    legendsSetan([lucifer, mammon, asmodeus, belphegor, beelzebub, leviathan, satan]).
+    asserta(legendsSetan([lucifer, mammon, asmodeus, belphegor, beelzebub, leviathan, satan])).
 
 initEnemy(0) :- !. /* Basis */
 initEnemy(N) :-

@@ -146,7 +146,7 @@ drop(Y, X) :- Y = 'N', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil
 drop(Y, X) :- Y = 'n', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
 
 dead(X) :-
-	playerSetan(Y), del(X, Y, Z), 
+	playerSetan(Y), resetEnemyHP(X), del(X, Y, Z), 
 	retract(playerSetan(Y)), assertz(playerSetan(Z)).
 
 resetHP([X|T])	:-
@@ -174,11 +174,11 @@ execute(a)      :- showPlayerName, write(' bergerak ke barat, '), a_move, showpo
 execute(s)      :- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, isEncountered, !.
 execute(d)      :- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
 execute(status) :- showstatus, !.
-% execute(_)		:- write('Masukan tidak sesuai, silahkan liat daftar command.'), !.
+execute(_)		:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
 
 endgame(0) :- nl, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. Tetap Semangat!!'), nl, abort, !.
-endgame(1) :- difficulty(hard), legendsSetan(L), L = [], !, nl, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, abort, !.
-endgame(1) :- difficulty(easy), legendsSetan(L), count(L, N), N == 5, !, nl, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty easy.'), nl, abort, !.
+endgame(1) :- difficulty(hard), legendsSetan(L), L = [], !, nl, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, halt, !.
+endgame(1) :- difficulty(easy), legendsSetan(L), count(L, N), N == 5, !, nl, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty easy.'), nl, halt, !.
 endgame(_) :- !.
 
 winAnimation :- 
