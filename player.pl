@@ -1,25 +1,33 @@
-:- dynamic(playerPos/2). 		/* playerPos(X, Y) */
-:- dynamic(playerSetan/1). 	/* playerSetan(X, Y) */
+:- dynamic(playerPos/2). 		    /* playerPos(X, Y) */
+:- dynamic(legendaryPos/3).         /* legendaryPos(legendary, X, Y) */
+:- dynamic(legendsSetan/1).         /* LegendsSetan(X) -- List */
+:- dynamic(playerSetan/1). 	        /* playerSetan(X, Y) */
 :- dynamic(rektoratUsed/1).			/* rektoratUsed(0) or rektoratUsed(1) */
-:- dynamic(enemy/3). /* enemy(setan, posX, posY) */
+:- dynamic(enemy/3).                /* enemy(setan, posX, posY) */
 
 initPlayer :-
 	write('Siapa nama kamu?'), nl,
 	write('$ '), read(P),
 	asserta(player(P)),
     /* Spawn Player */
-	random(1,15,X),
-	random(1,15,Y),
+	generateRandomPos(X,Y),
 	asserta(playerPos(X,Y)).
 	/* Setan awal */
-	playerSetan([pocong, valak]).
+	playerSetan([pocong]).
 	rektoratUsed(0). /* Setan belum pernah disembuhkan di rektorat */
-	legendsSetan([lucifer, mammon, asmodeus, belphegor, beelzebub, leviathan, satan]).
+
+initLegends :- !.
+    % generateRandomPos(X1, Y1), generateRandomPos(X2, Y2), generateRandomPos(X3, Y3), 
+    % generateRandomPos(X4, Y4), generateRandomPos(X5, Y5), generateRandomPos(X6, Y6),
+    % generateRandomPos(X7, Y7), 
+	% asserta(legendaryPos(lucifer, X1, Y1)), asserta(legendaryPos(mammon, X2, Y2)), asserta(legendaryPos(asmodeus, X3, Y3)),
+    % asserta(legendaryPos(belphegor, X4, Y4)), asserta(legendaryPos(beelzebub, X5, Y5)), asserta(legendaryPos(leviathan, X6, Y6)), 
+    % asserta(legendaryPos(satan, X7, Y7)), 
+    legendsSetan([lucifer, mammon, asmodeus, belphegor, beelzebub, leviathan, satan]).
 
 initEnemy(0) :- !. /* Basis */
 initEnemy(N) :-
-    random(1, 15, X),
-    random(1, 15, Y),
+    generateRandomPos(X, Y),
     findall(Z, setan(Z), ListSetan),
     length(ListSetan, PanjangList),
     random(0, PanjangList, RandomNoSetan),

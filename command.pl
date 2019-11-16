@@ -47,7 +47,6 @@ showstatus :-
 	
 showssetanstat([]).
 showssetanstat([X|T]) :-
-	setan(X),
 	write('Nama             : '), write(X), nl,
 	write('HP               : '), hp(X, Y), write(Y), write('/'), starthp(X,A), write(A),nl, 
 	write('Tipe             : '), type(Z, X), write(Z), nl,
@@ -56,12 +55,31 @@ showssetanstat([X|T]) :-
 	showssetanstat(T).
 
 showEnemyStatus(X) :-
-	setan(X),
 	write('Nama             : '), write(X), nl,
 	write('HP               : '), hp(X, Y), write(Y), write('/'), starthp(X,A), write(A),nl, 
 	write('Tipe             : '), type(Z, X), write(Z), nl,
 	write('Attack           : '), nattack(X, U), write(U), nl,
 	write('Special Attack   : '), spattack(X, V, W), write(W), write('('), write(V), write(')'), nl, nl, !.
+
+/* Generate random X, Y position */
+generateRandomPos(X, Y) :- random(1,15,X), random(1,15,Y).
+
+% /* Randomize Location Legendary Setan */ 
+generateRandomPosLegend :- 
+	generateRandomPos(X1, Y1), generateRandomPos(X2, Y2), generateRandomPos(X3, Y3), 
+    generateRandomPos(X4, Y4), generateRandomPos(X5, Y5), generateRandomPos(X6, Y6),
+    generateRandomPos(X7, Y7), 
+	retract(legendaryPos(lucifer, _, _)), retract(legendaryPos(mammon, _, _)), retract(legendaryPos(asmodeus, _, _)),
+    retract(legendaryPos(belphegor, _, _)), retract(legendaryPos(beelzebub, _, _)), retract(legendaryPos(leviathan, _, _)), 
+    retract(legendaryPos(satan, _, _)), 
+	asserta(legendaryPos(lucifer, X1, Y1)), asserta(legendaryPos(mammon, X2, Y2)), asserta(legendaryPos(asmodeus, X3, Y3)),
+    asserta(legendaryPos(belphegor, X4, Y4)), asserta(legendaryPos(beelzebub, X5, Y5)), asserta(legendaryPos(leviathan, X6, Y6)), 
+    asserta(legendaryPos(satan, X7, Y7)).
+
+% retractLegendaryPos([]) :- !.
+% retractLegendaryPos([H|T]) :-
+% 	legendaryPos(H, PosX, PosY), 
+
 
 /* Ambil elemen ke-N dari List */
 getElmt([], 0, '') :- !.
@@ -72,22 +90,20 @@ showslegends([]).
 /* KASUS SUDAH DITANGKAP */
 showslegends([X|T]) :-
 	searchParty(X), 
-	legendary(X), write(' - '), write(X), write(' <SUDAH DITANGKAP>'), nl,
 	showslegends(T).
 /* KASUS BELUM DITANGKAP */
 showslegends([X|T]) :-
-	legendary(X), write(' - '), write(X), nl,
+	write(' - '), write(X), nl,
 	showslegends(T).
 
 count([],0).
-count([H|Tail], N) :- number(H),count(Tail, N1), N is N1 + 1.
-count([H|Tail], N) :- \+number(H),count(Tail, N).
+count([_|Tail], N) :- count(Tail, N1), N is N1 + 1.
 
 conc([], List, List).
 conc([H|T], List, [H|CList]) :- conc(T, List, CList).
 
-del(Element,[Element|Tail],Tail).
-del(Element,[Head|Tail],[Head|Tail1]) :-
+del(Element, [Element|Tail], Tail).
+del(Element, [Head|Tail], [Head|Tail1]) :-
 	del(Element,Tail,Tail1).
 
 searchParty(X) :- 
@@ -96,17 +112,28 @@ searchParty(X) :-
 
 /* KASUS SUDAH 6 PARTY. nb: kalo tetep mau masukin, kasih opsi del satu setan dari party */
 captured(X) :-
-	setan(X),
-	playerSetan(Y), count(Y, N), N = 6,
-	write("Party sudah penuh!").
+	playerSetan(Y), count(Y, N), N == 6, !, 
+	write('Party sudah penuh! '),
+	write('Apakah kamu ingin drop Setan di inventory(Y/N)? '), read(Input), drop(Input, X).
 /* KASUS MASIH ADA SLOT */
 captured(X) :-
-	setan(X),
 	playerSetan(Y), conc(Y, [X], Z), 
-	retract(playerSetan(Y)), assertz(playerSetan(Z)).
+	retract(playerSetan(Y)), assertz(playerSetan(Z)), 
+	nl, write('Selamat!!'), nl, write(X), write(' berhasil ditangkap!'), nl, nl,
+	write('STATUS SAAT INI:'), nl, showstatus.
+
+drop(Y, X) :- Y = 'Y' , !,
+	write('Silahkan drop Setan: '), nl, nl, playerSetan(Z), showsetan(Z), nl,
+    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)),
+    asserta(playerSetan(A)), captured(X).
+drop(Y, X) :- Y = 'y' , !,
+	write('Silahkan drop Setan: '), nl, nl, playerSetan(Z), showsetan(Z), nl,
+    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)),
+    asserta(playerSetan(A)), captured(X).
+drop(Y, X) :- Y = 'N', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
+drop(Y, X) :- Y = 'n', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
 
 dead(X) :-
-	setan(X),
 	playerSetan(Y), del(X, Y, Z), 
 	retract(playerSetan(Y)), assertz(playerSetan(Z)).
 
@@ -135,6 +162,7 @@ execute(a)      :- showPlayerName, write(' bergerak ke barat, '), a_move, showpo
 execute(s)      :- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, isEncountered, !.
 execute(d)      :- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
 execute(status) :- showstatus, !.
+% execute(_)		:- write('Masukan tidak sesuai, silahkan liat daftar command.'), !.
 
 endgame(0) :- write('Anda kalah.'), nl, abort, !.
 endgame(1) :- write('Selamat!! Anda telah menyelesaikan permainan ini.'), nl, abort, !.

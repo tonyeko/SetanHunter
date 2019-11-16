@@ -16,7 +16,6 @@
     w_move :- playerPos(X, Y), A is X, B is Y-1, hedge(A, B), !, write('tetapi ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke utara.'), nl, !.
     w_move :- playerPos(X,Y), Y1 is Y-1, retract(playerPos(X,Y)), asserta(playerPos(X,Y1)), !.
     
-    
     % a_move :- playerPos(X,_), X == 1, !, write('tetapi ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke barat.'), nl, !.
     a_move :- playerPos(X, Y), A is X-1, B is Y, hedge(A, B), !, write('tetapi ada pagar yang menghalangi, jadi '), showPlayerName, write(' tidak bisa lagi bergerak ke barat.'), nl, !.
     a_move :- playerPos(X,Y), X1 is X-1, retract(playerPos(X,Y)), asserta(playerPos(X1,Y)), !.

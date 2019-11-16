@@ -35,10 +35,8 @@ pick(_) :-
     write('You don''t have that Setan!'), nl,
     write('Pick: '), read(Input), pick(Input).
 
-
 showsetan([]).
 showsetan([X|T]) :-
-	setan(X),
 	write(' - '), write(X), nl,
 	showsetan(T).
 
@@ -167,7 +165,7 @@ endbattle :-
     hp(Y, P), P =< 0,
     write('Anda telah mengalahkan setan '), write(Y), nl,
     write('Apakah anda ingin menangkap '), write(Y), write('(Y/N)? '),
-    read(Input), catch(Input, Y), restore, deleteEnemy, nl, showstatus, !.
+    read(Input), catch(Input, Y), restore, deleteEnemy, !.
 endbattle :-
     fighting(X, _),
     hp(X, P), P =< 0, !,
@@ -184,8 +182,8 @@ endbattle :-
     write('Anda kehabisan setan. '), restore,
     endgame(0), !.
 
-catch(X, Enemy) :- X = 'Y', !, resetEnemyHP(Enemy), captured(Enemy), nl, nl, write('Selamat!!'), nl, write(Enemy), write(' berhasil ditangkap!'), nl.
-catch(X, Enemy) :- X = 'y', !, resetEnemyHP(Enemy), captured(Enemy), nl, nl, write('Selamat!!'), nl, write(Enemy), write(' berhasil ditangkap!'), nl.
+catch(X, Enemy) :- X = 'Y', !, resetEnemyHP(Enemy), captured(Enemy).
+catch(X, Enemy) :- X = 'y', !, resetEnemyHP(Enemy), captured(Enemy).
 catch(X, _) :- X = 'N', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
 catch(X, _) :- X = 'n', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
 

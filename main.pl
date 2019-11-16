@@ -38,6 +38,7 @@ start :-
 	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl,
 	initPlayer, nl,
 	initEnemy(20),
+	initLegends,
 	showinstruction,
 	showmap,
 
