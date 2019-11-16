@@ -24,7 +24,7 @@ initLegends :-
 	asserta(legendaryPos(lucifer, X1, Y1)),
     asserta(legendaryPos(mammon, X2, Y2)), asserta(legendaryPos(asmodeus, X3, Y3)),
     asserta(legendaryPos(belphegor, X4, Y4)), asserta(legendaryPos(beelzebub, X5, Y5)), asserta(legendaryPos(leviathan, X6, Y6)), 
-    asserta(legendaryPos(satan, X7, Y7)), write(X3), write(Y3).
+    asserta(legendaryPos(satan, X7, Y7)).
     
     /* Fakta Awal Legends yg belum dikalahkan */
     legendsSetan([lucifer, mammon, asmodeus, belphegor, beelzebub, leviathan, satan]).
