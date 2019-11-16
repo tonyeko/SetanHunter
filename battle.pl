@@ -104,20 +104,39 @@ battlecommand(specialattack) :-
 
 battlecommand(status) :- battlestatus.
 
-enemymove :-  
-    fighting(X, Y),
+
+enemymove(N) :-  
+    fighting(X, Y), N =< 6,
     nattack(Y, U),
-    hp(X, P), P1 is P-U,
+    iseffective(X, Y, Modifier),
+    Damage is (U * Modifier),
+    hp(X, P), P1 is P-Damage,
     retract(hp(X, P)), asserta(hp(X, P1)),
-    write(X), nl, nl.
+    nl, nl.
+enemymove(N) :-  
+    fighting(X, Y), \+ spused(enemy), N > 6,
+    write('Enemy '), write(Y),
+    spattack(Y, U, Z),
+    iseffective(X, Y, Modifier),
+    write(' uses '), write(Z), write('!'),
+    Damage is (U * Modifier),
+    hp(X, P), P1 is P-Damage,
+    retract(hp(X, P)), asserta(hp(X, P1)),
+    assertz(spused(enemy)), nl, nl.
+enemymove(N) :-  
+    fighting(X, Y), spused(enemy), N < 11,
+    nattack(Y, U),
+    iseffective(X, Y, Modifier),
+    Damage is (U * Modifier),
+    hp(X, P), P1 is P-Damage,
+    retract(hp(X, P)), asserta(hp(X, P1)),
+    nl, nl.
 
 battle :-
     repeat,
         battlestatus,
-        write('DEBUG'), nl,
         write('$ '), read(Input), nl,
         battlecommand(Input), nl,
-        enemymove,
-        write('HahahihiDEBUG').
-
-% KONDISI ENDBATTLE NANTI HARUS DITAMBAHI retract(fighting(X, Y)),
+        random(1, 10, N),
+        enemymove(N),
+        battlestatus.
