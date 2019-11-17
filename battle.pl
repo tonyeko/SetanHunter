@@ -176,7 +176,7 @@ endbattle :-
 
 zeroHP(_) :- playerSetan(L), L = [], !,
     write('Anda kehabisan setan. '), restore, endgame(0), !.
-zeroHP(X) :- write(X), write(' is dead.'), nl, nl, spused(enemy, Z), restore, asserta(spused(enemy, Z)), initBattleKe2, !.
+zeroHP(X) :- write(X), write(' is dead.'), nl, nl, spused(enemy, Z), battleWithLegend(F), restore, asserta(spused(enemy, Z)), asserta(battleWithLegend(F)), initBattleKe2, !.
 
 isLegend(X) :- battleWithLegend(1), !, legendsSetan(ListLegend), del(X, ListLegend, NewListLegend), retract(legendsSetan(ListLegend)), asserta(legendsSetan(NewListLegend)), endgame(1), !.
 isLegend(_) :- battleWithLegend(0), !.

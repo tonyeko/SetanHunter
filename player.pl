@@ -7,7 +7,7 @@
 :- dynamic(player/1).                /* player(P) */
 
 initPlayer :-
-	write('Siapa nama kamu?'), nl,
+	write('Siapa nama kamu?'), nl, delay,
 	write('$ '), read(P),
 	asserta(player(P)),
     /* Spawn Player */

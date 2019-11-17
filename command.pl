@@ -1,35 +1,37 @@
 :- dynamic(difficulty/1).
 
 initDifficulty :-
-	write('Pilih tingkat kesulitan game ini: '), nl,
-	write(' - easy : Anda hanya perlu mengalahkan 2 legendary setan.'), nl,
-	write(' - hard : Anda perlu mengalahkan semua legendary setan dan persentase bertemu legendary setan lebih kecil.'), nl, nl,
+	write('Pilih tingkat kesulitan game ini: '), nl, delay,
+	write(' - easy : Anda hanya perlu mengalahkan 2 legendary setan.'), nl, delay,
+	write(' - hard : Anda perlu mengalahkan semua legendary setan dan persentase bertemu legendary setan lebih kecil.'), nl, nl, 
 	readDifficulty.
 
 readDifficulty :-
-	write('$ '), read(Input), nl,
+	write('$ '), read(Input), nl, delay,
 	chooseDifficulty(Input).
 
 chooseDifficulty(easy) :- write('Anda memilih difficulty: easy'), asserta(difficulty(easy)).
 chooseDifficulty(hard) :- write('Anda memilih difficulty: hard'), asserta(difficulty(hard)).
 chooseDifficulty(_) :- write('Pilihan tidak ada, masukkan easy atau hard!'), nl, nl, readDifficulty.
 
+delay :- sleep(0.3).
+delay2 :- sleep(1).
 
 showinstruction :-
     write('Halo, '), showPlayerName, write('! Kamu adalah mahasiswa ITB jurusan Teknik Informatika, yang mempunyai banyak sekali tugas besar dan tugas kecil.'), nl,
-    sleep(2),
+    delay2,
 	write('Tentunya, kamu juga punya banyak sekali deadline tubes yang harus akan datang dalam waktu dekat.'), nl,
-	sleep(2),
+	delay2,
 	write('Namun, akhir-akhir ini setiap malam di ITB banyak sekali setan yang berkeliaraan yang mengganggu mahasiswa (termasuk kamu), sehingga kamu tidak bisa nubes malem-malem di ITB...'), nl,
-	sleep(2),
+	delay2,
 	write('Keresahan inilah yang membuat kamu membuat sebuah pengangkap setan (yang dibuat menggunakan bahasa Prolog) dan mencalonkan diri sebagai seorang SETAN HUNTER,'), nl,
-	sleep(2),
+	delay2,
 	write('Kebetulan, kamu (dengan hoki) menangkap satu POCONG, dan kamu bisa menggunakannya untuk mengalahkan setan-setan lain...'), nl,
-	sleep(2),
+	delay2,
 	write('Kamu akan bertugas untuk menjinakkan setan-setan di ITB, serta mengakhiri penyebab dari penampakan-penampakan ini...'), nl, nl,
-	sleep(2),
+	delay2,
 	write('Apakah kamu bisa menjinakkan serta mengalahkan semua setan di ITB? Semoga berhasil! Nasib tubes dan indeks dan teman-temanmu semua ada di tanganmu!'), nl, nl,
-    sleep(2),
+    sleep(3),
     showcommands.
 
 showcommands :-
@@ -184,23 +186,23 @@ execute(d)      :- showPlayerName, write(' bergerak ke timur, '), d_move, showpo
 execute(status) :- showstatus, !.
 execute(_)		:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
 
-endgame(0) :- nl, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. ITB akhirnya dikuasai oleh makhluk halus, dan menjadi angker...'), nl, abort, !.
-endgame(1) :- difficulty(hard), legendsSetan(L), L = [], !, nl, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, halt, !.
-endgame(1) :- difficulty(easy), legendsSetan(L), count(L, N), N == 5, !, nl, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty easy.'), nl, halt, !.
+endgame(0) :- nl, delay, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. ITB akhirnya dikuasai oleh makhluk halus, dan menjadi angker...'), nl, abort, !.
+endgame(1) :- difficulty(hard), legendsSetan(L), L = [], !, nl, delay, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, halt, !.
+endgame(1) :- difficulty(easy), legendsSetan(L), count(L, N), N == 5, !, nl, delay, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty easy.'), nl, halt, !.
 endgame(_) :- !.
 
 winAnimation :-
-	write('_____.___.               __      __.__        '),nl,
-	write('\\__  |   | ____  __ __  /  \\    /  \\__| ____  '),nl,
-	write(' /   |   |/  _ \\|  |  \\ \\   \\/\\/   /  |/    \\ '),nl,
-	write(' \\____   (  <_> )  |  /  \\        /|  |   |  \\'),nl,
-	write(' / ______|\\____/|____/    \\__/\\  / |__|___|  /'),nl,
+	write('_____.___.               __      __.__        '),nl, delay,
+	write('\\__  |   | ____  __ __  /  \\    /  \\__| ____  '),nl, delay,
+	write(' /   |   |/  _ \\|  |  \\ \\   \\/\\/   /  |/    \\ '),nl, delay,
+	write(' \\____   (  <_> )  |  /  \\        /|  |   |  \\'),nl, delay,
+	write(' / ______|\\____/|____/    \\__/\\  / |__|___|  /'),nl, delay,
 	write(' \\/                            \\/          \\/ '),nl.
 
 loseAnimation :-
-	write('_____.___.              .____                        '),nl,
-	write('\\__  |   | ____  __ __  |    |    ____  ______ ____  '),nl,
-	write(' /   |   |/  _ \\|  |  \\ |    |   /  _ \\/  ___// __ \\ '),nl,
-	write(' \\____   (  <_> )  |  / |    |__(  <_> )___ \\\\  ___/ '),nl,
-	write(' / ______|\\____/|____/  |_______ \\____/____  >\\___  >'),nl,
+	write('_____.___.              .____                        '),nl, delay,
+	write('\\__  |   | ____  __ __  |    |    ____  ______ ____  '),nl, delay,
+	write(' /   |   |/  _ \\|  |  \\ |    |   /  _ \\/  ___// __ \\ '),nl, delay,
+	write(' \\____   (  <_> )  |  / |    |__(  <_> )___ \\\\  ___/ '),nl, delay,
+	write(' / ______|\\____/|____/  |_______ \\____/____  >\\___  >'),nl, delay,
 	write(' \\/                             \\/         \\/     \\/ '),nl.
