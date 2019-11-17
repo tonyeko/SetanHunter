@@ -1,4 +1,5 @@
 :- dynamic(spused/2).
+:- dynamic(enemyHP/2).
 :- dynamic(fighting/2).
 :- dynamic(battleWithLegend/1).
 
@@ -117,8 +118,6 @@ battlecommand(specialattack) :-
     fighting(_, _), spused(player, 1), !,
     write('Special Attack sudah digunakan!'), nl, nl, inputBattleCommand.
 
-battlecommand(status) :- battlestatus.
-
 enemymove(N) :-
     fighting(X, Y), N =< 6,
     nattack(Y, U),
@@ -162,7 +161,7 @@ battle :-
         	random(1, 10, N),
        		enemymove(N),
         	endbattle	).
-        
+
 
 inputBattleCommand :-
     write('$ '), read(Input), nl,

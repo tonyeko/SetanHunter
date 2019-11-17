@@ -3,7 +3,7 @@
 initDifficulty :-
 	write('Pilih tingkat kesulitan game ini: '), nl, delay,
 	write(' - easy : Anda hanya perlu mengalahkan 2 legendary setan.'), nl, delay,
-	write(' - hard : Anda perlu mengalahkan semua legendary setan dan persentase bertemu legendary setan lebih kecil.'), nl, nl, 
+	write(' - hard : Anda perlu mengalahkan semua legendary setan dan persentase bertemu legendary setan lebih kecil.'), nl, nl,
 	readDifficulty.
 
 readDifficulty :-
@@ -66,35 +66,35 @@ quit :-
     read(X), nl, isSave(X),
     abort, !.
 
-isSave(X) :- X == 'Y', !, 
+isSave(X) :- X == 'Y', !,
 	write('Masukkan nama file: '), nl,
     write('$ '), read(Z), save(X, Z), !.
-isSave(X) :- X == 'y', !, 
+isSave(X) :- X == 'y', !,
 	write('Masukkan nama file: '), nl,
     write('$ '), read(Z), save(X, Z), !.
 isSave(X) :- X == 'N', !.
 isSave(X) :- X == 'n', !.
 
-isLoad(X) :- X == 'N', !, nl, 
+isLoad(X) :- X == 'N', !, nl,
 	initDifficulty, nl, nl, delay,
 	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl, delay,
 	initPlayer, nl,
 	initLegends,
 	initEnemy(20),
 	showinstruction, !.
-isLoad(X) :- X == 'n', !, nl, 
+isLoad(X) :- X == 'n', !, nl,
 	initDifficulty, nl, nl, delay,
 	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl, delay,
 	initPlayer, nl,
 	initLegends,
 	initEnemy(20),
 	showinstruction, !.
-isLoad(X) :- X == 'Y', !, 
+isLoad(X) :- X == 'Y', !,
 	write('Masukkan nama file: '), nl,
-    write('$ '), read(Z), loadGame(Z), nl, write('Status game berhasil di-load!'), nl, nl, !. 
-isLoad(X) :- X == 'y', !, 
+    write('$ '), read(Z), loadGame(Z), nl, write('Status game berhasil di-load!'), nl, nl, !.
+isLoad(X) :- X == 'y', !,
 	write('Masukkan nama file: '), nl,
-    write('$ '), read(Z), loadGame(Z), nl, write('Status game berhasil di-load!'), nl, nl, !. 
+    write('$ '), read(Z), loadGame(Z), nl, write('Status game berhasil di-load!'), nl, nl, !.
 
 showstatus :-
 	write('Setan yang dimiliki:'), nl, nl,
@@ -121,7 +121,7 @@ showEnemyStatus(X) :-
 /* Generate random X, Y position */
 generateRandomPos(X, Y) :- random(1,15,X), random(1,15,Y).
 
-% /* Randomize Location Legendary Setan */
+/* Randomize Location Legendary Setan */
 generateRandomPosLegend :-
 	generateRandomPos(X1, Y1), generateRandomPos(X2, Y2), generateRandomPos(X3, Y3),
     generateRandomPos(X4, Y4), generateRandomPos(X5, Y5), generateRandomPos(X6, Y6),
@@ -201,13 +201,13 @@ resetEnemyHP(X) :-
 	retract(hp(X, _)),
 	asserta(hp(X, Y)), !.
 
-healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, playerSetan(Z), resetHP(Z), 
+healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, playerSetan(Z), resetHP(Z),
 			write('.'), delay2, write('.'), delay2, write('.'), delay2, nl, write('Setan kamu berhasil disembuhkan.'), retract(rektoratUsed(0)), asserta(rektoratUsed(1)), nl, nl, !.
 healing	:- rektoratUsed(0), !, write('tidak berada di area rektorat, setan kamu tidak bisa disembuhkan.'), nl, !.
 healing :- rektoratUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan setan kamu di rektorat.'), nl, !.
 
 execute(start)			:- write('permainan sudah dimulai.'), nl, !.
-execute(quit)   		:- quit, !.
+%execute(quit)   		:- quit, !.
 execute(help)   		:- showcommands, !.
 execute(map)    		:- showmap, !.
 execute(heal)			:- healing, !.
@@ -243,8 +243,8 @@ loseAnimation :-
 
 save(X, NamaFile) :- X == 'Y' , !, savegame(NamaFile), write('Status game berhasil disimpan!'), nl, !.
 save(X, NamaFile) :- X == 'y' , !, savegame(NamaFile), write('Status game berhasil disimpan!'), nl, !.
-save(X, _) :- X == 'N' , !. 
-save(X, _) :- X == 'n' , !. 
+save(X, _) :- X == 'N' , !.
+save(X, _) :- X == 'n' , !.
 
 savegame(NamaFile):-
 	open(NamaFile,write,SaveFile),
@@ -274,12 +274,12 @@ savegame(NamaFile):-
 	close(SaveFile).
 
 writeList(_, _, [], [], []) :- !.
-writeList(NamaFile, NamaList, [H1|T1], [H2|T2], [H3|T3]) :- 
-	write(NamaFile, NamaList), 
+writeList(NamaFile, NamaList, [H1|T1], [H2|T2], [H3|T3]) :-
+	write(NamaFile, NamaList),
 	write(NamaFile, '('),
-	write(NamaFile, (H1,H2,H3)), 
+	write(NamaFile, (H1,H2,H3)),
 	write(NamaFile, ')'),
-	write(NamaFile, '.'), 
+	write(NamaFile, '.'),
 	nl(NamaFile),
 	writeList(NamaFile, NamaList, T1, T2, T3), !.
 
@@ -287,11 +287,11 @@ writeHP(_, _, [], []) :- !.
 writeHP(NamaFile, NamaList, [H1|T1], [H2|T2]) :- starthp(H1, X), X == H2 , !,
 	writeHP(NamaFile, NamaList, T1, T2), !.
 writeHP(NamaFile, NamaList, [H1|T1], [H2|T2]) :- starthp(H1, X), X \= H2 , !,
-	write(NamaFile, NamaList), 
+	write(NamaFile, NamaList),
 	write(NamaFile, '('),
-	write(NamaFile, (H1,H2)), 
+	write(NamaFile, (H1,H2)),
 	write(NamaFile, ')'),
-	write(NamaFile, '.'), 
+	write(NamaFile, '.'),
 	nl(NamaFile),
 	writeHP(NamaFile, NamaList, T1, T2), !.
 
@@ -327,7 +327,7 @@ loadGame(NamaFile) :-
 	close(LoadFile), !.
 
 loadStatus(LoadFile) :-
-	repeat, 
+	repeat,
 		read(LoadFile, F),
 		asserta(F),
 		at_end_of_stream(LoadFile).
