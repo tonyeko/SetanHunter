@@ -1,4 +1,5 @@
 :- dynamic(spused/2).
+:- dynamic(enemyHP/2).
 :- dynamic(fighting/2).
 :- dynamic(battleWithLegend/1).
 
@@ -162,7 +163,7 @@ battle :-
         	random(1, 10, N),
        		enemymove(N),
         	endbattle	).
-        
+
 
 inputBattleCommand :-
     write('$ '), read(Input), nl,

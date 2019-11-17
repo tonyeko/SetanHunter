@@ -3,7 +3,7 @@
 initDifficulty :-
 	write('Pilih tingkat kesulitan game ini: '), nl, delay,
 	write(' - easy : Anda hanya perlu mengalahkan 2 legendary setan.'), nl, delay,
-	write(' - hard : Anda perlu mengalahkan semua legendary setan dan persentase bertemu legendary setan lebih kecil.'), nl, nl, 
+	write(' - hard : Anda perlu mengalahkan semua legendary setan dan persentase bertemu legendary setan lebih kecil.'), nl, nl,
 	readDifficulty.
 
 readDifficulty :-
@@ -91,7 +91,7 @@ showEnemyStatus(X) :-
 /* Generate random X, Y position */
 generateRandomPos(X, Y) :- random(1,15,X), random(1,15,Y).
 
-% /* Randomize Location Legendary Setan */
+/* Randomize Location Legendary Setan */
 generateRandomPosLegend :-
 	generateRandomPos(X1, Y1), generateRandomPos(X2, Y2), generateRandomPos(X3, Y3),
     generateRandomPos(X4, Y4), generateRandomPos(X5, Y5), generateRandomPos(X6, Y6),
@@ -171,13 +171,13 @@ resetEnemyHP(X) :-
 	retract(hp(X, _)),
 	asserta(hp(X, Y)), !.
 
-healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, playerSetan(Z), resetHP(Z), 
+healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, playerSetan(Z), resetHP(Z),
 			write('.'), delay2, write('.'), delay2, write('.'), delay2, nl, write('Setan kamu berhasil disembuhkan.'), retract(rektoratUsed(0)), asserta(rektoratUsed(1)), nl, nl, !.
 healing	:- rektoratUsed(0), !, write('tidak berada di area rektorat, setan kamu tidak bisa disembuhkan.'), nl, !.
 healing :- rektoratUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan setan kamu di rektorat.'), nl, !.
 
 execute(start)			:- write('permainan sudah dimulai.'), nl, !.
-execute(quit)   		:- quit, !.
+%execute(quit)   		:- quit, !.
 execute(help)   		:- showcommands, !.
 execute(map)    		:- showmap, !.
 execute(heal)			:- healing, !.
@@ -186,7 +186,7 @@ execute(a)      		:- showPlayerName, write(' bergerak ke barat, '), a_move, show
 execute(s)      		:- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, isEncountered, !.
 execute(d)      		:- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
 execute(status) 		:- showstatus, !.
-execute(save(NamaFile)) :- save(y, NamaFile), !.
+%execute(save(NamaFile)) :- save(y, NamaFile), !.
 execute(_)				:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
 
 endgame(0) :- nl, delay, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. ITB akhirnya dikuasai oleh makhluk halus, dan menjadi angker...'), nl, abort, !.
@@ -210,10 +210,7 @@ loseAnimation :-
 	write(' / ______|\\____/|____/  |_______ \\____/____  >\\___  >'),nl, delay,
 	write(' \\/                             \\/         \\/     \\/ '),nl.
 
-save(X) :- X == 'Y' , !, savegame.
-save(X) :- X == 'y' , !, savegame.
-save(X) :- X == 'N' , !. 
-save(X) :- X == 'n' , !. 
-
-
-
+%save(X) :- X == 'Y' , !, savegame.
+%save(X) :- X == 'y' , !, savegame.
+%save(X) :- X == 'N' , !.
+%save(X) :- X == 'n' , !.
