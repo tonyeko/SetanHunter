@@ -220,8 +220,8 @@
     pos(15,4, 'Road.').
     pos(15,5, 'Hospital of Agony.').
     pos(15,6, 'Dead Trial.').
-    pos(15,7, 'Hospital of Agony.').
-    pos(15,8, 'RS Boromeus.').
+    pos(15,7, 'Spring of Agony.').
+    pos(15,8, 'Hospital of Agony.').
     pos(15,9, 'Path to Nowhere.').
     pos(15,10, 'Road.').
     pos(15,11, 'Road.').
