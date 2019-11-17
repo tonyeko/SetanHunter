@@ -110,7 +110,7 @@
         starthp(leviathan, 7000).
         starthp(satan, 9999).
 
-        hp(pocong, 25000).
+        hp(pocong, 3500).
         hp(kuntilanak, 2000).
         hp(tuyul, 3000).
         hp(banaspati, 3000).
@@ -143,7 +143,7 @@
         hp(leviathan, 7000).
         hp(satan, 9999).
 
-        nattack(pocong, 750).
+        nattack(pocong, 350).
         nattack(kuntilanak, 275).
         nattack(tuyul, 225).
         nattack(banaspati, 325).
@@ -176,7 +176,7 @@
         nattack(leviathan, 400).
         nattack(satan, 650).
 
-        spattack(pocong, 500, 'Rocket Knuckle').
+        spattack(pocong, 700, 'Rocket Knuckle').
         spattack(kuntilanak, 600, 'Screaming Howl').
         spattack(tuyul, 775, 'Dual Burst').
         spattack(banaspati, 875,'Rising Flame').
