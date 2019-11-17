@@ -176,17 +176,18 @@ healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), 
 healing	:- rektoratUsed(0), !, write('tidak berada di area rektorat, setan kamu tidak bisa disembuhkan.'), nl, !.
 healing :- rektoratUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan setan kamu di rektorat.'), nl, !.
 
-execute(start)	:- write('permainan sudah dimulai.'), nl, !.
-execute(quit)   :- quit, !.
-execute(help)   :- showcommands, !.
-execute(map)    :- showmap, !.
-execute(heal)	:- healing, !.
-execute(w)      :- showPlayerName, write(' bergerak ke utara, '), w_move, showpos, isEncountered, !.
-execute(a)      :- showPlayerName, write(' bergerak ke barat, '), a_move, showpos, isEncountered, !.
-execute(s)      :- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, isEncountered, !.
-execute(d)      :- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
-execute(status) :- showstatus, !.
-execute(_)		:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
+execute(start)			:- write('permainan sudah dimulai.'), nl, !.
+execute(quit)   		:- quit, !.
+execute(help)   		:- showcommands, !.
+execute(map)    		:- showmap, !.
+execute(heal)			:- healing, !.
+execute(w)      		:- showPlayerName, write(' bergerak ke utara, '), w_move, showpos, isEncountered, !.
+execute(a)      		:- showPlayerName, write(' bergerak ke barat, '), a_move, showpos, isEncountered, !.
+execute(s)      		:- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, isEncountered, !.
+execute(d)      		:- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
+execute(status) 		:- showstatus, !.
+execute(save(NamaFile)) :- save(y, NamaFile), !.
+execute(_)				:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
 
 endgame(0) :- nl, delay, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. ITB akhirnya dikuasai oleh makhluk halus, dan menjadi angker...'), nl, abort, !.
 endgame(1) :- difficulty(hard), legendsSetan(L), L = [], !, nl, delay, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, halt, !.
@@ -208,3 +209,11 @@ loseAnimation :-
 	write(' \\____   (  <_> )  |  / |    |__(  <_> )___ \\\\  ___/ '),nl, delay,
 	write(' / ______|\\____/|____/  |_______ \\____/____  >\\___  >'),nl, delay,
 	write(' \\/                             \\/         \\/     \\/ '),nl.
+
+save(X) :- X == 'Y' , !, savegame.
+save(X) :- X == 'y' , !, savegame.
+save(X) :- X == 'N' , !. 
+save(X) :- X == 'n' , !. 
+
+
+
