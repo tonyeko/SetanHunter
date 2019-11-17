@@ -77,7 +77,7 @@
         legendary(satan).
 
 /* stats */
-        starthp(pocong, 2500).
+        starthp(pocong, 3500).
         starthp(kuntilanak, 2000).
         starthp(tuyul, 3000).
         starthp(banaspati, 3000).
