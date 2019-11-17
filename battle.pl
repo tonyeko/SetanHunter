@@ -34,6 +34,7 @@ pick(X) :-
     write(', lawan setan itu!'), nl, nl,
     playerPos(D, E), B is D, C is E, enemy(A, B, C),
     asserta(fighting(X, A)),
+    starthp(A, M), asserta(enemyHP(A, M)),
     battle, !.
 pick(_) :-
     write('You don''t have that Setan!'), nl,
@@ -78,7 +79,7 @@ battlestatus :-
     fighting(X, Y),
     write('Enemy Status: '), nl,
     write(Y), nl,
-    write('Health: '), hp(Y, P),
+    write('Health: '), enemyHP(Y, P),
     write(P), nl,
     write('Type: '), type(Q, Y),
     write(Q), nl, nl,
@@ -94,8 +95,8 @@ battlecommand(attack) :-
     iseffective(X, Y, Modifier),
     nattack(X, Z),
     Damage is (Z * Modifier),
-    hp(Y, P), P1 is P-Damage,
-    retract(hp(Y, P)), asserta(hp(Y, P1)),
+    enemyHP(Y, P), P1 is P-Damage,
+    retract(enemyHP(Y, P)), asserta(enemyHP(Y, P1)),
     write('You dealt '), write(Damage),
     write(' damage to '), write(Y).
 
@@ -105,8 +106,8 @@ battlecommand(specialattack) :-
     write(X), write(' uses '), write(Z), write('!'), nl,
     iseffective(X, Y, Modifier),
     Damage is (U * Modifier),
-    hp(Y, P), P1 is P-Damage,
-    retract(hp(Y, P)), asserta(hp(Y, P1)),
+    enemyHP(Y, P), P1 is P-Damage,
+    retract(enemyHP(Y, P)), asserta(enemyHP(Y, P1)),
     write('You dealt '), write(Damage),
     write(' damage to '), write(Y), nl,
     retract(spused(player, 0)),
@@ -156,9 +157,12 @@ battle :-
     repeat,
         battlestatus,
         inputBattleCommand,
-        random(1, 10, N),
-        enemymove(N),
-        endbattle.
+        ( 	fighting(_, Y), enemyHP(Y, U), U =< 0 ->
+        		endbattle;
+        	random(1, 10, N),
+       		enemymove(N),
+        	endbattle	).
+        
 
 inputBattleCommand :-
     write('$ '), read(Input), nl,
@@ -166,7 +170,7 @@ inputBattleCommand :-
 
 endbattle :-
     fighting(_, Y),
-    hp(Y, P), P =< 0, !,
+    enemyHP(Y, P), P =< 0, !,
     write('Anda telah mengalahkan setan '), write(Y), nl, isLegend(Y),
     write('Apakah anda ingin menangkap '), write(Y), write('(Y/N)? '),
     read(Input), catch(Input, Y), restore, deleteEnemy, !.
@@ -186,7 +190,7 @@ catch(X, Enemy) :- X = 'y', !, resetEnemyHP(Enemy), captured(Enemy).
 catch(X, _) :- X = 'N', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
 catch(X, _) :- X = 'n', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
 
-deleteEnemy :- playerPos(D, E), B is D, C is E, enemy(A, B, C), retract(enemy(A, B, C)).
+deleteEnemy :- playerPos(D, E), B is D, C is E, enemy(A, B, C), retract(enemy(A, B, C)), retract(enemyHP(A, _)).
 
 restore :-
     retract(spused(player, _)), retract(fighting(_, _)), retract(spused(enemy, _)), retract(battleWithLegend(_)).

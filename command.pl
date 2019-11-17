@@ -22,7 +22,7 @@ showinstruction :-
     delay2,
 	write('Tentunya, kamu juga punya banyak sekali deadline tubes yang harus akan datang dalam waktu dekat.'), nl,
 	delay2,
-	write('Namun, akhir-akhir ini setiap malam di ITB banyak sekali setan yang berkeliaraan yang mengganggu mahasiswa (termasuk kamu), sehingga kamu tidak bisa nubes malem-malem di ITB...'), nl,
+	write('Namun, akhir-akhir ini setiap malam di ITB banyak sekali setan yang berkeliaraan yang mengganggu mahasiswa (termasuk kamu), sehingga kamu tidak bisa nubes malem-malem di ITB...'), nl, nl,
 	delay2,
 	write('Keresahan inilah yang membuat kamu membuat sebuah pengangkap setan (yang dibuat menggunakan bahasa Prolog) dan mencalonkan diri sebagai seorang SETAN HUNTER,'), nl,
 	delay2,
