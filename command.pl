@@ -63,8 +63,38 @@ showmap :-
 quit :-
     write('Anda akan keluar dari game. Ingin save status game? (y/n)'), nl,
     write('$ '),
-    /*read(X), save(X),*/
+    read(X), nl, isSave(X),
     abort, !.
+
+isSave(X) :- X == 'Y', !,
+	write('Masukkan nama file: '), nl,
+    write('$ '), read(Z), save(X, Z), !.
+isSave(X) :- X == 'y', !,
+	write('Masukkan nama file: '), nl,
+    write('$ '), read(Z), save(X, Z), !.
+isSave(X) :- X == 'N', !.
+isSave(X) :- X == 'n', !.
+
+isLoad(X) :- X == 'N', !, nl,
+	initDifficulty, nl, nl, delay,
+	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl, delay,
+	initPlayer, nl,
+	initLegends,
+	initEnemy(20),
+	showinstruction, !.
+isLoad(X) :- X == 'n', !, nl,
+	initDifficulty, nl, nl, delay,
+	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl, delay,
+	initPlayer, nl,
+	initLegends,
+	initEnemy(20),
+	showinstruction, !.
+isLoad(X) :- X == 'Y', !,
+	write('Masukkan nama file: '), nl,
+    write('$ '), read(Z), loadGame(Z), nl, write('Status game berhasil di-load!'), nl, nl, !.
+isLoad(X) :- X == 'y', !,
+	write('Masukkan nama file: '), nl,
+    write('$ '), read(Z), loadGame(Z), nl, write('Status game berhasil di-load!'), nl, nl, !.
 
 showstatus :-
 	write('Setan yang dimiliki:'), nl, nl,
@@ -186,7 +216,8 @@ execute(a)      		:- showPlayerName, write(' bergerak ke barat, '), a_move, show
 execute(s)      		:- showPlayerName, write(' bergerak ke selatan, '), s_move, showpos, isEncountered, !.
 execute(d)      		:- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
 execute(status) 		:- showstatus, !.
-%execute(save(NamaFile)) :- save(y, NamaFile), !.
+execute(save(NamaFile)) :- save(y, NamaFile), !.
+execute(load(NamaFile)) :- loadGame(NamaFile), nl, write('Status game berhasil di-load!'), nl, showstatus, !.
 execute(_)				:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
 
 endgame(0) :- nl, delay, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. ITB akhirnya dikuasai oleh makhluk halus, dan menjadi angker...'), nl, abort, !.
@@ -210,7 +241,82 @@ loseAnimation :-
 	write(' / ______|\\____/|____/  |_______ \\____/____  >\\___  >'),nl, delay,
 	write(' \\/                             \\/         \\/     \\/ '),nl.
 
-%save(X) :- X == 'Y' , !, savegame.
-%save(X) :- X == 'y' , !, savegame.
-%save(X) :- X == 'N' , !.
-%save(X) :- X == 'n' , !.
+save(X, NamaFile) :- X == 'Y' , !, savegame(NamaFile), write('Status game berhasil disimpan!'), nl, !.
+save(X, NamaFile) :- X == 'y' , !, savegame(NamaFile), write('Status game berhasil disimpan!'), nl, !.
+save(X, _) :- X == 'N' , !.
+save(X, _) :- X == 'n' , !.
+
+savegame(NamaFile):-
+	open(NamaFile,write,SaveFile),
+	player(NamaPlayer),
+	write(SaveFile, player(NamaPlayer)),write(SaveFile, '.'), nl(SaveFile),
+	playerPos(X, Y),
+	write(SaveFile,playerPos(X, Y)),write(SaveFile,'.'),nl(SaveFile),
+	difficulty(Diff),
+	write(SaveFile,difficulty(Diff)),write(SaveFile,'.'),nl(SaveFile),
+	rektoratUsed(Num1),
+	write(SaveFile,rektoratUsed(Num1)),write(SaveFile,'.'),nl(SaveFile),
+	legendsSetan(Legend),
+	write(SaveFile,legendsSetan(Legend)),write(SaveFile,'.'),nl(SaveFile),
+	playerSetan(PS),
+	write(SaveFile,playerSetan(PS)),write(SaveFile,'.'),nl(SaveFile),
+	findall(LegendSetan, legendaryPos(LegendSetan, XPos, YPos), ListLegend),
+	findall(XPos, legendaryPos(LegendSetan, XPos, YPos), ListXPosLegend),
+	findall(YPos, legendaryPos(LegendSetan, XPos, YPos), ListYPosLegend),
+	writeList(SaveFile, legendaryPos, ListLegend, ListXPosLegend, ListYPosLegend),
+	findall(Setan, enemy(Setan, XPosSetan, YPosSetan), ListSetan),
+	findall(XPosSetan, enemy(Setan, XPosSetan, YPosSetan), ListXPosSetan),
+	findall(YPosSetan, enemy(Setan, XPosSetan, YPosSetan), ListYPosSetan),
+	writeList(SaveFile, enemy, ListSetan, ListXPosSetan, ListYPosSetan),
+	findall(Setan1, hp(Setan1,SetanHP), ListSetan1),
+	findall(SetanHP, hp(Setan1,SetanHP), ListHP),
+	writeHP(SaveFile, hp, ListSetan1, ListHP),
+	close(SaveFile).
+
+writeList(_, _, [], [], []) :- !.
+writeList(NamaFile, NamaList, [H1|T1], [H2|T2], [H3|T3]) :-
+	write(NamaFile, NamaList),
+	write(NamaFile, '('),
+	write(NamaFile, (H1,H2,H3)),
+	write(NamaFile, ')'),
+	write(NamaFile, '.'),
+	nl(NamaFile),
+	writeList(NamaFile, NamaList, T1, T2, T3), !.
+
+writeHP(_, _, [], []) :- !.
+writeHP(NamaFile, NamaList, [H1|T1], [H2|T2]) :- starthp(H1, X), X == H2 , !,
+	writeHP(NamaFile, NamaList, T1, T2), !.
+writeHP(NamaFile, NamaList, [H1|T1], [H2|T2]) :- starthp(H1, X), X \= H2 , !,
+	write(NamaFile, NamaList),
+	write(NamaFile, '('),
+	write(NamaFile, (H1,H2)),
+	write(NamaFile, ')'),
+	write(NamaFile, '.'),
+	nl(NamaFile),
+	writeHP(NamaFile, NamaList, T1, T2), !.
+
+reset :-
+	retractall(player(_)),
+	retractall(playerPos(_, _)),
+	retractall(legendaryPos(_, _, _)),
+	retractall(enemy(_, _, _)),
+	retractall(difficulty(_)),
+	retractall(legendsSetan(_)),
+	retractall(playerSetan(_)),
+	retractall(rektoratUsed(_)),
+	retractall(spused(_)),
+	retractall(battleWithLegend(_)),
+	retractall(fighting(_,_)),
+	retractall(hp(_,_)), consult('setan.pl').
+
+loadGame(NamaFile) :-
+	reset,
+	open(NamaFile, read, LoadFile),
+	loadStatus(LoadFile),
+	close(LoadFile), !.
+
+loadStatus(LoadFile) :-
+	repeat,
+		read(LoadFile, F),
+		asserta(F),
+		at_end_of_stream(LoadFile).

@@ -211,32 +211,49 @@
 
 /* Relasi Tipe setan */
     /* Super Effective */
-    /* Serangan setan envy efektif terhadap gluttony */
+    /* Envy -> Gluttony && Envy -> Pride */
     seffective(envy, gluttony).
-    /* Serangan setan gluttony efektif terhadap greed */
+    seffective(envy, pride).
+    /* Gluttony -> Greed && Gluttony -> Sloth */
     seffective(gluttony, greed).
-    /* Serangan setan greed efektif terhadap envy */
-    seffective(greed, envy).
-    /* Serangan setan lust efektif terhadap greed */
-    seffective(lust, greed).
-    /* Serangan setan pride efektif terhadap pride */
-    seffective(pride, pride).
-    /* Serangan setan wrath efektif terhadap pride */
-    seffective(wrath, pride).
-    /* Serangan setan wrath efektif terhadap envy */
+    seffective(gluttony, sloth).
+    /* Greed -> Pride && Greed -> Lust */
+    seffective(greed, pride).
+    seffective(greed, lust).
+    /* Pride -> Sloth && Pride -> Wrath */
+    seffective(pride, sloth).
+    seffective(pride, wrath).
+    /* Sloth -> Lust && Sloth -> Wrath */
+    seffective(sloth, lust).
+    seffective(sloth, wrath).
+    /* Lust -> Envy && Lust -> Wrath */
+    seffective(lust, envy).
+    seffective(lust, wrath).
+    /* Wrath -> Envy && Wrath -> Gluttony && Wrath -> Greed */
     seffective(wrath, envy).
+    seffective(wrath, gluttony).
+    seffective(wrath, greed).
+    
     /* Not Effective */
-    /* Serangan setan gluttony tidak efektif terhadap envy */
+    /* Envy -> Lust && Envy -> Wrath */
+    neffective(envy, lust).
+    neffective(envy, wrath).
+    /* Gluttony -> Envy && Gluttony -> Wrath */
     neffective(gluttony, envy).
-    /* Serangan setan greed tidak efektif terhadap gluttony */
+    neffective(gluttony, wrath).
+    /* Greed -> Gluttony && Greed -> Wrath */
     neffective(greed, gluttony).
-    /* Serangan setan envy tidak efektif terhadap greed */
-    neffective(envy, greed).
-    /* Serangan setan pride tidak efektif terhadap envy */
+    neffective(greed, wrath).
+    /* Pride -> Envy && Pride -> Greed */
     neffective(pride, envy).
-    /* Serangan setan pride tidak efektif terhadap greed, gluttony, dan lust */
     neffective(pride, greed).
-    neffective(pride, gluttony).
-    neffective(pride, lust).
-    /* Serangan setan lust tidak efektif terhadap gluttony */
-    neffective(lust, gluttony).
+    /* Sloth -> Pride && Sloth -> Gluttony */
+    neffective(sloth, pride).
+    neffective(sloth, gluttony).
+    /* Lust -> Greed && Lust -> Sloth */
+    neffective(lust, greed).
+    neffective(lust, sloth).
+    /* Wrath -> Pride && Wrath -> Sloth && Wrath -> Lust */
+    neffective(wrath, pride).
+    neffective(wrath, sloth).
+    neffective(wrath, lust).
