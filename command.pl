@@ -159,6 +159,7 @@ dead(X) :-
 	playerSetan(Y), resetEnemyHP(X), del(X, Y, Z),
 	retract(playerSetan(Y)), assertz(playerSetan(Z)).
 
+resetHP([]) :- !.
 resetHP([X|T])	:-
 	starthp(X, Y),
 	retract(hp(X, _)),
@@ -170,7 +171,8 @@ resetEnemyHP(X) :-
 	retract(hp(X, _)),
 	asserta(hp(X, Y)), !.
 
-healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, write('Setan kamu berhasil disembuhkan.'), nl, nl, retract(rektoratUsed(0)), asserta(rektoratUsed(1)), playerSetan(Z), resetHP(Z), !.
+healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, playerSetan(Z), resetHP(Z), 
+			write('.'), delay2, write('.'), delay2, write('.'), delay2, nl, write('Setan kamu berhasil disembuhkan.'), retract(rektoratUsed(0)), asserta(rektoratUsed(1)), nl, nl, !.
 healing	:- rektoratUsed(0), !, write('tidak berada di area rektorat, setan kamu tidak bisa disembuhkan.'), nl, !.
 healing :- rektoratUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan setan kamu di rektorat.'), nl, !.
 
