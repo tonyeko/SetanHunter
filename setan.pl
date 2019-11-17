@@ -110,7 +110,7 @@
         starthp(leviathan, 7000).
         starthp(satan, 9999).
 
-        hp(pocong, 2500).
+        hp(pocong, 25000).
         hp(kuntilanak, 2000).
         hp(tuyul, 3000).
         hp(banaspati, 3000).
@@ -143,7 +143,7 @@
         hp(leviathan, 7000).
         hp(satan, 9999).
 
-        nattack(pocong, 250).
+        nattack(pocong, 750).
         nattack(kuntilanak, 275).
         nattack(tuyul, 225).
         nattack(banaspati, 325).

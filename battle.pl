@@ -156,9 +156,12 @@ battle :-
     repeat,
         battlestatus,
         inputBattleCommand,
-        random(1, 10, N),
-        enemymove(N),
-        endbattle.
+        ( 	fighting(_, Y), hp(Y, U), U =< 0 ->
+        		endbattle;
+        	random(1, 10, N),
+       		enemymove(N),
+        	endbattle	).
+        
 
 inputBattleCommand :-
     write('$ '), read(Input), nl,
