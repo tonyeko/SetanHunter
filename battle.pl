@@ -118,8 +118,6 @@ battlecommand(specialattack) :-
     fighting(_, _), spused(player, 1), !,
     write('Special Attack sudah digunakan!'), nl, nl, inputBattleCommand.
 
-battlecommand(status) :- battlestatus.
-
 enemymove(N) :-
     fighting(X, Y), N =< 6,
     nattack(Y, U),
