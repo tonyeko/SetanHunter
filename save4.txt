@@ -27,5 +27,5 @@ enemy(danlap_1920,14,5).
 enemy(tukang_baso_PAU,9,8).
 enemy(hantu_kaki,12,9).
 enemy(tukang_baso_PAU,14,4).
-hp(kuyang,25).
-hp(jeruk_purut,1225).
+hpSetanKita(kuyang,25).
+hpSetanKita(jeruk_purut,1225).

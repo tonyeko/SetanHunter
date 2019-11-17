@@ -30,4 +30,4 @@ enemy(samurai,14,2).
 enemy(banaspati,10,8).
 enemy(kuntilanak,10,7).
 enemy(genderuwo,11,5).
-hp(pocong,1700).
+hpSetanKita(pocong,1700).

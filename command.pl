@@ -217,7 +217,7 @@ execute(s)      		:- showPlayerName, write(' bergerak ke selatan, '), s_move, sh
 execute(d)      		:- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
 execute(status) 		:- showstatus, !.
 execute(save(NamaFile)) :- save(y, NamaFile), !.
-execute(load(NamaFile)) :- loadGame(NamaFile), nl, write('Status game berhasil di-load!'), nl, showstatus, !.
+execute(load(NamaFile)) :- loadGame(NamaFile), resetHPplayerSetan, nl, write('Status game berhasil di-load!'), nl, showstatus, !.
 execute(_)				:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
 
 endgame(0) :- nl, delay, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. ITB akhirnya dikuasai oleh makhluk halus, dan menjadi angker...'), nl, abort, !.
@@ -270,7 +270,7 @@ savegame(NamaFile):-
 	writeList(SaveFile, enemy, ListSetan, ListXPosSetan, ListYPosSetan),
 	findall(Setan1, hp(Setan1,SetanHP), ListSetan1),
 	findall(SetanHP, hp(Setan1,SetanHP), ListHP),
-	writeHP(SaveFile, hp, ListSetan1, ListHP),
+	writeHP(SaveFile, hpSetanKita, ListSetan1, ListHP),
 	close(SaveFile).
 
 writeList(_, _, [], [], []) :- !.
@@ -295,6 +295,13 @@ writeHP(NamaFile, NamaList, [H1|T1], [H2|T2]) :- starthp(H1, X), X \= H2 , !,
 	nl(NamaFile),
 	writeHP(NamaFile, NamaList, T1, T2), !.
 
+resetHP([], []) :- !.
+resetHP([H1|T1], [H2|T2]) :- starthp(H1, X), X == H2 , !,
+	resetHP(T1, T2), !.
+resetHP([H1|T1], [H2|T2]) :- starthp(H1, X), X \= H2 , !,
+	retract(hp(H1, H2)), asserta(hp(H1, X)),
+	resetHP(T1, T2), !.
+	
 reset :-
 	retractall(player(_)),
 	retractall(playerPos(_, _)),
@@ -307,7 +314,11 @@ reset :-
 	retractall(spused(_)),
 	retractall(battleWithLegend(_)),
 	retractall(fighting(_,_)),
-	retractall(hp(_,_)), consult('setan.pl').
+	retractall(enemyHP(_,_)),
+	% retractall(hp(_,_)), consult('setan.pl').
+	findall(Setan1, hp(Setan1,SetanHP), ListSetan1),
+	findall(SetanHP, hp(Setan1,SetanHP), ListHP),
+	resetHP(ListSetan1, ListHP).
 
 loadGame(NamaFile) :-
 	reset,
@@ -320,3 +331,8 @@ loadStatus(LoadFile) :-
 		read(LoadFile, F),
 		asserta(F),
 		at_end_of_stream(LoadFile).
+
+resetHPplayerSetan :- 
+	findall(Setan1, hpSetanKita(Setan1,SetanHP), ListSetan1),
+	findall(SetanHP, hpSetanKita(Setan1,SetanHP), ListHP),
+	resetHP(ListSetan1, ListHP), !.
