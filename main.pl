@@ -38,13 +38,8 @@ start :-
 	write('$$ |  $$ |$$    $$/ $$ |  $$ |  $$  $$/ $$       |$$ |      '),nl, delay,
 	write('$$/   $$/  $$$$$$/  $$/   $$/    $$$$/   $$$$$$$/ $$/       '),nl, delay,
 	nl,nl,
-	initDifficulty, nl, nl, delay,
-	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl, delay,
-	initPlayer, nl,
-	initLegends,
-	initEnemy(20),
-
-	showinstruction,
+	write('Apakah Anda ingin load status game yang sudah ada(Y/N)? '), nl,
+    write('$ '), read(X), isLoad(X),
 	showmap,
 
 	repeat,
@@ -56,15 +51,3 @@ start :-
 loop :-
   gameMain(0), !.
 
-reset :-
-	retractall(playerPos(_, _)),
-	retractall(legendaryPos(_, _, _)),
-	retractall(enemy(_, _, _)),
-	retractall(difficulty(_)),
-	retractall(legendsSetan(_)),
-	retractall(playerSetan(_)),
-	retractall(rektoratUsed(_)),
-	retractall(spused(_)),
-	retractall(battleWithLegend(_)),
-	retractall(fighting(_,_)),
-	retractall(hp(_,_)), consult('setan.pl').
