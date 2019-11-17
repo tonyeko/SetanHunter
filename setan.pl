@@ -1,4 +1,7 @@
 :- dynamic(hp/2). /* hp(X, Y) */
+:- dynamic(fullhp/2).
+:- dynamic(level/2).
+:- dynamic(experience/2).
 
 /* Nama setan */
         setan(pocong).
@@ -45,7 +48,7 @@
         type(greed, mammon).
     /* type: pride */
         type(pride, hantu_IP_4).
-        type(pride,	jin_tomang).
+        type(pride, jin_tomang).
         type(pride, jelangkung).
         type(pride, lucifer).
         type(pride, samurai).
@@ -53,18 +56,18 @@
         type(sloth, jenglot).
         type(sloth, wewe_gombel).
         type(sloth, jeruk_purut).
-        type(sloth,nurikabe).
-        type(sloth,belphegor).
+        type(sloth, nurikabe).
+        type(sloth, belphegor).
     /* type: lust */
         type(lust, noni_belanda).
         type(lust, tukang_baso_PAU).
         type(lust, hantu_wibu).
         type(lust, asmodeus).
-    /*	type: wrath */
-    	type(wrath, pennywise).
-    	type(wrath, valak).
-    	type(wrath, danlap_1920).
-    	type(wrath, satan).
+    /*  type: wrath */
+        type(wrath, pennywise).
+        type(wrath, valak).
+        type(wrath, danlap_1920).
+        type(wrath, satan).
         type(wrath, cerberus).
 
 /* Legendary setan */
@@ -109,39 +112,6 @@
         starthp(beelzebub, 6000).
         starthp(leviathan, 7000).
         starthp(satan, 9999).
-
-        hp(pocong, 3500).
-        hp(kuntilanak, 2000).
-        hp(tuyul, 3000).
-        hp(banaspati, 3000).
-        hp(genderuwo, 2250).
-        hp(kuyang, 2100).
-        hp(mbah_jenggot, 2400).
-        hp(hantu_kaki, 2250).
-        hp(slenderman, 3500).
-        hp(jin_tomang, 2250).
-        hp(jelangkung, 2500).
-        hp(hantu_IP_4, 3000).
-        hp(tukang_baso_PAU, 3000).
-        hp(noni_belanda, 2600).
-        hp(jenglot, 2340).
-        hp(wewe_gombel, 2460).
-        hp(jeruk_purut, 2600).
-        hp(valak, 2470).
-        hp(pennywise, 2750).
-        hp(danlap_1920,3150).
-        hp(hantu_wibu,2235).
-        hp(nurikabe, 7500).
-        hp(samurai, 2700).
-        hp(grimreaper, 4250).
-        hp(cerberus, 4750).
-        hp(lucifer, 7500).
-        hp(mammon, 8500).
-        hp(asmodeus, 5500).
-        hp(belphegor, 4500).
-        hp(beelzebub, 6000).
-        hp(leviathan, 7000).
-        hp(satan, 9999).
 
         nattack(pocong, 350).
         nattack(kuntilanak, 275).
@@ -257,3 +227,9 @@
     neffective(wrath, pride).
     neffective(wrath, sloth).
     neffective(wrath, lust).
+
+/* LEVEL STARTING POCONG  */
+    level(pocong, 10).
+    fullhp(pocong, 3520).
+    hp(pocong, 3520).
+    experience(pocong, 1000).

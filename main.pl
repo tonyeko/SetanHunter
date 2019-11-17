@@ -55,16 +55,3 @@ start :-
 
 loop :-
     gameMain(0), !.
-
-reset :-
-    retractall(playerPos(_, _)),
-    retractall(legendaryPos(_, _, _)),
-    retractall(enemy(_, _, _)),
-    retractall(difficulty(_)),
-    retractall(legendsSetan(_)),
-    retractall(playerSetan(_)),
-    retractall(rektoratUsed(_)),
-    retractall(spused(_)),
-    retractall(battleWithLegend(_)),
-    retractall(fighting(_,_)),
-    retractall(hp(_,_)), consult('setan.pl').

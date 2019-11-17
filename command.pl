@@ -105,18 +105,21 @@ showstatus :-
 showssetanstat([]).
 showssetanstat([X|T]) :-
 	write('Nama             : '), write(X), nl,
-	write('HP               : '), hp(X, Y), write(Y), write('/'), starthp(X,A), write(A),nl,
+	write('Level            : '), level(X, N), write(N), nl,
+	write('HP               : '), hp(X, Y), write(Y), write('/'), fullhp(X,A), write(A),nl,
+	write('EXP              : '), experience(X, XP), write(XP), nl,
 	write('Tipe             : '), type(Z, X), write(Z), nl,
-	write('Attack           : '), nattack(X, U), write(U), nl,
-	write('Special Attack   : '), spattack(X, V, W), write(W), write('('), write(V), write(')'), nl, nl,
+	write('Attack           : '), nattack(X, U), U1 is (U + (2*N)), write(U1), nl,
+	write('Special Attack   : '), spattack(X, V, W), write(W), V1 is (V + (3*N)), write(' ('), write(V1), write(')'), nl, nl,
 	showssetanstat(T).
 
 showEnemyStatus(X) :-
 	write('Nama             : '), write(X), nl,
-	write('HP               : '), hp(X, Y), write(Y), write('/'), starthp(X,A), write(A),nl,
+	write('Level            : '), enemylv(_, N), write(N), nl,
+	write('HP               : '), enemyHP(X, Y), write(Y), write('/'), enemyHP(X, Y), write(Y),nl,
 	write('Tipe             : '), type(Z, X), write(Z), nl,
-	write('Attack           : '), nattack(X, U), write(U), nl,
-	write('Special Attack   : '), spattack(X, V, W), write(W), write('('), write(V), write(')'), nl, nl, !.
+	write('Attack           : '), enemyAtk(X, U), write(U), nl,
+	write('Special Attack   : '), enemySA(X, V, W), write(W), write(' ('), write(V), write(')'), nl, nl, !.
 
 /* Generate random X, Y position */
 generateRandomPos(X, Y) :- random(1,15,X), random(1,15,Y).
@@ -176,11 +179,11 @@ captured(X) :-
 
 drop(Y, X) :- Y = 'Y' , !,
 	write('Silahkan drop Setan: '), nl, nl, playerSetan(Z), showsetan(Z), nl,
-    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)),
+    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)),
     asserta(playerSetan(A)), captured(X).
 drop(Y, X) :- Y = 'y' , !,
 	write('Silahkan drop Setan: '), nl, nl, playerSetan(Z), showsetan(Z), nl,
-    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)),
+    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)),
     asserta(playerSetan(A)), captured(X).
 drop(Y, X) :- Y = 'N', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
 drop(Y, X) :- Y = 'n', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
@@ -191,7 +194,7 @@ dead(X) :-
 
 resetHP([]) :- !.
 resetHP([X|T])	:-
-	starthp(X, Y),
+	fullhp(X, Y),
 	retract(hp(X, _)),
 	asserta(hp(X, Y)),
 	resetHP(T), !.
@@ -296,9 +299,9 @@ writeHP(NamaFile, NamaList, [H1|T1], [H2|T2]) :- starthp(H1, X), X \= H2 , !,
 	writeHP(NamaFile, NamaList, T1, T2), !.
 
 resetHP([], []) :- !.
-resetHP([H1|T1], [H2|T2]) :- starthp(H1, X), X == H2 , !,
+resetHP([H1|T1], [H2|T2]) :- fullhp(H1, X), X == H2 , !,
 	resetHP(T1, T2), !.
-resetHP([H1|T1], [H2|T2]) :- starthp(H1, X), X \= H2 , !,
+resetHP([H1|T1], [H2|T2]) :- fullhp(H1, X), X \= H2 , !,
 	retract(hp(H1, H2)), asserta(hp(H1, X)),
 	resetHP(T1, T2), !.
 	
