@@ -48,7 +48,7 @@ preBattle :-
     random(1,100,Q), run(Q).
 
 run(X) :- X < 50, !, write('You failed to run!'), nl, asserta(battleWithLegend(0)), initBattle, !.
-run(_) :- write('You sucessfully escaped the Setan!'), retract(enemylv(_)), retract(enemyHP(_,_)), retract(enemyAtk(_,_)), retract(enemySA(_,_,_)), nl, !.
+run(_) :- write('You sucessfully escaped the Setan!'), retract(enemylv(_,_)), retract(enemyHP(_,_)), retract(enemyAtk(_,_)), retract(enemySA(_,_,_)), nl, !.
 
 pick(X) :-
     searchParty(X), !,
@@ -144,8 +144,6 @@ battlecommand(specialattack) :-
 battlecommand(specialattack) :-
     fighting(_, _), spused(player, 1), !,
     write('Special Attack sudah digunakan!'), nl, nl, inputBattleCommand.
-
-% battlecommand(status) :- battlestatus.
 
 enemymove(N) :-
     fighting(X, Y), N =< 6,

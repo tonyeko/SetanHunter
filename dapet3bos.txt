@@ -1,6 +1,6 @@
 player(d).
 playerPos(9,5).
-difficulty(hard).
+difficulty(easy).
 rektoratUsed(1).
 legendsSetan([lucifer,asmodeus,belphegor,beelzebub]).
 playerSetan([satan,valak,slenderman,jeruk_purut,mammon,leviathan]).
