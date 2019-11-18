@@ -179,17 +179,17 @@ captured(X) :-
 
 drop(Y, X) :- Y = 'Y' , !,
 	write('Silahkan drop Setan: '), nl, nl, playerSetan(Z), showsetan(Z), nl,
-    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)),
+    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)), retract(level(Input, _)),
     asserta(playerSetan(A)), captured(X).
 drop(Y, X) :- Y = 'y' , !,
 	write('Silahkan drop Setan: '), nl, nl, playerSetan(Z), showsetan(Z), nl,
-    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)),
+    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)), retract(level(Input, _)),
     asserta(playerSetan(A)), captured(X).
 drop(Y, X) :- Y = 'N', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
 drop(Y, X) :- Y = 'n', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
 
 dead(X) :-
-	playerSetan(Y), resetEnemyHP(X), del(X, Y, Z),
+	playerSetan(Y), retractSetanFromList(X), del(X, Y, Z),
 	retract(playerSetan(Y)), assertz(playerSetan(Z)).
 
 resetHP([]) :- !.
@@ -199,10 +199,11 @@ resetHP([X|T])	:-
 	asserta(hp(X, Y)),
 	resetHP(T), !.
 
-resetEnemyHP(X) :-
-	starthp(X, Y),
+retractSetanFromList(X) :-
 	retract(hp(X, _)),
-	asserta(hp(X, Y)), !.
+	retract(level(X, _)),
+	retract(experience(X,_)),
+	retract(fullhp(X, _)), !.
 
 healing	:- playerPos(X, Y), rektoratPos(A, B), X == A, Y == B, rektoratUsed(0), !, playerSetan(Z), resetHP(Z),
 			write('.'), delay2, write('.'), delay2, write('.'), delay2, nl, write('Setan kamu berhasil disembuhkan.'), retract(rektoratUsed(0)), asserta(rektoratUsed(1)), nl, nl, !.
@@ -210,7 +211,7 @@ healing	:- rektoratUsed(0), !, write('tidak berada di area rektorat, setan kamu 
 healing :- rektoratUsed(1), !, write('command ini tidak dapat lagi digunakan karena kamu sudah pernah menyembuhkan setan kamu di rektorat.'), nl, !.
 
 execute(start)			:- write('permainan sudah dimulai.'), nl, !.
-%execute(quit)   		:- quit, !.
+execute(quit)   		:- quit, !.
 execute(help)   		:- showcommands, !.
 execute(map)    		:- showmap, !.
 execute(heal)			:- healing, !.
@@ -220,7 +221,7 @@ execute(s)      		:- showPlayerName, write(' bergerak ke selatan, '), s_move, sh
 execute(d)      		:- showPlayerName, write(' bergerak ke timur, '), d_move, showpos, isEncountered, !.
 execute(status) 		:- showstatus, !.
 execute(save(NamaFile)) :- save(y, NamaFile), !.
-execute(load(NamaFile)) :- loadGame(NamaFile), resetHPplayerSetan, nl, write('Status game berhasil di-load!'), nl, showstatus, !.
+execute(load(NamaFile)) :- loadGame(NamaFile), nl, write('Status game berhasil di-load!'), nl, showstatus, !.
 execute(_)				:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
 
 endgame(0) :- nl, delay, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. ITB akhirnya dikuasai oleh makhluk halus, dan menjadi angker...'), nl, abort, !.
@@ -271,9 +272,18 @@ savegame(NamaFile):-
 	findall(XPosSetan, enemy(Setan, XPosSetan, YPosSetan), ListXPosSetan),
 	findall(YPosSetan, enemy(Setan, XPosSetan, YPosSetan), ListYPosSetan),
 	writeList(SaveFile, enemy, ListSetan, ListXPosSetan, ListYPosSetan),
-	findall(Setan1, hp(Setan1,SetanHP), ListSetan1),
+	findall(Setan1, hp(Setan1,SetanHP), ListSetan1),	/* List hp */
 	findall(SetanHP, hp(Setan1,SetanHP), ListHP),
-	writeHP(SaveFile, hpSetanKita, ListSetan1, ListHP),
+	writeStatusPlayer(SaveFile, hp, ListSetan1, ListHP),
+	findall(Setan2, fullhp(Setan2,SetanHP2), ListSetan2),	/* List fullhp */
+	findall(SetanHP2, fullhp(Setan2,SetanHP2), ListHP2),
+	writeStatusPlayer(SaveFile, fullhp, ListSetan2, ListHP2),
+	findall(Setan3, level(Setan3,LevelSetan), ListSetan3),	/* List level */
+	findall(LevelSetan, level(Setan3,LevelSetan), ListLevel),
+	writeStatusPlayer(SaveFile, level, ListSetan3, ListLevel),
+	findall(Setan4, experience(Setan4,ExpSetan), ListSetan4),	/* List experience */
+	findall(ExpSetan, experience(Setan4,ExpSetan), ListExp),
+	writeStatusPlayer(SaveFile, experience, ListSetan4, ListExp),
 	close(SaveFile).
 
 writeList(_, _, [], [], []) :- !.
@@ -286,24 +296,22 @@ writeList(NamaFile, NamaList, [H1|T1], [H2|T2], [H3|T3]) :-
 	nl(NamaFile),
 	writeList(NamaFile, NamaList, T1, T2, T3), !.
 
-writeHP(_, _, [], []) :- !.
-writeHP(NamaFile, NamaList, [H1|T1], [H2|T2]) :- starthp(H1, X), X == H2 , !,
-	writeHP(NamaFile, NamaList, T1, T2), !.
-writeHP(NamaFile, NamaList, [H1|T1], [H2|T2]) :- starthp(H1, X), X \= H2 , !,
+writeStatusPlayer(_, _, [], []) :- !.
+writeStatusPlayer(NamaFile, NamaList, [H1|T1], [H2|T2]) :-
 	write(NamaFile, NamaList),
 	write(NamaFile, '('),
 	write(NamaFile, (H1,H2)),
 	write(NamaFile, ')'),
 	write(NamaFile, '.'),
 	nl(NamaFile),
-	writeHP(NamaFile, NamaList, T1, T2), !.
+	writeStatusPlayer(NamaFile, NamaList, T1, T2), !.
 
-resetHP([], []) :- !.
-resetHP([H1|T1], [H2|T2]) :- fullhp(H1, X), X == H2 , !,
-	resetHP(T1, T2), !.
-resetHP([H1|T1], [H2|T2]) :- fullhp(H1, X), X \= H2 , !,
+resetHPLoad([], []) :- !.
+resetHPLoad([H1|T1], [H2|T2]) :- hp(H1, X), X == H2 , !,
+	resetHPLoad(T1, T2), !.
+resetHPLoad([H1|T1], [H2|T2]) :- hp(H1, X), X \= H2 , !,
 	retract(hp(H1, H2)), asserta(hp(H1, X)),
-	resetHP(T1, T2), !.
+	resetHPLoad(T1, T2), !.
 	
 reset :-
 	retractall(player(_)),
@@ -318,10 +326,18 @@ reset :-
 	retractall(battleWithLegend(_)),
 	retractall(fighting(_,_)),
 	retractall(enemyHP(_,_)),
-	% retractall(hp(_,_)), consult('setan.pl').
-	findall(Setan1, hp(Setan1,SetanHP), ListSetan1),
-	findall(SetanHP, hp(Setan1,SetanHP), ListHP),
-	resetHP(ListSetan1, ListHP).
+	retractall(enemylv(_,_)),
+	retractall(enemyAtk(_,_)),
+	retractall(enemySA(_,_,_)),
+	retractall(allyAtk(_,_)),
+	retractall(allySA(_,_,_)),
+	retractall(fullhp(_,_)),
+	retractall(level(_,_)),
+	retractall(experience(_,_)),
+	retractall(hp(_,_)).
+	% findall(Setan1, fullhp(Setan1,SetanHP), ListSetan1), /* LIST SETAN YANG PUNYA FULL HP */
+	% findall(SetanHP, fullhp(Setan1,SetanHP), ListHP),
+	% resetHPLoad(ListSetan1, ListHP).
 
 loadGame(NamaFile) :-
 	reset,
@@ -335,7 +351,7 @@ loadStatus(LoadFile) :-
 		asserta(F),
 		at_end_of_stream(LoadFile).
 
-resetHPplayerSetan :- 
-	findall(Setan1, hpSetanKita(Setan1,SetanHP), ListSetan1),
-	findall(SetanHP, hpSetanKita(Setan1,SetanHP), ListHP),
-	resetHP(ListSetan1, ListHP), !.
+% resetHPplayerSetan :- 
+% 	findall(Setan1, hpSetanKita(Setan1,SetanHP), ListSetan1),
+% 	findall(SetanHP, hpSetanKita(Setan1,SetanHP), ListHP),
+% 	resetHPLoad(ListSetan1, ListHP), !.

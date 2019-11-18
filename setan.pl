@@ -227,9 +227,3 @@
     neffective(wrath, pride).
     neffective(wrath, sloth).
     neffective(wrath, lust).
-
-/* LEVEL STARTING POCONG  */
-    level(pocong, 10).
-    fullhp(pocong, 3520).
-    hp(pocong, 3520).
-    experience(pocong, 1000).

@@ -145,7 +145,7 @@ battlecommand(specialattack) :-
     fighting(_, _), spused(player, 1), !,
     write('Special Attack sudah digunakan!'), nl, nl, inputBattleCommand.
 
-battlecommand(status) :- battlestatus.
+% battlecommand(status) :- battlestatus.
 
 enemymove(N) :-
     fighting(X, Y), N =< 6,
@@ -211,7 +211,7 @@ zeroHP(_) :- playerSetan(L), L = [], !,
     write('Anda kehabisan setan. '), restore, endgame(0), !.
 zeroHP(X) :-    
     write(X), write(' is dead.'), 
-    retract(level(X, _)), retract(hp(X, _)),        
+    % retract(level(X, _)), retract(hp(X, _)),        
     nl, nl, spused(enemy, Z), battleWithLegend(F), restore, asserta(spused(enemy, Z)), asserta(battleWithLegend(F)), initBattleKe2, !.
 
 isLegend(X) :- battleWithLegend(1), !, legendsSetan(ListLegend), del(X, ListLegend, NewListLegend), retract(legendsSetan(ListLegend)), asserta(legendsSetan(NewListLegend)), endgame(1), !.
@@ -268,7 +268,7 @@ generateXP(X, Y) :-
 
 
 levelup(X) :-
-    experience(X, XP), N1 is div(XP, 100),
+    experience(X, XP), N1 is div(XP, 100), !,
     level(X, N), N1 > N, 
     write(X), write(' telah naik level ke level '), write(N1), write('!'), nl,
     retract(level(X, N)), asserta(level(X, N1)),
@@ -276,7 +276,7 @@ levelup(X) :-
     fullhp(X, V), V1 is (V + (5*N1)), retract(fullhp(X, V)), asserta(fullhp(X, V1)).
 
 levelup(X) :-
-    experience(X, XP), N1 is div(XP, 100),
+    experience(X, XP), N1 is div(XP, 100), !, 
     level(X, N), N1 =:= N, write(X), write(' makin tangguh dalam bertarung!').
 
 
