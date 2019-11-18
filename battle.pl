@@ -217,20 +217,10 @@ zeroHP(X) :-
 isLegend(X) :- battleWithLegend(1), !, legendsSetan(ListLegend), del(X, ListLegend, NewListLegend), retract(legendsSetan(ListLegend)), asserta(legendsSetan(NewListLegend)), endgame(1), !.
 isLegend(_) :- battleWithLegend(0), !.
 
-catch(X, Enemy) :- X = 'Y', !, initCapture(Enemy), captured(Enemy).
-catch(X, Enemy) :- X = 'y', !, initCapture(Enemy), captured(Enemy).
+catch(X, Enemy) :- X = 'Y', !, captured(Enemy).
+catch(X, Enemy) :- X = 'y', !, captured(Enemy).
 catch(X, _) :- X = 'N', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
 catch(X, _) :- X = 'n', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
-
-initCapture(X) :-
-    enemylv(X, N),
-    asserta(level(X, N)),
-    starthp(X, H),
-    H1 is (H + (5*N)),
-    asserta(hp(X, H1)),
-    asserta(fullhp(X, H1)),
-    XP is (N*100),
-    asserta(experience(X, XP)).
 
 /* GENERATE EXP */
 generateXP(X, Y) :-

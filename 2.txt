@@ -28,10 +28,10 @@ enemy(valak,4,9).
 enemy(tukang_baso_PAU,12,11).
 enemy(hantu_IP_4,3,11).
 hp(mammon,8975).
-hp(nurikabe,6770).
+hp(nurikabe,9050).
 hp(genderuwo,2425).
 fullhp(mammon,8975).
-fullhp(nurikabe,7650).
+fullhp(nurikabe,9050).
 fullhp(genderuwo,2425).
 level(mammon,95).
 level(nurikabe,16).

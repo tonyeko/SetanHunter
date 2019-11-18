@@ -165,6 +165,16 @@ searchParty(X) :-
     playerSetan(L),
     member(X, L).
 
+initCapture(X) :-
+    enemylv(X, N),
+    asserta(level(X, N)),
+    starthp(X, H),
+    H1 is (H + (5*N)),
+    asserta(hp(X, H1)),
+    asserta(fullhp(X, H1)),
+    XP is (N*100),
+    asserta(experience(X, XP)).
+
 /* KASUS SUDAH 6 PARTY */
 captured(X) :-
 	playerSetan(Y), count(Y, N), N == 6, !,
@@ -172,7 +182,7 @@ captured(X) :-
 	write('Apakah kamu ingin drop Setan di inventory(Y/N)? '), read(Input), drop(Input, X).
 /* KASUS MASIH ADA SLOT */
 captured(X) :-
-	playerSetan(Y), \+searchParty(X), !, 
+	playerSetan(Y), \+searchParty(X), !, initCapture(X),
 	conc(Y, [X], Z),
 	retract(playerSetan(Y)), assertz(playerSetan(Z)),
 	nl, write('Selamat!!'), nl, write(X), write(' berhasil ditangkap!'), nl, nl,
