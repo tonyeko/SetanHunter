@@ -200,12 +200,13 @@ endbattle :-
     fighting(_, Y),
     enemyHP(Y, P), P =< 0, !,
     write('Anda telah mengalahkan setan '), write(Y), nl, isLegend(Y), nl,
-    generateXP(X, Y), levelup(X), nl,
-    write('Apakah anda ingin menangkap '), write(Y), write('(Y/N)? '),
-    read(Input), catch(Input, Y), nl, restore, nl, deleteEnemy, retract(allyAtk(_,_)), retract(allySA(_,_,_)), !.
+    generateXP(X, Y), levelup(X), nl, write('Apakah anda ingin menangkap '), write(Y), write('(Y/N)? '),
+    isCatch(Y), !.
 endbattle :-
     fighting(X, _),
     hp(X, P), P =< 0, !, dead(X), zeroHP(X), !.
+
+isCatch(Y) :- nl, write('$ '), read(Input), catch(Input, Y), nl, restore, nl, deleteEnemy, retract(allyAtk(_,_)), retract(allySA(_,_,_)), !.
 
 zeroHP(_) :- playerSetan(L), L = [], !,
     write('Anda kehabisan setan. '), restore, endgame(0), !.
@@ -221,6 +222,7 @@ catch(X, Enemy) :- X = 'Y', !, captured(Enemy).
 catch(X, Enemy) :- X = 'y', !, captured(Enemy).
 catch(X, _) :- X = 'N', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
 catch(X, _) :- X = 'n', !, nl, write('Sayang sekali anda tidak mau menangkap setan tersebut. Baiklah tidak apa-apa, lanjutkan perjalanan anda!'), !.
+catch(_, Enemy) :- write('Masukan tidak sesuai! Masukkan y/n!'), isCatch(Enemy), !.
 
 /* GENERATE EXP */
 generateXP(X, Y) :-
