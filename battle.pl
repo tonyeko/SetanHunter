@@ -150,7 +150,7 @@ battlecommand(specialattack) :-
 enemymove(N) :-
     fighting(X, Y), N =< 6,
     enemyAtk(Y, U),
-    iseffective(X, Y, Modifier),
+    iseffective(Y, X, Modifier),
     Damage is (U * Modifier),
     hp(X, P), P1 is P-Damage,
     retract(hp(X, P)), asserta(hp(X, P1)),
@@ -159,7 +159,7 @@ enemymove(N) :-
     fighting(X, Y), spused(enemy, 0), N > 6, !,
     write('Enemy '), write(Y),
     enemySA(Y, U, Z),
-    iseffective(X, Y, Modifier),
+    iseffective(Y, X, Modifier),
     write(' uses '), write(Z), write('!'),
     Damage is (U * Modifier),
     hp(X, P), P1 is P-Damage,
@@ -170,7 +170,7 @@ enemymove(N) :-
 enemymove(N) :-
     fighting(X, Y), spused(enemy, 1), N > 6, !,
     enemyAtk(Y, U),
-    iseffective(X, Y, Modifier),
+    iseffective(Y, X, Modifier),
     Damage is (U * Modifier),
     hp(X, P), P1 is P-Damage,
     retract(hp(X, P)), asserta(hp(X, P1)),
