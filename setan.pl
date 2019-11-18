@@ -115,7 +115,7 @@
         starthp(beelzebub, 10000).
         starthp(leviathan, 9000).
         starthp(satan, 12000).
-        starthp(twilight_Dragon, 18000).
+        starthp(twilight_Dragon, 20000).
 
         nattack(pocong, 750).
         nattack(kuntilanak, 475).
@@ -149,7 +149,7 @@
         nattack(beelzebub, 510).
         nattack(leviathan, 510).
         nattack(satan, 810).
-        nattack(twilight_Dragon, 1300).
+        nattack(twilight_Dragon, 1500).
 
         spattack(pocong, 1000, 'Rocket Knuckle').
         spattack(kuntilanak, 950, 'Screaming Howl').
@@ -183,7 +183,7 @@
         spattack(beelzebub, 2800,'Demonic Blast').
         spattack(leviathan, 2600,'Hell Punishing Wave').
         spattack(satan, 8000,'Big Bang!').
-        spattack(twilight_Dragon, 6500,'Chaos Bloom!').
+        spattack(twilight_Dragon, 9000,'Chaos Bloom!').
 
 /* Relasi Tipe setan */
     /* Super Effective */
@@ -238,7 +238,6 @@
     neffective(wrath, pride).
     neffective(wrath, sloth).
     neffective(wrath, lust).
-    /* Void -> Envy && Void -> Gluttony && Void -> Greed */
+    /* Void -> Envy*/
     neffective(void, envy).
-    neffective(void, gluttony).
-    neffective(void, greed).
+
