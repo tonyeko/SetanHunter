@@ -200,7 +200,7 @@ endbattle :-
     fighting(_, Y),
     enemyHP(Y, P), P =< 0, !,
     write('Anda telah mengalahkan setan '), write(Y), nl, isLegend(Y), nl,
-    generateXP(X, Y), levelup(X), nl, write('Apakah anda ingin menangkap '), write(Y), write('(Y/N)? '),
+    generateXP(X, Y), levelup(X), nl, write('Apakah anda ingin menangkap '), write(Y), write('(y/n)? '),
     isCatch(Y), nl, restore, nl, deleteEnemy, retract(allyAtk(_,_)), retract(allySA(_,_,_)), !.
 endbattle :-
     fighting(X, _),

@@ -3,7 +3,7 @@
 initDifficulty :-
 	write('Pilih tingkat kesulitan game ini: '), nl, delay,
 	write(' - easy : Anda hanya perlu mengalahkan 2 legendary setan.'), nl, delay,
-	write(' - hard : Anda perlu mengalahkan semua legendary setan dan persentase bertemu legendary setan lebih kecil.'), nl, nl,
+	write(' - hard : Anda perlu mengalahkan semua legendary setan, lebih sering bertemu setan, dan persentase bertemu legendary setan lebih kecil.'), nl, nl,
 	readDifficulty.
 
 readDifficulty :-
@@ -62,39 +62,47 @@ showmap :-
 
 quit :-
     write('Anda akan keluar dari game. Ingin save status game? (y/n)'), nl,
-    write('$ '),
-    read(X), nl, isSave(X),
+    readSave,
     abort, !.
 
-isSave(X) :- X == 'Y', !,
-	write('Masukkan nama file: '), nl,
-    write('$ '), read(Z), save(X, Z), !.
-isSave(X) :- X == 'y', !,
-	write('Masukkan nama file: '), nl,
-    write('$ '), read(Z), save(X, Z), !.
-isSave(X) :- X == 'N', !.
-isSave(X) :- X == 'n', !.
+readSave :- write('$ '), read(X), nl, isSave(X), !.
 
-isLoad(X) :- X == 'N', !, nl,
+isSave(X) :- X = 'Y', !,
+	write('Masukkan nama file: '), nl,
+    write('$ '), read(Z), save(X, Z), !.
+isSave(X) :- X = 'y', !,
+	write('Masukkan nama file: '), nl,
+    write('$ '), read(Z), save(X, Z), !.
+isSave(X) :- X = 'N', !.
+isSave(X) :- X = 'n', !.
+isSave(_) :- write('Masukan salah! Masukkan input y. atau n. !'), nl, readSave, !.
+
+readLoad :- write('$ '), read(X), isLoad(X), !.
+
+isLoad(X) :- X = 'N', !, nl,
 	initDifficulty, nl, nl, delay,
 	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl, delay,
 	initPlayer, nl,
 	initLegends,
-	initEnemy(35),
+	initRandomNumberEnemy,
 	showinstruction, !.
-isLoad(X) :- X == 'n', !, nl,
+isLoad(X) :- X = 'n', !, nl,
 	initDifficulty, nl, nl, delay,
 	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl, delay,
 	initPlayer, nl,
 	initLegends,
-	initEnemy(35),
+	initRandomNumberEnemy,
 	showinstruction, !.
-isLoad(X) :- X == 'Y', !,
+isLoad(X) :- X = 'Y', !,
 	write('Masukkan nama file: '), nl,
     write('$ '), read(Z), loadGame(Z), nl, write('Status game berhasil di-load!'), nl, nl, !.
-isLoad(X) :- X == 'y', !,
+isLoad(X) :- X = 'y', !,
 	write('Masukkan nama file: '), nl,
     write('$ '), read(Z), loadGame(Z), nl, write('Status game berhasil di-load!'), nl, nl, !.
+isLoad(_) :- nl, write('Masukan salah! Masukkan input y. atau n. !'), nl, readLoad, !.
+
+initRandomNumberEnemy :- difficulty(easy), !, random(50,60,JumlahEnemy), initEnemy(JumlahEnemy), !.
+initRandomNumberEnemy :- difficulty(hard), !, random(90,100,JumlahEnemy), initEnemy(JumlahEnemy), !.
 
 showstatus :-
 	write('Setan yang dimiliki:'), nl, nl,
@@ -179,7 +187,7 @@ initCapture(X) :-
 captured(X) :-
 	playerSetan(Y), count(Y, N), N == 6, !,
 	write('Party sudah penuh! '),
-	write('Apakah kamu ingin drop Setan di inventory(Y/N)? '), read(Input), drop(Input, X).
+	write('Apakah kamu ingin drop Setan di inventory(y/n)? '), nl, readCaptured(X), !.
 /* KASUS MASIH ADA SLOT */
 captured(X) :-
 	playerSetan(Y), \+searchParty(X), !, initCapture(X),
@@ -193,6 +201,8 @@ captured(X) :-
 	nl, write('Setan '), write(X), write(' tidak berhasil ditangkap, karena sudah ada di inventory.'), nl, nl,
 	write('STATUS SAAT INI:'), nl, showstatus.
 
+readCaptured(X) :- write('$ '), read(Input), drop(Input, X), !.
+
 drop(Y, X) :- Y = 'Y' , !,
 	write('Silahkan drop Setan: '), nl, nl, playerSetan(Z), showsetan(Z), nl,
     write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)), retract(level(Input, _)),
@@ -203,6 +213,7 @@ drop(Y, X) :- Y = 'y' , !,
     asserta(playerSetan(A)), captured(X).
 drop(Y, X) :- Y = 'N', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
 drop(Y, X) :- Y = 'n', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
+drop(_, X) :- nl, write('Masukan salah! Masukkan input y. atau n. !'), nl, readCaptured(X), !.
 
 dead(X) :-
 	playerSetan(Y), retractSetanFromList(X), del(X, Y, Z),
@@ -261,10 +272,10 @@ loseAnimation :-
 	write(' / ______|\\____/|____/  |_______ \\____/____  >\\___  >'),nl, delay,
 	write(' \\/                             \\/         \\/     \\/ '),nl.
 
-save(X, NamaFile) :- X == 'Y' , !, savegame(NamaFile), write('Status game berhasil disimpan!'), nl, !.
-save(X, NamaFile) :- X == 'y' , !, savegame(NamaFile), write('Status game berhasil disimpan!'), nl, !.
-save(X, _) :- X == 'N' , !.
-save(X, _) :- X == 'n' , !.
+save(X, NamaFile) :- X = 'Y' , !, savegame(NamaFile), write('Status game berhasil disimpan!'), nl, !.
+save(X, NamaFile) :- X = 'y' , !, savegame(NamaFile), write('Status game berhasil disimpan!'), nl, !.
+save(X, _) :- X = 'N' , !.
+save(X, _) :- X = 'n' , !.
 
 savegame(NamaFile):-
 	open(NamaFile,write,SaveFile),
@@ -351,9 +362,6 @@ reset :-
 	retractall(level(_,_)),
 	retractall(experience(_,_)),
 	retractall(hp(_,_)).
-	% findall(Setan1, fullhp(Setan1,SetanHP), ListSetan1), /* LIST SETAN YANG PUNYA FULL HP */
-	% findall(SetanHP, fullhp(Setan1,SetanHP), ListHP),
-	% resetHPLoad(ListSetan1, ListHP).
 
 loadGame(NamaFile) :-
 	reset,
@@ -366,8 +374,3 @@ loadStatus(LoadFile) :-
 		read(LoadFile, F),
 		asserta(F),
 		at_end_of_stream(LoadFile).
-
-% resetHPplayerSetan :- 
-% 	findall(Setan1, hpSetanKita(Setan1,SetanHP), ListSetan1),
-% 	findall(SetanHP, hpSetanKita(Setan1,SetanHP), ListHP),
-% 	resetHPLoad(ListSetan1, ListHP), !.

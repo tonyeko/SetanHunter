@@ -39,7 +39,7 @@ start :-
 	write('$$/   $$/  $$$$$$/  $$/   $$/    $$$$/   $$$$$$$/ $$/       '),nl, delay,
 	nl,nl,
 	write('Apakah Anda ingin load status game yang sudah ada(Y/N)? '), nl,
-    write('$ '), read(X), isLoad(X),
+    readLoad,
 	showmap,
 
     repeat,
