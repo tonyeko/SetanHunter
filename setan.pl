@@ -111,7 +111,7 @@
         starthp(belphegor, 4500).
         starthp(beelzebub, 6000).
         starthp(leviathan, 7000).
-        starthp(satan, 9999).
+        starthp(satan, 9000).
 
         nattack(pocong, 350).
         nattack(kuntilanak, 275).
@@ -139,12 +139,12 @@
         nattack(grimreaper, 400).
         nattack(cerberus, 350).
         nattack(lucifer, 350).
-        nattack(mammon, 250).
-        nattack(asmodeus, 550).
-        nattack(belphegor, 450).
-        nattack(beelzebub, 500).
-        nattack(leviathan, 400).
-        nattack(satan, 650).
+        nattack(mammon, 300).
+        nattack(asmodeus, 360).
+        nattack(belphegor, 260).
+        nattack(beelzebub, 310).
+        nattack(leviathan, 210).
+        nattack(satan, 550).
 
         spattack(pocong, 700, 'Rocket Knuckle').
         spattack(kuntilanak, 600, 'Screaming Howl').
