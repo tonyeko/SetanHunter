@@ -17,8 +17,8 @@ initPlayer :-
 	asserta(playerSetan([pocong])),          /* Setan awal */
     asserta(level(pocong, 10)),
     asserta(experience(pocong, 1000)),
-    asserta(hp(pocong, 3520)),
-    asserta(fullhp(pocong, 3520)),
+    asserta(hp(pocong, 7500)),
+    asserta(fullhp(pocong, 7500)),
 	asserta(rektoratUsed(0)).                /* Setan belum pernah disembuhkan di rektorat */
 
 initLegends :-
