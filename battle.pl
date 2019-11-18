@@ -215,7 +215,8 @@ zeroHP(X) :-
     % retract(level(X, _)), retract(hp(X, _)),
     nl, nl, spused(enemy, Z), battleWithLegend(F), restore, asserta(spused(enemy, Z)), asserta(battleWithLegend(F)), initBattleKe2, !.
 
-isLegend(X) :- battleWithLegend(1), !, legendsSetan(ListLegend), del(X, ListLegend, NewListLegend), retract(legendsSetan(ListLegend)), asserta(legendsSetan(NewListLegend)), endgame(1), !.
+isLegend(X) :- battleWithLegend(1), searchListLegendSetan(X), !, legendsSetan(ListLegend), del(X, ListLegend, NewListLegend), retract(legendsSetan(ListLegend)), asserta(legendsSetan(NewListLegend)), endgame(1), !.
+isLegend(X) :- battleWithLegend(1), \+ searchListLegendSetan(X), !.
 isLegend(_) :- battleWithLegend(0), !.
 
 catch(X, Enemy) :- X = 'Y', !, captured(Enemy).

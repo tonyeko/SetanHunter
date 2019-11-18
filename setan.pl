@@ -29,6 +29,7 @@
         setan(samurai).
         setan(grimreaper).
         setan(cerberus).
+        setan(twilight_Dragon).
 
     /* type: envy */
         type(envy, pocong).
@@ -69,6 +70,8 @@
         type(wrath, danlap_1920).
         type(wrath, satan).
         type(wrath, cerberus).
+    /* type: void */
+        type(void, twilight_Dragon).
 
 /* Legendary setan */
         legendary(lucifer).
@@ -112,6 +115,7 @@
         starthp(beelzebub, 10000).
         starthp(leviathan, 9000).
         starthp(satan, 12000).
+        starthp(twilight_Dragon, 18000).
 
         nattack(pocong, 750).
         nattack(kuntilanak, 475).
@@ -145,6 +149,7 @@
         nattack(beelzebub, 510).
         nattack(leviathan, 510).
         nattack(satan, 810).
+        nattack(twilight_Dragon, 1300).
 
         spattack(pocong, 1000, 'Rocket Knuckle').
         spattack(kuntilanak, 950, 'Screaming Howl').
@@ -178,6 +183,7 @@
         spattack(beelzebub, 2800,'Demonic Blast').
         spattack(leviathan, 2600,'Hell Punishing Wave').
         spattack(satan, 8000,'Big Bang!').
+        spattack(twilight_Dragon, 6500,'Chaos Bloom!').
 
 /* Relasi Tipe setan */
     /* Super Effective */
@@ -203,6 +209,11 @@
     seffective(wrath, envy).
     seffective(wrath, gluttony).
     seffective(wrath, greed).
+    /* Void -> Pride && Void -> Sloth && Void -> Lust && Void -> Wrath */
+    seffective(void, pride).
+    seffective(void, sloth).
+    seffective(void, lust).
+    seffective(void, wrath).
     
     /* Not Effective */
     /* Envy -> Lust && Envy -> Wrath */
@@ -227,3 +238,7 @@
     neffective(wrath, pride).
     neffective(wrath, sloth).
     neffective(wrath, lust).
+    /* Void -> Envy && Void -> Gluttony && Void -> Greed */
+    neffective(void, envy).
+    neffective(void, gluttony).
+    neffective(void, greed).
