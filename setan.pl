@@ -80,104 +80,104 @@
         legendary(satan).
 
 /* stats */
-        starthp(pocong, 3500).
-        starthp(kuntilanak, 2000).
-        starthp(tuyul, 3000).
-        starthp(banaspati, 3000).
-        starthp(genderuwo, 2250).
-        starthp(kuyang, 2100).
-        starthp(mbah_jenggot, 2400).
-        starthp(hantu_kaki, 2250).
-        starthp(slenderman, 3500).
-        starthp(jin_tomang, 2250).
-        starthp(jelangkung, 2500).
-        starthp(hantu_IP_4, 3000).
-        starthp(tukang_baso_PAU, 3000).
-        starthp(noni_belanda, 2600).
-        starthp(jenglot, 2340).
-        starthp(wewe_gombel, 2460).
-        starthp(jeruk_purut, 2600).
-        starthp(valak, 2470).
-        starthp(pennywise, 2750).
-        starthp(danlap_1920,3150).
-        starthp(hantu_wibu,2235).
-        starthp(nurikabe, 7500).
-        starthp(samurai, 2700).
-        starthp(grimreaper, 4250).
-        starthp(cerberus, 4750).
-        starthp(lucifer, 7500).
+        starthp(pocong, 4500).
+        starthp(kuntilanak, 5000).
+        starthp(tuyul, 4000).
+        starthp(banaspati, 5000).
+        starthp(genderuwo, 4250).
+        starthp(kuyang, 4100).
+        starthp(mbah_jenggot, 4400).
+        starthp(hantu_kaki, 5250).
+        starthp(slenderman, 6500).
+        starthp(jin_tomang, 7250).
+        starthp(jelangkung, 6500).
+        starthp(hantu_IP_4, 9000).
+        starthp(tukang_baso_PAU, 5000).
+        starthp(noni_belanda, 7600).
+        starthp(jenglot, 6340).
+        starthp(wewe_gombel, 6460).
+        starthp(jeruk_purut, 6600).
+        starthp(valak, 6470).
+        starthp(pennywise, 6750).
+        starthp(danlap_1920,8150).
+        starthp(hantu_wibu,6235).
+        starthp(nurikabe, 10500).
+        starthp(samurai, 8700).
+        starthp(grimreaper, 9750).
+        starthp(cerberus, 10750).
+        starthp(lucifer, 9000).
         starthp(mammon, 8500).
-        starthp(asmodeus, 5500).
-        starthp(belphegor, 4500).
-        starthp(beelzebub, 6000).
-        starthp(leviathan, 7000).
-        starthp(satan, 9000).
+        starthp(asmodeus, 8500).
+        starthp(belphegor, 9500).
+        starthp(beelzebub, 10000).
+        starthp(leviathan, 9000).
+        starthp(satan, 12000).
 
-        nattack(pocong, 350).
-        nattack(kuntilanak, 275).
-        nattack(tuyul, 225).
-        nattack(banaspati, 325).
-        nattack(genderuwo, 275).
-        nattack(kuyang, 275).
-        nattack(mbah_jenggot, 225).
-        nattack(hantu_kaki, 300).
-        nattack(slenderman, 350).
-        nattack(jin_tomang, 225).
-        nattack(jelangkung, 250).
-        nattack(hantu_IP_4, 300).
-        nattack(tukang_baso_PAU, 350).
-        nattack(noni_belanda, 225).
-        nattack(jenglot, 275).
-        nattack(wewe_gombel, 200).
-        nattack(jeruk_purut, 300).
-        nattack(valak, 300).
-        nattack(pennywise, 225).
-        nattack(danlap_1920,200).
-        nattack(hantu_wibu,250).
-        nattack(nurikabe, 100).
-        nattack(samurai, 300).
-        nattack(grimreaper, 400).
-        nattack(cerberus, 350).
-        nattack(lucifer, 350).
-        nattack(mammon, 300).
-        nattack(asmodeus, 360).
-        nattack(belphegor, 260).
-        nattack(beelzebub, 310).
-        nattack(leviathan, 210).
-        nattack(satan, 550).
+        nattack(pocong, 550).
+        nattack(kuntilanak, 475).
+        nattack(tuyul, 425).
+        nattack(banaspati, 525).
+        nattack(genderuwo, 575).
+        nattack(kuyang, 675).
+        nattack(mbah_jenggot, 525).
+        nattack(hantu_kaki, 600).
+        nattack(slenderman, 650).
+        nattack(jin_tomang, 625).
+        nattack(jelangkung, 550).
+        nattack(hantu_IP_4, 500).
+        nattack(tukang_baso_PAU, 550).
+        nattack(noni_belanda, 525).
+        nattack(jenglot, 475).
+        nattack(wewe_gombel, 500).
+        nattack(jeruk_purut, 600).
+        nattack(valak, 600).
+        nattack(pennywise, 625).
+        nattack(danlap_1920,700).
+        nattack(hantu_wibu,550).
+        nattack(nurikabe, 400).
+        nattack(samurai, 800).
+        nattack(grimreaper, 900).
+        nattack(cerberus, 650).
+        nattack(lucifer, 550).
+        nattack(mammon, 500).
+        nattack(asmodeus, 460).
+        nattack(belphegor, 460).
+        nattack(beelzebub, 510).
+        nattack(leviathan, 510).
+        nattack(satan, 810).
 
-        spattack(pocong, 700, 'Rocket Knuckle').
-        spattack(kuntilanak, 600, 'Screaming Howl').
-        spattack(tuyul, 775, 'Dual Burst').
-        spattack(banaspati, 875,'Rising Flame').
-        spattack(genderuwo, 975,'Black Void').
-        spattack(kuyang, 975,'Surging Aurora').
-        spattack(mbah_jenggot, 625,'Beard Slap').
-        spattack(hantu_kaki, 650,'Rampaging Kick').
-        spattack(slenderman, 600,'Faceless Rage').
-        spattack(jin_tomang, 900,'Cyclone Fury').
-        spattack(jelangkung, 550,'Vegetable Nightmare').
-        spattack(hantu_IP_4, 950,'Soulstroke of Education').
-        spattack(tukang_baso_PAU, 650,'Happy Discount Fiesta').
-        spattack(noni_belanda, 850,'Assasinate').
-        spattack(jenglot, 650,'Moonlight Fury').
-        spattack(wewe_gombel, 775,'Spicy BOMB!!!').
-        spattack(jeruk_purut, 800,'Exploded Fruit Farm').
-        spattack(valak, 1000,'Indignation').
-        spattack(pennywise, 575,'Lucky!!!').
-        spattack(danlap_1920, 800,'Homing Interruption Fury').
-        spattack(hantu_wibu, 1000,'Comiket Open!!!').
-        spattack(nurikabe, 500,'Earthquake').
-        spattack(samurai, 1100,'Godspeed Slash').
-        spattack(grimreaper, 1200,'Twilight Fury').
-        spattack(cerberus, 1500,'Tri-Burst Elemental Ray').
-        spattack(lucifer, 1500,'Terminus Pride').
-        spattack(mammon, 1250,'Astral Impact').
-        spattack(asmodeus, 1400,'Symphony of Hell').
-        spattack(belphegor, 1750,'Chaotic Fury').
-        spattack(beelzebub, 1800,'Demonic Blast').
-        spattack(leviathan, 1600,'Hell Punishing Wave').
-        spattack(satan, 2000,'Big Bang!').
+        spattack(pocong, 1000, 'Rocket Knuckle').
+        spattack(kuntilanak, 950, 'Screaming Howl').
+        spattack(tuyul, 1275, 'Dual Burst').
+        spattack(banaspati, 1475,'Rising Flame').
+        spattack(genderuwo, 1775,'Black Void').
+        spattack(kuyang, 1675,'Surging Aurora').
+        spattack(mbah_jenggot, 1525,'Beard Slap').
+        spattack(hantu_kaki, 1550,'Rampaging Kick').
+        spattack(slenderman, 1700,'Faceless Rage').
+        spattack(jin_tomang, 1800,'Cyclone Fury').
+        spattack(jelangkung, 1250,'Vegetable Nightmare').
+        spattack(hantu_IP_4, 1650,'Soulstroke of Education').
+        spattack(tukang_baso_PAU, 1550,'Happy Discount Fiesta').
+        spattack(noni_belanda, 1550,'Assasinate').
+        spattack(jenglot, 1850,'Moonlight Fury').
+        spattack(wewe_gombel, 1775,'Spicy BOMB!!!').
+        spattack(jeruk_purut, 1800,'Exploded Fruit Farm').
+        spattack(valak, 3000,'Indignation').
+        spattack(pennywise, 1575,'Lucky!!!').
+        spattack(danlap_1920, 1800,'Homing Interruption Fury').
+        spattack(hantu_wibu, 2000,'Comiket Open!!!').
+        spattack(nurikabe, 2500,'Earthquake').
+        spattack(samurai, 2100,'Godspeed Slash').
+        spattack(grimreaper, 2200,'Twilight Fury').
+        spattack(cerberus, 3000,'Tri-Burst Elemental Ray').
+        spattack(lucifer, 2500,'Terminus Pride').
+        spattack(mammon, 2250,'Astral Impact').
+        spattack(asmodeus, 2400,'Symphony of Hell').
+        spattack(belphegor, 2750,'Chaotic Fury').
+        spattack(beelzebub, 2800,'Demonic Blast').
+        spattack(leviathan, 2600,'Hell Punishing Wave').
+        spattack(satan, 3000,'Big Bang!').
 
 /* Relasi Tipe setan */
     /* Super Effective */
