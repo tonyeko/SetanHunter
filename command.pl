@@ -181,6 +181,10 @@ searchParty(X) :-
     playerSetan(L),
     member(X, L).
 
+searchListLegendSetan(X) :-
+    legendsSetan(L),
+    member(X, L).
+
 initCapture(X) :-
     enemylv(X, N),
     asserta(level(X, N)),
