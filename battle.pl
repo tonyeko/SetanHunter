@@ -254,7 +254,7 @@ generateXP(X, Y) :-
     fighting(X, Y),
     enemylv(Y, N), level(X, M), legendary(Y),
     random(1000, 2500, RNG), 
-    P is div(RNG, (M+N)), write('Kamu mendapatkan '), write(P), write(' poin EXP dari LEGENDARY SETAN!!'), nl,
+    P is RNG, write('Kamu mendapatkan '), write(P), write(' poin EXP dari LEGENDARY SETAN!!'), nl,
     experience(X, XP), XP1 is XP + P,
     retract(experience(X, XP)), asserta(experience(X, XP1)).
 
