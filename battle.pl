@@ -202,7 +202,7 @@ endbattle :-
     write('Anda telah mengalahkan setan '), write(Y), nl, isLegend(Y), nl,
     generateXP(X, Y), levelup(X), nl,
     write('Apakah anda ingin menangkap '), write(Y), write('(Y/N)? '),
-    read(Input), catch(Input, Y), restore, deleteEnemy, !.
+    read(Input), catch(Input, Y), nl, restore, nl, deleteEnemy, retract(allyAtk(_,_)), retract(allySA(_,_,_)), !.
 endbattle :-
     fighting(X, _),
     hp(X, P), P =< 0, !, dead(X), zeroHP(X), !.
@@ -280,7 +280,7 @@ levelup(X) :-
     level(X, N), N1 =:= N, write(X), write(' makin tangguh dalam bertarung!').
 
 
-deleteEnemy :- playerPos(D, E), B is D, C is E, enemy(A, B, C), retract(enemy(A, B, C)), retract(enemyHP(A, _)), retract(enemyAtk(_,_)), retract(enemySA(_,_,_)).
+deleteEnemy :- playerPos(D, E), B is D, C is E, enemy(A, B, C), retract(enemy(A, B, C)), retract(enemyHP(A, _)), retract(enemyAtk(A,_)), retract(enemySA(A,_,_)).
 
 restore :-
     retract(spused(player, _)), retract(fighting(_, _)), retract(spused(enemy, _)), retract(battleWithLegend(_)).
