@@ -177,7 +177,7 @@
         spattack(belphegor, 2750,'Chaotic Fury').
         spattack(beelzebub, 2800,'Demonic Blast').
         spattack(leviathan, 2600,'Hell Punishing Wave').
-        spattack(satan, 3000,'Big Bang!').
+        spattack(satan, 8000,'Big Bang!').
 
 /* Relasi Tipe setan */
     /* Super Effective */
