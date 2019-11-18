@@ -47,7 +47,15 @@ showcommands :-
 	write('  d.                 : bergerak kearah timur.'),nl,
 	write('  status.            : melihat status diri.'),nl,
 	write('  save(filename).    : menyimpan status permainan.'),nl,
-	write('  load(filename).    : me-load status permainan.'),nl,nl, !.
+	write('  load(filename).    : me-load status permainan.'),nl,nl,
+	write('Daftar keterkaitan antara tipe tipe setan: '), nl,
+	write('  envy bagus melawan gluttony dan pride tetapi lemah melawan lust dan wrath'), nl,
+	write('  gluttony bagus melawan greed dan sloth tetapi lemah melawan envy dan wrath'), nl,
+	write('  greed bagus melawan pride dan lust tetapi lemah melawan gluttony dan wrath'), nl,
+	write('  pride bagus melawan sloth dan wrath tetapi lemah melawan envy dan greed'), nl,
+	write('  sloth bagus melawan lust dan wrath tetapi lemah melawan pride dan gluttony'), nl,
+	write('  lust bagus melawan envy dan wrath tetapi lemah melawan greed dan sloth'), nl,
+	write('  wrath bagus melawan envy, gluttony dan greed tetapi lemah melawan pride, sloth dan lust'), nl, nl, !.
 
 showlegends :-
     write('Keterangan : '), nl,
@@ -197,7 +205,7 @@ captured(X) :-
 	write('STATUS SAAT INI:'), nl, showstatus.
 /* KASUS SETAN SUDAH ADA DI INVENTORY */
 captured(X) :-
-	searchParty(X), !, 
+	searchParty(X), !,
 	nl, write('Setan '), write(X), write(' tidak berhasil ditangkap, karena sudah ada di inventory.'), nl, nl,
 	write('STATUS SAAT INI:'), nl, showstatus.
 
@@ -339,7 +347,7 @@ resetHPLoad([H1|T1], [H2|T2]) :- hp(H1, X), X == H2 , !,
 resetHPLoad([H1|T1], [H2|T2]) :- hp(H1, X), X \= H2 , !,
 	retract(hp(H1, H2)), asserta(hp(H1, X)),
 	resetHPLoad(T1, T2), !.
-	
+
 reset :-
 	retractall(player(_)),
 	retractall(playerPos(_, _)),

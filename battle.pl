@@ -9,18 +9,18 @@
 :- dynamic(allySA/3).
 
 /* Encounter */
-enc :-  nl, write('!!!!Cilukk Baaaa!!!!'), nl, write('Tiba-tiba ada setan '), 
-        playerPos(A, B), enemy(X, C, D), A == C, B == D, write(X), write(' muncul di depanmu!'), nl, nl, 
-        random(2, 85, N), asserta(enemylv(X, N)), 
+enc :-  nl, write('!!!!Cilukk Baaaa!!!!'), nl, write('Tiba-tiba ada setan '),
+        playerPos(A, B), enemy(X, C, D), A == C, B == D, write(X), write(' muncul di depanmu!'), nl, nl,
+        random(2, 85, N), asserta(enemylv(X, N)),
         enemyInfo(X),
         write('Fight or Run?'), nl, readbattlechoice.
-encLegend :-    nl, write('!!!!ALERTT!!!!'), nl, write('Tiba-tiba ada BOS setan '), playerPos(A, B), legendaryPos(X, C, D), A == C, B == D, 
-                asserta(enemy(X, C, D)), write(X), write(' muncul di depanmu!'), nl, nl, asserta(enemylv(X, 95)), 
+encLegend :-    nl, write('!!!!ALERTT!!!!'), nl, write('Tiba-tiba ada BOS setan '), playerPos(A, B), legendaryPos(X, C, D), A == C, B == D,
+                asserta(enemy(X, C, D)), write(X), write(' muncul di depanmu!'), nl, nl, asserta(enemylv(X, 95)),
                 enemyInfo(X),
                 asserta(battleWithLegend(1)), initBattle.
 
 enemyInfo(X) :-
-    enemylv(X, N),  
+    enemylv(X, N),
     starthp(X, M), HP is (M + (5*N)), asserta(enemyHP(X, HP)),
     nattack(X, BAtk), NAtk is (BAtk + (2*N)), asserta(enemyAtk(X, NAtk)),
     spattack(X, BSpAtk, Y), NSpAtk is (BSpAtk + (3*N)), asserta(enemySA(X, NSpAtk, Y)),
@@ -65,7 +65,9 @@ pick(_) :-
 
 showsetan([]).
 showsetan([X|T]) :-
-    write(' - '), write(X), nl,
+    write(' - '), write(X),
+    write('\t'), type(Y, X),
+    write('(Type :'), write(Y), write(')'), nl,
     showsetan(T).
 
 initBattle :-
@@ -113,7 +115,7 @@ battlestatus :-
     write(X), nl,
     write('Level: '), level(X, M),
     write(M), nl,
-    write('Health: '), hp(X, R), 
+    write('Health: '), hp(X, R),
     write(R), write('/'), fullhp(X, FHP), write(FHP), nl,
     write('Type: '), type(S, X),
     write(S), nl, nl.
@@ -188,7 +190,7 @@ battle :-
             random(1, 10, N),
             enemymove(N),
             endbattle   ).
-        
+
 
 inputBattleCommand :-
     write('$ '), read(Input), nl,
@@ -208,9 +210,9 @@ isCatch(Y) :- nl, write('$ '), read(Input), catch(Input, Y), !.
 
 zeroHP(_) :- playerSetan(L), L = [], !,
     write('Anda kehabisan setan. '), restore, endgame(0), !.
-zeroHP(X) :-    
-    write(X), write(' is dead.'), 
-    % retract(level(X, _)), retract(hp(X, _)),        
+zeroHP(X) :-
+    write(X), write(' is dead.'),
+    % retract(level(X, _)), retract(hp(X, _)),
     nl, nl, spused(enemy, Z), battleWithLegend(F), restore, asserta(spused(enemy, Z)), asserta(battleWithLegend(F)), initBattleKe2, !.
 
 isLegend(X) :- battleWithLegend(1), !, legendsSetan(ListLegend), del(X, ListLegend, NewListLegend), retract(legendsSetan(ListLegend)), asserta(legendsSetan(NewListLegend)), endgame(1), !.
@@ -226,7 +228,7 @@ catch(_, Enemy) :- write('Masukan tidak sesuai! Masukkan y/n!'), isCatch(Enemy),
 generateXP(X, Y) :-
     fighting(X, Y),
     enemylv(Y, N), level(X, M),
-    random(250, 1500, RNG), 
+    random(250, 1500, RNG),
     P is div(RNG, (N+M)), M < N,
     Gain is P*N, write(X), write(' mendapatkan '), write(Gain), write(' poin EXP!!'), nl,
     experience(X, XP), XP1 is XP + Gain,
@@ -234,7 +236,7 @@ generateXP(X, Y) :-
 generateXP(X, Y) :-
     fighting(X, Y),
     enemylv(Y, N), level(X, M),
-    random(250, 1500, RNG), 
+    random(250, 1500, RNG),
     P is div(RNG, (N+M)), M =:= N,
     Gain is P, write(X), write(' mendapatkan '), write(Gain), write(' poin EXP!!'), nl,
     experience(X, XP), XP1 is XP + Gain,
@@ -242,7 +244,7 @@ generateXP(X, Y) :-
 generateXP(X, Y) :-
     fighting(X, Y),
     enemylv(Y, N), level(X, M),
-    random(250, 1500, RNG), 
+    random(250, 1500, RNG),
     P is div(RNG, (N+M)), M > N,
     Gain is P*N, write(X), write(' mendapatkan '), write(Gain), write(' poin EXP!!'), nl,
     experience(X, XP), XP1 is XP + Gain,
@@ -251,7 +253,7 @@ generateXP(X, Y) :-
 generateXP(X, Y) :-
     fighting(X, Y),
     enemylv(Y, N), level(X, M), legendary(Y),
-    random(500, 2000, RNG), 
+    random(500, 2000, RNG),
     P is RNG, write('Kamu mendapatkan '), write(P), write(' poin EXP dari LEGENDARY SETAN!!'), nl,
     experience(X, XP), XP1 is XP + P,
     retract(experience(X, XP)), asserta(experience(X, XP1)).
@@ -259,14 +261,14 @@ generateXP(X, Y) :-
 
 levelup(X) :-
     experience(X, XP), N1 is div(XP, 100), !,
-    level(X, N), N1 > N, 
+    level(X, N), N1 > N,
     write(X), write(' telah naik level ke level '), write(N1), write('!'), nl,
     retract(level(X, N)), asserta(level(X, N1)),
     hp(X, U), U1 is (U + (5*N1)), retract(hp(X, U)), asserta(hp(X, U1)),
     fullhp(X, V), V1 is (V + (5*N1)), retract(fullhp(X, V)), asserta(fullhp(X, V1)).
 
 levelup(X) :-
-    experience(X, XP), N1 is div(XP, 100), !, 
+    experience(X, XP), N1 is div(XP, 100), !,
     level(X, N), N1 =:= N, write(X), write(' makin tangguh dalam bertarung!').
 
 
