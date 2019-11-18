@@ -217,20 +217,15 @@ readCaptured(X) :- write('$ '), read(Input), drop(Input, X), !.
 
 drop(Y, X) :- Y = 'Y' , !,
 	write('Silahkan drop Setan: '), nl, nl, playerSetan(Z), showsetan(Z), nl,
-    write('Drop: '), read(Input), dropping(Input, X).
+    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)), retract(level(Input, _)),
+    asserta(playerSetan(A)), captured(X).
 drop(Y, X) :- Y = 'y' , !,
 	write('Silahkan drop Setan: '), nl, nl, playerSetan(Z), showsetan(Z), nl,
-    write('Drop: '), read(Input), dropping(Input, X).
+    write('Drop: '), read(Input), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)), retract(level(Input, _)),
+    asserta(playerSetan(A)), captured(X).
 drop(Y, X) :- Y = 'N', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
 drop(Y, X) :- Y = 'n', nl, write('Yahh!!'), nl, write(X), write(' tidak berhasil ditangkap :('), !.
 drop(_, X) :- nl, write('Masukan salah! Masukkan input y. atau n. !'), nl, readCaptured(X), !.
-
-dropping(X, Capturing) :-
-	\+ searchParty(X), !,
-	write('Anda tidak memiliki setan tersebut!.'), nl, catch(y, Capturing).
-dropping(X, _) :-
-    playerSetan(Z), del(Input, Z, A), retract(playerSetan(Z)), retract(hp(Input, _)), retract(fullhp(Input, _)), retract(experience(Input,_)), retract(level(Input, _)),
-    asserta(playerSetan(A)), captured(X).
 
 dead(X) :-
 	playerSetan(Y), retractSetanFromList(X), del(X, Y, Z),
@@ -269,7 +264,7 @@ execute(load(NamaFile)) :- loadGame(NamaFile), nl, write('Status game berhasil d
 execute(_)				:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
 
 endgame(0) :- nl, delay, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. ITB akhirnya dikuasai oleh makhluk halus, dan menjadi angker...'), nl, abort, !.
-endgame(1) :- difficulty(hard), legendsSetan(L), L = [], !, nl, delay, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, halt, !.
+endgame(1) :- difficulty(hard), legendsSetan(L), count(L, N), N == 0, !, nl, delay, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, halt, !.
 endgame(1) :- difficulty(easy), legendsSetan(L), count(L, N), N == 5, !, nl, delay, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty easy.'), nl, halt, !.
 endgame(_) :- !.
 
