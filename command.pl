@@ -80,14 +80,14 @@ isLoad(X) :- X == 'N', !, nl,
 	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl, delay,
 	initPlayer, nl,
 	initLegends,
-	initEnemy(20),
+	initEnemy(35),
 	showinstruction, !.
 isLoad(X) :- X == 'n', !, nl,
 	initDifficulty, nl, nl, delay,
 	write('Selamat datang di dunia Setan Hunter. Silahkan memperkenalkan dirimu...'),nl, delay,
 	initPlayer, nl,
 	initLegends,
-	initEnemy(20),
+	initEnemy(35),
 	showinstruction, !.
 isLoad(X) :- X == 'Y', !,
 	write('Masukkan nama file: '), nl,
@@ -172,9 +172,15 @@ captured(X) :-
 	write('Apakah kamu ingin drop Setan di inventory(Y/N)? '), read(Input), drop(Input, X).
 /* KASUS MASIH ADA SLOT */
 captured(X) :-
-	playerSetan(Y), conc(Y, [X], Z),
+	playerSetan(Y), \+searchParty(X), !, 
+	conc(Y, [X], Z),
 	retract(playerSetan(Y)), assertz(playerSetan(Z)),
 	nl, write('Selamat!!'), nl, write(X), write(' berhasil ditangkap!'), nl, nl,
+	write('STATUS SAAT INI:'), nl, showstatus.
+/* KASUS SETAN SUDAH ADA DI INVENTORY */
+captured(X) :-
+	searchParty(X), !, 
+	nl, write('Setan '), write(X), write(' tidak berhasil ditangkap, karena sudah ada di inventory.'), nl, nl,
 	write('STATUS SAAT INI:'), nl, showstatus.
 
 drop(Y, X) :- Y = 'Y' , !,
