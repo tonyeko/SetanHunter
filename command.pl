@@ -264,7 +264,7 @@ execute(load(NamaFile)) :- loadGame(NamaFile), nl, write('Status game berhasil d
 execute(_)				:- write('Masukan tidak sesuai, silahkan liat daftar command.'), nl, !.
 
 endgame(0) :- nl, delay, loseAnimation, nl, write('Sayang sekali Anda kalah karena kehabisan setan. ITB akhirnya dikuasai oleh makhluk halus, dan menjadi angker...'), nl, abort, !.
-endgame(1) :- difficulty(hard), legendsSetan(L), L = [], !, nl, delay, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, halt, !.
+endgame(1) :- difficulty(hard), legendsSetan(L), count(L, N), N == 0, !, nl, delay, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty hard.'), nl, halt, !.
 endgame(1) :- difficulty(easy), legendsSetan(L), count(L, N), N == 5, !, nl, delay, winAnimation, write('Selamat!! Anda telah menyelesaikan permainan ini dalam difficulty easy.'), nl, halt, !.
 endgame(_) :- !.
 
