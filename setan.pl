@@ -104,7 +104,7 @@
         starthp(nurikabe, 10500).
         starthp(samurai, 8700).
         starthp(grimreaper, 9750).
-        starthp(cerberus, 10750).
+        starthp(cerberus, 9750).
         starthp(lucifer, 9000).
         starthp(mammon, 8500).
         starthp(asmodeus, 8500).
